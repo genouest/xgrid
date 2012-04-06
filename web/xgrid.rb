@@ -1,6 +1,7 @@
 require 'sinatra'
 require 'xgridadmin.rb'
 require 'xgridnode.rb'
+require 'AWS'
 
 enable :sessions
 
@@ -87,6 +88,21 @@ end
 
 def requestaddnode()
  # TODO create new node, status pending, send EC2 request with node id
+  ec2_secret_key = Digest::SHA1.hexdigest(ec2_secret_key)
+  ec2 = AWS::EC2::Base.new(:access_key_id => ec2_access_key, :secret_access_key => ec2_secret_key, :server => ec2_url, :port => 4567, :use_ssl => false)
+  begin
+    response = ec2.run_instances(
+              :image_id       => configdoc['config']['ami_id'],
+              :min_count      => 1,
+              :max_count      => 1,
+              :instance_type  => configdoc['config']['ami_type'],
+              :user_data      => user_data,
+              :base64_encoded => true
+              )
+  rescue Exception => e
+    puts "Error: "+e.message
+  end
+
 end
 
 def requestdelnode()
