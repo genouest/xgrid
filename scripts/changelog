@@ -1,0 +1,95 @@
+TODO:
+
+
+qconf -Aq genocloud.queue.tpl
+==
+qname                 genocloud
+hostlist              @allhosts
+seq_no                0
+load_thresholds       np_load_avg=1.75
+suspend_thresholds    NONE
+nsuspend              1
+suspend_interval      00:05:00
+priority              0
+min_cpu_interval      00:05:00
+processors            UNDEFINED
+qtype                 BATCH INTERACTIVE
+ckpt_list             NONE
+pe_list               make
+rerun                 FALSE
+slots                 1
+tmpdir                /tmp
+shell                 /bin/csh
+prolog                NONE
+epilog                NONE
+==
+
+qconf -Au gencloud.user.tpl
+==
+name vuser
+oticket 0
+fshare 0
+delete_time 0
+default_project NONE
+==
+
+qconf -Ahgrp genocloud.hostgroup.tpl
+==
+group_name @allhosts
+hostlist NONE
+==
+qconf -as MASTERHOSTNAME_WITH_DOMAIN
+
+Add /var/lib/gridengine to exports:
+apt-get install nfs-server
+echo "/var/spool/gridengine 192.168.2.0/255.255.255.0(rw,sync,no_subtree_check,no_root_squash)" >> /etc/exports
+echo "/var/lib/gridengine 192.168.2.0/255.255.255.0(rw,sync,no_subtree_check,no_root_squash)" >> /etc/exports
+echo "/usr/lib/gridengine 192.168.2.0/255.255.255.0(rw,sync,no_subtree_check,no_root_squash)" >> /etc/exports
+
+#/etc/init.d/nfs-kernel-server  restart
+exportfs -ra
+
+apt-get install gridengine-exec
+
+## Web  interface ##
+apt-get install libsinatra-ruby
+
+Add /etc/apache2/conf.d/xgrid:
+ProxyPass       /xgrid  http://127.0.0.1:4567
+ProxyPassReverse /xgrid http://127.0.0.1:4567
+
+
+
+
++++++++++ On node ++++++++++
+. /mnt/context.sh
+mkdir -p /var/spool/gridengine
+mount -t nfs 192.168.2.35:/var/spool/gridengine /var/spool/gridengine
+mkdir -p /var/lib/gridengine
+mount -t nfs 192.168.2.35:/var/lib/gridengine /var/lib/gridengine
+mkdir -p /usr/lib/gridengine
+mount -t nfs 192.168.2.35:/usr/lib/gridengine /usr/lib/gridengine
+DEBIAN_FRONTEND='noninteractive' apt-get -y install gridengine-exec 
+sed  -i 's/none/'$DOMAIN'/' /etc/gridengine/bootstrap
+
+
+
+
+++++++++++ New node to declare ++++++++
+
+When a new node is added:
+qconf -Ae genocloud.exec.tpl
+==
+hostname              EXECHOSTNAME_WITHDOMAIN
+load_scaling          NONE
+complex_values        NONE
+user_lists            NONE
+xuser_lists           NONE
+projects              NONE
+xprojects             NONE
+usage_scaling         NONE
+report_variables      NONE
+
+==
+qconf -Mhgrp genocloud.hostgroup.tpl
+replace NONE if present, else add hostname

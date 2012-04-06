@@ -1,0 +1,19 @@
+qname                 genocloud
+hostlist              @allhosts
+seq_no                0
+load_thresholds       np_load_avg=1.75
+suspend_thresholds    NONE
+nsuspend              1
+suspend_interval      00:05:00
+priority              0
+min_cpu_interval      00:05:00
+processors            UNDEFINED
+qtype                 BATCH INTERACTIVE
+ckpt_list             NONE
+pe_list               make
+rerun                 FALSE
+slots                 1
+tmpdir                /tmp
+shell                 /bin/csh
+prolog                NONE
+epilog                NONE

@@ -1,0 +1,18 @@
+Source: xgrid
+Section: science
+Priority: optional
+Maintainer: Olivier Sallou <osallou@debian.org>
+Build-Depends: debhelper (>= 8.0.0)
+Standards-Version: 3.9.2
+Homepage: http://gitlab.irisa.fr/xgrid
+Vcs-Git: git@gitlab.irisa.fr:xgrid.git
+Vcs-Browser: https://gitlab.irisa.fr/xgrid/master/tree
+
+Package: xgrid
+Architecture: all
+Depends: ${shlibs:Depends}, ${misc:Depends}, ruby, libsinatra-ruby, rbygems, gone, sqlite3, libsqlite3-dev, build-essentials
+ ruby-amazon-ec2
+Description: Auto SGE installer
+ Install in OpenNebula a SGE cluster with a user
+ web interface to add new nodes.
+

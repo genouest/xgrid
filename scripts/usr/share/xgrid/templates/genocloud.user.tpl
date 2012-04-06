@@ -1,0 +1,5 @@
+name ${USER}
+oticket 0
+fshare 0
+delete_time 0
+default_project NONE
