@@ -1,0 +1,9 @@
+Introduction
+
+This software provides a web interface and some scripts to deploy a SGE cluster on Open Nebula
+
+
+Dependencies
+
+apt-get install sqlite3
+gem install dm-core dm-sqlite-adapter dm-migrations

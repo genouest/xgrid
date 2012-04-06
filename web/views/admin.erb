@@ -1,0 +1,25 @@
+<h1>Administration page</h1>
+<h2>Update EC2 access</h2>
+<% if  @ec2.length==0 %>
+  <p>EC2 parameters are not set, they are needed to add new nodes</p>
+<% end %>
+<a href="admin/ec2">Update</a>
+<h2>Cluster</h2>
+<p>API key : <%= @@apikey %></p>
+<p>Current number of nodes : </p>
+
+<a href="admin/addnode">request new node</a>
+
+<h2>Nodes</h2>
+... list of node with removal capability....
+<% if @nodes %>
+    <table>
+        <%@nodes.each do |r|%>
+        <tr valign="top">
+            <td><%=r.id%></td><td><%=r.status%></td>
+        </tr>
+        <%end%>
+    </table>
+<% else %>
+   <p>No node available</p>
+<% end %>
