@@ -6,21 +6,22 @@ require 'AWS'
 enable :sessions
 
 set :password, 'admin'
+set :baseurl, ''
 
 @@apikey = rand(36**16).to_s(36)
 
 before '/admin*' do
    if session[:authenticated]==nil ||  session[:authenticated]==false
-     redirect "/login"
+     redirect settings.baseurl+"/login"
    end
    if session[:apikey]==nil || session[:apikey]!=@@apikey
      session[:authenticated]=false
-     redirect "/login"
+     redirect settings.baseurl+"/login"
    end
 end
 
 get '/' do 
-  "You can go to the <a href=\"admin\">admin</a> section."
+  "You can go to the <a href=\""+settings.baseurl+"admin\">admin</a> section."
 end
 
 get '/login' do
@@ -39,7 +40,7 @@ get '/admin/addnode' do
    node.name = "test"
    node.status = 1
    node.save
-   redirect "/admin"
+   redirect settings.baseurl+"/admin"
 end
 
 get '/admin/ec2' do
@@ -54,12 +55,12 @@ post '/admin/ec2update' do
     ec2 = XgridEC2.new
   end
   if params[:ec2key].empty? || params[:ec2password].empty?
-    redirect 'admin/ec2'
+    redirect settings.baseurl+'/admin/ec2'
   end
   ec2.ec2key = params[:ec2key]
   ec2.ec2pwd = params[:ec2password]
   ec2.save
-  redirect 'admin'
+  redirect settings.baseurl+'/admin'
 end
 
 post '/login' do
@@ -68,9 +69,9 @@ post '/login' do
   if admin.authenticated?
     session[:authenticated] = true
     session[:apikey] = @@apikey
-    redirect "/admin"
+    redirect settings.baseurl+"/admin"
   else
-    redirect "/"
+    redirect settings.baseurl+"/"
   end
 end
 
@@ -88,20 +89,20 @@ end
 
 def requestaddnode()
  # TODO create new node, status pending, send EC2 request with node id
-  ec2_secret_key = Digest::SHA1.hexdigest(ec2_secret_key)
-  ec2 = AWS::EC2::Base.new(:access_key_id => ec2_access_key, :secret_access_key => ec2_secret_key, :server => ec2_url, :port => 4567, :use_ssl => false)
-  begin
-    response = ec2.run_instances(
-              :image_id       => configdoc['config']['ami_id'],
-              :min_count      => 1,
-              :max_count      => 1,
-              :instance_type  => configdoc['config']['ami_type'],
-              :user_data      => user_data,
-              :base64_encoded => true
-              )
-  rescue Exception => e
-    puts "Error: "+e.message
-  end
+ # ec2_secret_key = Digest::SHA1.hexdigest(ec2_secret_key)
+ # ec2 = AWS::EC2::Base.new(:access_key_id => ec2_access_key, :secret_access_key => ec2_secret_key, :server => ec2_url, :port => 4567, :use_ssl => false)
+ # begin
+ #   response = ec2.run_instances(
+ #             :image_id       => configdoc['config']['ami_id'],
+ #             :min_count      => 1,
+ #             :max_count      => 1,
+ #             :instance_type  => configdoc['config']['ami_type'],
+ #             :user_data      => user_data,
+ #             :base64_encoded => true
+ #             )
+ # rescue Exception => e
+ #   puts "Error: "+e.message
+ # end
 
 end
 

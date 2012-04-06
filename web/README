@@ -9,3 +9,10 @@ Dependencies
 
 apt-get install sqlite3 libsqlite3-dev build-essentials  libsinatra-ruby
 gem install dm-core dm-sqlite-adapter dm-migrations amazon-ec2
+
+Configuration
+
+in xgrid.rb:
+set :password, 'admin'  # Default admin password, TO BE MODIFIED
+set :baseurl, ''  # Base URL of the service if not http://xxxx/
+

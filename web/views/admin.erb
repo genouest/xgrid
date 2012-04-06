@@ -3,12 +3,12 @@
 <% if  @ec2.length==0 %>
   <p>EC2 parameters are not set, they are needed to add new nodes</p>
 <% end %>
-<a href="admin/ec2">Update</a>
+<a href="<%= settings.baseurl %>/admin/ec2">Update</a>
 <h2>Cluster</h2>
 <p>API key : <%= @@apikey %></p>
 <p>Current number of nodes : </p>
 
-<a href="admin/addnode">request new node</a>
+<a href="<%= settings.baseurl %>/admin/addnode">request new node</a>
 
 <h2>Nodes</h2>
 ... list of node with removal capability....
