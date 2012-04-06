@@ -7,5 +7,5 @@ ruby -rubygems xgrid.rb
 
 Dependencies
 
-apt-get install sqlite3  libsinatra-ruby
+apt-get install sqlite3 libsqlite3-dev  libsinatra-ruby
 gem install dm-core dm-sqlite-adapter dm-migrations amazon-ec2
