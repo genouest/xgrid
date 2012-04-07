@@ -51,9 +51,8 @@ end
 
 get '/admin/node/:id' do
   # TODO search with id and show info
-  #node = XgridNode.find(:id => params[:id])
-  #node.id
-  "info from node..."
+  @node = XgridNode.find(params[:id])
+  erb :node
 end
 
 #TODO add del /admin/node/:id
