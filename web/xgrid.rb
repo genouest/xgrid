@@ -35,13 +35,29 @@ get '/admin' do
    erb :admin
 end
 
-get '/admin/addnode' do
-   node = XgridNode.new
-   node.name = "test"
-   node.status = 1
-   node.save
-   redirect settings.baseurl+"/admin"
+
+# TODO manage dual route admin/node api/node
+post '/admin/node' do
+  if(params[:apikey]!=@@apikey)
+   erb :apierror
+  end
+  node = XgridNode.new
+  node.name = "test"
+  node.status = 1
+  node.save
+  redirect settings.baseurl+"/admin"
 end
+
+
+get '/admin/node/:id' do
+  # TODO search with id and show info
+  #node = XgridNode.find(:id => params[:id])
+  #node.id
+  "info from node..."
+end
+
+#TODO add del /admin/node/:id
+#TODO add del/admin/nodes
 
 get '/admin/ec2' do
   @ec2 = XgridEC2.first
@@ -49,7 +65,7 @@ get '/admin/ec2' do
   erb :ec2
 end
 
-post '/admin/ec2update' do
+post '/admin/ec2' do
   ec2 = XgridEC2.first
   if(ec2==nil)
     ec2 = XgridEC2.new
@@ -75,8 +91,12 @@ post '/login' do
   end
 end
 
+put '/api/node/:id' do
+  # TODO update node status and add to SGE
+end
+
 get '/slave/:id/:vmname/:vmid/:key' do
-  if(params[:key]!=apikey)
+  if(params[:key]!=@@apikey)
    erb :apierror 
   end
   "GET: should add slave #{params[:vmname]} using key #{params[:key]}"
