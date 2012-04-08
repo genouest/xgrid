@@ -15,7 +15,7 @@ class Xgrid < Sinatra::Base
   set :password, 'admin'
   set :baseurl, ''
 
-  set :apikey, rand(36**16).to_s(36)
+  set :apikey, nil
 
 before '/admin*' do
    if session[:authenticated]==nil ||  session[:authenticated]==false
@@ -32,6 +32,18 @@ get '/' do
 end
 
 get '/login' do
+   if settings.apikey==nil
+     key = XgridKey.get(1)
+     if key == nil
+       key = XgridKey.new
+       key.id = 1
+       key.value = rand(36**16).to_s(36)
+       key.save
+       settings.apikey = key.value
+     else
+       settings.apikey = key.value
+     end
+   end
  erb :login
 end
 

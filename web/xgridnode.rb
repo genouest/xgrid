@@ -43,5 +43,12 @@ class XgridEC2
 
 end
 
+class XgridKey
+   include DataMapper::Resource
+
+   property :id, Integer, :key => true
+   property :value, String
+end
+
 DataMapper.finalize
 DataMapper.auto_upgrade!
