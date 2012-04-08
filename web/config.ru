@@ -1,2 +1,4 @@
 require 'xgrid.rb'
-run Xgrid
+require 'plugins/sge/xgridsge.rb'
+#run Xgrid
+run Rack::Cascade.new [Xgrid, XgridSge]

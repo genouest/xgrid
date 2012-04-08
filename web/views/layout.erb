@@ -7,7 +7,12 @@
 <div class="header">
 <h1>XGrid Management</h1>
 <div class="menu">
-<div class="menuitem">Administration</div><div class="menuitem">EC2</div>
+<div class="menuitem"><a href="<%= XgridConfig.baseurl+"/admin" %>">Administration</a></div><div class="menuitem"><a href="<%= XgridConfig.baseurl+"/admin/ec2" %>">EC2</a></div>
+<% XgridConfig.dashboard.each do|name,route|%>
+<div class="menuitem">
+<a href="<%= XgridConfig.baseurl+route %>"><%= name %></a>
+</div>
+<% end %>
 </div>
 </div>
 <div class="content">

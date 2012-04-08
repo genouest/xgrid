@@ -2,6 +2,7 @@ require 'rubygems'
 require 'sinatra/base'
 require 'xgridadmin.rb'
 require 'xgridnode.rb'
+require 'xgridconfig.rb'
 require 'AWS'
 
 class Xgrid < Sinatra::Base
@@ -13,7 +14,7 @@ class Xgrid < Sinatra::Base
   set :public_folder, File.dirname(__FILE__) + '/public'
 
   set :password, 'admin'
-  set :baseurl, ''
+  set :baseurl, XgridConfig.baseurl
 
   set :apikey, nil
 
@@ -25,6 +26,12 @@ before '/admin*' do
      session[:authenticated]=false
      redirect settings.baseurl+"/login"
    end
+end
+
+before '/api/*' do
+  if params[:apikey]!=settings.apikey
+    erb :error
+  end
 end
 
 get '/' do 
