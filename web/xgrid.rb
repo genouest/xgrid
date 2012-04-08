@@ -1,20 +1,27 @@
-require 'sinatra'
+require 'rubygems'
+require 'sinatra/base'
 require 'xgridadmin.rb'
 require 'xgridnode.rb'
 require 'AWS'
 
-enable :sessions
+class Xgrid < Sinatra::Base
 
-set :password, 'admin'
-set :baseurl, ''
+  enable :sessions
+  set :static, true
+  set :root, File.dirname(__FILE__)
 
-@@apikey = rand(36**16).to_s(36)
+  set :public_folder, File.dirname(__FILE__) + '/public'
+
+  set :password, 'admin'
+  set :baseurl, ''
+
+  set :apikey, rand(36**16).to_s(36)
 
 before '/admin*' do
    if session[:authenticated]==nil ||  session[:authenticated]==false
      redirect settings.baseurl+"/login"
    end
-   if session[:apikey]==nil || session[:apikey]!=@@apikey
+   if session[:apikey]==nil || session[:apikey]!=settings.apikey
      session[:authenticated]=false
      redirect settings.baseurl+"/login"
    end
@@ -37,7 +44,7 @@ end
 
 
 post '/admin/node' do
-  if(params[:apikey]!=@@apikey)
+  if(params[:apikey]!=settings.apikey)
    erb :apierror
   end
   node = XgridNode.new
@@ -47,9 +54,9 @@ post '/admin/node' do
   redirect settings.baseurl+"/admin"
 end
 
-patch 'api/node/:id' do
+#patch 'api/node/:id' do
   # Update node
-end
+#end
 
 get '/admin/node/:id' do
   @node = XgridNode.find(params[:id])
@@ -89,7 +96,7 @@ post '/login' do
   admin.authenticate(params[:login],params[:password])
   if admin.authenticated?
     session[:authenticated] = true
-    session[:apikey] = @@apikey
+    session[:apikey] = settings.apikey
     redirect settings.baseurl+"/admin"
   else
     redirect settings.baseurl+"/"
@@ -122,4 +129,6 @@ end
 
 def requestdelnode()
  # send EC2 request to delete node, remove from database, remove form SGE
+end
+
 end

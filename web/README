@@ -8,7 +8,7 @@ ruby -rubygems xgrid.rb
 Dependencies
 
 apt-get install sqlite3 libsqlite3-dev build-essentials  libsinatra-ruby
-gem install dm-core dm-sqlite-adapter dm-migrations amazon-ec2
+gem install dm-core dm-sqlite-adapter dm-migrations amazon-ec2 rake
 
 Configuration
 

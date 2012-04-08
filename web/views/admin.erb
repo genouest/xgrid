@@ -7,11 +7,11 @@
 <input type="submit" value="Update"/>
 </form>
 <h2>Cluster</h2>
-<p>API key : <%= @@apikey %></p>
+<p>API key : <%= settings.apikey %></p>
 <p>Current number of nodes : </p>
 
 <form action="<%= settings.baseurl %>/admin/node" method="post">
- <input type="hidden" id="apikey" name="apikey" value="<%= @@apikey %>"/>
+ <input type="hidden" id="apikey" name="apikey" value="<%= settings.apikey %>"/>
  <input type="submit" value="Request new node"/>
 </form>
 
