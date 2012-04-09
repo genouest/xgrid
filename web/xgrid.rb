@@ -35,7 +35,7 @@ before '/api/*' do
 end
 
 get '/' do 
-  "You can go to the <a href=\""+settings.baseurl+"admin\">admin</a> section."
+  redirect '/admin'
 end
 
 get '/login' do
