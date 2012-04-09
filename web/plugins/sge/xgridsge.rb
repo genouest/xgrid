@@ -3,7 +3,7 @@ require 'sinatra/base'
 require 'xgridconfig.rb'
 require 'AWS'
 
-XgridConfig.adddashboard('SGE','admin/sge')
+XgridConfig.adddashboard('SGE','/admin/sge')
 
 class XgridSge < Sinatra::Base
 

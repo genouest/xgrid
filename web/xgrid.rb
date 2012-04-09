@@ -13,7 +13,7 @@ class Xgrid < Sinatra::Base
 
   set :public_folder, File.dirname(__FILE__) + '/public'
 
-  set :password, 'admin'
+  set :password, XgridConfig.adminpwd
   set :baseurl, XgridConfig.baseurl
 
   set :apikey, nil

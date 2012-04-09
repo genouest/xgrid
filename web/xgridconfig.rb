@@ -7,6 +7,8 @@ class XgridConfig
   # Update to base url
   @@baseurl= ''
 
+  @@adminpwd = 'admin'
+
   @@dashboard = Hash.new
 
   def self.apikey
@@ -19,6 +21,10 @@ class XgridConfig
 
   def self.baseurl
     @@baseurl
+  end
+
+  def self.adminpwd
+    @@adminpwd
   end
 
   def self.dashboard
