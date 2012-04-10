@@ -1,3 +1,4 @@
 web/xgrid.db
 *.deb
 *.changes
+scripts/usr/share/xgrid/web/xgrid.db
