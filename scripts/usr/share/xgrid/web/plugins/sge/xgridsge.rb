@@ -34,12 +34,18 @@ post '/admin/sge' do
 end
 
 post '/api/sge/:id' do
-  node = XgridNode.find(params[:id])
+  node = XgridNode.get(params[:id])
   node.name = params[:name]
   node.status = 2
   node.save
-  addexecnode(params[name])
+  addexecnode(params[:name])
   "{ \"status\": \"success\" }"
+end
+
+delete '/admin/sge/:id' do
+  node = XgridNode.get(params[:id])
+  deletenodeid(node)
+  node.destroy
 end
 
 def requestnewnode(ami,type)
@@ -74,21 +80,42 @@ def requestnewnode(ami,type)
 end
 
 
-def addexecnode(id)
-#qconf -Ae genocloud.exec.tpl
-#==
-#hostname              EXECHOSTNAME_WITHDOMAIN
-#load_scaling          NONE
-#complex_values        NONE
-#user_lists            NONE
-#xuser_lists           NONE
-#projects              NONE
-#xprojects             NONE
-#usage_scaling         NONE
-#report_variables      NONE
-#==
-#qconf -Mhgrp genocloud.hostgroup.tpl
-#replace NONE if present, else add hostname
+def deletenode(node)
+  ec2keys = XgridEC2.first
+  ec2_access_key = ec2keys.ec2key
+  ec2_secret_key = ec2keys.ec2pwd
+  ec2_secret_key = Digest::SHA1.hexdigest(ec2_secret_key)
+
+  vmid = node.name[3,node.name.length-1]
+  ec2 = AWS::EC2::Base.new(:access_key_id => ec2_access_key, :secret_access_key => ec2_secret_key, :server => XgridConfig.url, :port => 4567, :use_ssl => false)
+
+  begin
+    response = ec2.terminate_instances(
+              :instance_id => [ vmid ]
+              )
+  rescue Exception => e
+     return e.message
+  end
+
+  updateexeclist()
+  return nil
+end
+
+
+def addexecnode(name)
+  system("sed -e 's/\$\{EXECHOSTNAME\}/"+name+"/' /usr/share/xgrid/templates/genocloud.exec.tpl > /tmp/genocloud.exec")
+  system("qconf -Ae /tmp/genocloud.exec")
+  updatexeclist()
+end
+
+def updateexeclist
+  nodes = XgridNode.find(:status => 2)
+  execlist = ''
+  nodes.each do |node|
+    execlist+= node.name+" "
+  end
+  system("sed -e 's/NONE/"+execlist+"/' /usr/share/xgrid/templates/genocloud.hostgroup.tpl > /tmp/genocloud.hostgroup")
+  system ("qconf  -Mhgrp /tmp/genocloud.hostgroup")
 end
 
 end
