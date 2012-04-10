@@ -42,12 +42,6 @@ post '/api/sge/:id' do
   "{ \"status\": \"success\" }"
 end
 
-delete '/admin/sge/:id' do
-  node = XgridNode.get(params[:id])
-  deletenodeid(node)
-  node.destroy
-end
-
 def requestnewnode(ami,type)
   ec2keys = XgridEC2.first
   ec2_access_key = ec2keys.ec2key
@@ -77,28 +71,6 @@ def requestnewnode(ami,type)
 
   return nil
 
-end
-
-
-def deletenode(node)
-  ec2keys = XgridEC2.first
-  ec2_access_key = ec2keys.ec2key
-  ec2_secret_key = ec2keys.ec2pwd
-  ec2_secret_key = Digest::SHA1.hexdigest(ec2_secret_key)
-
-  vmid = node.name[3,node.name.length-1]
-  ec2 = AWS::EC2::Base.new(:access_key_id => ec2_access_key, :secret_access_key => ec2_secret_key, :server => XgridConfig.url, :port => 4567, :use_ssl => false)
-
-  begin
-    response = ec2.terminate_instances(
-              :instance_id => [ vmid ]
-              )
-  rescue Exception => e
-     return e.message
-  end
-
-  updateexeclist()
-  return nil
 end
 
 

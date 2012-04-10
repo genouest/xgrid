@@ -83,11 +83,18 @@ get '/admin/node/:id' do
 end
 
 delete '/admin/node/:id' do
- # delete one node
+  node = XgridNode.get(params[:id])
+  deletenode(node)
+  node.destroy
 end
 
 delete '/admin/nodes' do
  # delete all nodes
+ nodes = XgridNode.all
+ nodes.each do |node|
+   deletenode(node)
+   node.destroy
+ end
 end
 
 get '/admin/ec2' do
@@ -123,9 +130,6 @@ post '/login' do
 end
 
 
-def nodeready(nodeid,vmname,vmid)
- # TODO get node in db, update status, add to SGE
-end
 
 def requestaddnode()
  # TODO create new node, status pending, send EC2 request with node id
@@ -146,8 +150,24 @@ def requestaddnode()
 
 end
 
-def requestdelnode()
- # send EC2 request to delete node, remove from database, remove form SGE
+def deletenode(node)
+  ec2keys = XgridEC2.first
+  ec2_access_key = ec2keys.ec2key
+  ec2_secret_key = ec2keys.ec2pwd
+  ec2_secret_key = Digest::SHA1.hexdigest(ec2_secret_key)
+
+  vmid = node.name[3,node.name.length-1]
+  ec2 = AWS::EC2::Base.new(:access_key_id => ec2_access_key, :secret_access_key => ec2_secret_key, :server => XgridConfig.url, :port => 4567, :use_ssl => false)
+
+  begin
+    response = ec2.terminate_instances(
+              :instance_id => [ vmid ]
+              )
+  rescue Exception => e
+     return e.message
+  end
+
+  return nil
 end
 
 end
