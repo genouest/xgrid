@@ -46,7 +46,8 @@ if [ "$SGE" = "master" ]; then
   echo "/usr/lib/gridengine 192.168.2.0/255.255.255.0(rw,sync,no_subtree_check,no_root_squash)" >> /etc/exports
   exportfs -ra
 
-
+  # Web frontend
+  gem install dm-core dm-sqlite-adapter dm-migrations amazon-ec2 rake
 fi
 if [ "$SGE" = "node" ]; then
   mkdir -p /var/spool/gridengine
