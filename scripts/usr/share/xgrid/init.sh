@@ -47,7 +47,7 @@ if [ "$SGE" = "master" ]; then
   exportfs -ra
 
   # Web frontend
-  gem install dm-core dm-sqlite-adapter dm-migrations amazon-ec2 rake
+  gem install dm-core dm-sqlite-adapter dm-migrations amazon-ec2 rack
   sed -i "s/@@ip = ''/@@ip = '"$IP"'/" /usr/share/xgrid/web/xgridconfig.rb
   # @@baseurl = ''
   LASTIP=`echo $IP| cut -d"." -f4`
