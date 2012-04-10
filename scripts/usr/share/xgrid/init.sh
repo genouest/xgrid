@@ -49,6 +49,9 @@ if [ "$SGE" = "master" ]; then
   # Web frontend
   gem install dm-core dm-sqlite-adapter dm-migrations amazon-ec2 rake
   sed -i "s/@@ip = ''/@@ip = '"$IP"'/" /usr/share/xgrid/web/xgridconfig.rb
+  # @@baseurl = ''
+  LASTIP=`echo $IP| cut -d"." -f4`
+  sed -i "s/@@baseurl = ''/@@baseurl = 'http://genocloud.genouest.org/cloud/"$LASTIP"/xgrid'/" /usr/share/xgrid/web/xgridconfig.rb
 fi
 if [ "$SGE" = "node" ]; then
   mkdir -p /var/spool/gridengine
