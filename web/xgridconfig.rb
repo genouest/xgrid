@@ -5,7 +5,7 @@
 class XgridConfig
 
   # Update to base url
-  @@baseurl= ''
+  @@baseurl= 'http://debiansid.genouest.org/xgrid'
 
   @@adminpwd = 'admin'
 
