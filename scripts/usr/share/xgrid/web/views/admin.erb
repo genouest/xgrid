@@ -8,12 +8,6 @@
 </form>
 <h2>Cluster</h2>
 <p>API key : <%= settings.apikey %></p>
-<p>Current number of nodes : </p>
-
-<form action="<%= settings.baseurl %>/admin/node" method="post">
- <input type="hidden" id="apikey" name="apikey" value="<%= settings.apikey %>"/>
- <input type="submit" value="Request new node"/>
-</form>
 
 <h2>Nodes</h2>
 ... list of node with removal capability....

@@ -52,6 +52,8 @@ if [ "$SGE" = "master" ]; then
   # @@baseurl = ''
   LASTIP=`echo $IP| cut -d"." -f4`
   sed -i "s/@@baseurl = ''/@@baseurl = 'http:\/\/genocloud.genouest.org\/cloud\/"$LASTIP"\/xgrid'/" /usr/share/xgrid/web/xgridconfig.rb
+  echo "Starting xgrid web server"
+  /usr/share/xgrid/web/startup.sh&
 fi
 if [ "$SGE" = "node" ]; then
   mkdir -p /var/spool/gridengine

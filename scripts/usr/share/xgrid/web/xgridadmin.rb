@@ -14,7 +14,6 @@ class XgridAdmin
 
   def authenticate(id,pwd)
     if(@login==id && @password==pwd)
-      puts "there is match"
       @authenticated = true
     end
     @authenticated

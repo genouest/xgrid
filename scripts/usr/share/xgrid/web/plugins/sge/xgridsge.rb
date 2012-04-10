@@ -75,19 +75,21 @@ end
 
 
 def addexecnode(name)
-  system("sed -e 's/\$\{EXECHOSTNAME\}/"+name+"/' /usr/share/xgrid/templates/genocloud.exec.tpl > /tmp/genocloud.exec")
-  system("qconf -Ae /tmp/genocloud.exec")
+  cur = Time.now.to_i
+  system("sed -e 's/\$\{EXECHOSTNAME\}/"+name+"/' /usr/share/xgrid/templates/genocloud.exec.tpl > /tmp/genocloud.exec."+cur.to_s)
+  system("qconf -Ae /tmp/genocloud.exec."+cur_to_s)
   updateexeclist()
 end
 
 def updateexeclist
-  nodes = XgridNode.find(:status => 2)
+  nodes = XgridNode.all(:status => 2)
   execlist = ''
   nodes.each do |node|
     execlist+= node.name+" "
   end
-  system("sed -e 's/NONE/"+execlist+"/' /usr/share/xgrid/templates/genocloud.hostgroup.tpl > /tmp/genocloud.hostgroup")
-  system ("qconf  -Mhgrp /tmp/genocloud.hostgroup")
+  cur = Time.now.to_i
+  system("sed -e 's/NONE/"+execlist+"/' /usr/share/xgrid/templates/genocloud.hostgroup.tpl > /tmp/genocloud.hostgroup."+cur.to_s)
+  system ("qconf  -Mhgrp /tmp/genocloud.hostgroup."+cur_to_s)
 end
 
 end
