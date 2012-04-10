@@ -48,15 +48,16 @@ if [ "$SGE" = "master" ]; then
 
   # Web frontend
   gem install dm-core dm-sqlite-adapter dm-migrations amazon-ec2 rake
+  sed -i "s/@@ip = ''/@@ip = '"$IP"'/" /usr/share/xgrid/web/xgridconfig.rb
 fi
 if [ "$SGE" = "node" ]; then
   mkdir -p /var/spool/gridengine
-  mount -t nfs 192.168.2.35:/var/spool/gridengine /var/spool/gridengine
+  mount -t nfs $SGEMASTER:/var/spool/gridengine /var/spool/gridengine
   mkdir -p /var/lib/gridengine
-  mount -t nfs 192.168.2.35:/var/lib/gridengine /var/lib/gridengine
+  mount -t nfs $SGEMASTER:/var/lib/gridengine /var/lib/gridengine
   mkdir -p /usr/lib/gridengine
-  mount -t nfs 192.168.2.35:/usr/lib/gridengine /usr/lib/gridengine
-  DEBIAN_FRONTEND='noninteractive' apt-get -y install gridengine-exec 
+  mount -t nfs $SGEMASTER:/usr/lib/gridengine /usr/lib/gridengine
+  DEBIAN_FRONTEND='noninteractive' apt-get -y install gridengine-exec  gridengine-client
   sed  -i 's/none/'$DOMAIN'/' /etc/gridengine/bootstrap
   ruby /usr/share/xgrid/sendstatus.rb -master $SGEMASTER -host $HOSTNAME -xid $XGRIDID
 fi

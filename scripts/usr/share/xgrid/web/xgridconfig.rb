@@ -5,7 +5,11 @@
 class XgridConfig
 
   # Update to base url
-  @@baseurl= ''
+  @@baseurl = ''
+
+  @@ip = ''
+
+  @@url = '192.168.2.91'
 
   @@adminpwd = 'admin'
 
@@ -13,6 +17,14 @@ class XgridConfig
 
   def self.apikey
     @@apikey
+  end
+
+  def self.url
+    @@url
+  end
+
+  def self.ip
+    @@ip
   end
 
   def self.setapikey(key)
