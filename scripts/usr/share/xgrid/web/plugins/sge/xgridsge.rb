@@ -16,7 +16,7 @@ class XgridSge < Sinatra::Base
   set :views, File.dirname(__FILE__) + '/views'
 
 get '/admin/sge' do
-  @amis = getamis
+  @amis = XgridEC2.getamis
   erb :sge
 end
 
@@ -36,15 +36,6 @@ end
 
 error EC2Error do
   'EC2 error occured' + env['sinatra.error'].message
-end
-
-def getamis
-  ec2keys = XgridEC2.first
-  ec2_access_key = ec2keys.ec2key
-  ec2_secret_key = ec2keys.ec2pwd
-  ec2_secret_key = Digest::SHA1.hexdigest(ec2_secret_key)
-  ec2 = AWS::EC2::Base.new(:access_key_id => ec2_access_key, :secret_access_key => ec2_secret_key, :server => XgridConfig.url, :port => 4567, :use_ssl => false)
-  retun ec2.describe_images.imagesSet.item
 end
 
 def requestnewnode(ami,type)
