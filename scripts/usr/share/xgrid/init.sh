@@ -62,7 +62,13 @@ if [ "$SGE" = "node" ]; then
   mount -t nfs $SGEMASTER:/var/lib/gridengine /var/lib/gridengine
   mkdir -p /usr/lib/gridengine
   mount -t nfs $SGEMASTER:/usr/lib/gridengine /usr/lib/gridengine
+  # Wait for DNS to be ready (5 minutes refresh)
+  echo "Waiting for DNS refresh"
+  sleep 300
+  echo "Update node status"
+  ruby /usr/share/xgrid/sendstatus.rb --master $SGEMASTER --name $HOSTNAME.$DOMAIN --id $XGRIDID --key $KEY
+  sleep 60
+  echo "Install grid node"
   DEBIAN_FRONTEND='noninteractive' apt-get -y install gridengine-exec  gridengine-client
   sed  -i 's/none/'$DOMAIN'/' /etc/gridengine/bootstrap
-  ruby /usr/share/xgrid/sendstatus.rb --master $SGEMASTER --name $HOSTNAME.$DOMAIN --id $XGRIDID --key $KEY
 fi
