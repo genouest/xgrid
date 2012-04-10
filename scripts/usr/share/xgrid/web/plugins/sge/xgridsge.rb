@@ -30,7 +30,7 @@ post '/admin/sge' do
   if err!=nil
     raise ec2error, err
   end
-  redirect '/admin'
+  redirect XgridConfig.baseurl+'/admin'
 end
 
 post '/api/sge/:id' do

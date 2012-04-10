@@ -1,6 +1,6 @@
 <h1>SGE page</h1>
 
-<form action="sge" method="post">
+<form action="<%= settings.baseurl %>/sge" method="post">
  <select id="ami" name="ami">
   <% @amis.each do |image| %>
    <option value="<%= image.imageId %>"><%= image.imageId %></option>

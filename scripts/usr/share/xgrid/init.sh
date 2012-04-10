@@ -62,5 +62,5 @@ if [ "$SGE" = "node" ]; then
   mount -t nfs $SGEMASTER:/usr/lib/gridengine /usr/lib/gridengine
   DEBIAN_FRONTEND='noninteractive' apt-get -y install gridengine-exec  gridengine-client
   sed  -i 's/none/'$DOMAIN'/' /etc/gridengine/bootstrap
-  ruby /usr/share/xgrid/sendstatus.rb --master $SGEMASTER --name $HOSTNAME --id $XGRIDID --key $KEY
+  ruby /usr/share/xgrid/sendstatus.rb --master $SGEMASTER --name $HOSTNAME.$DOMAIN --id $XGRIDID --key $KEY
 fi
