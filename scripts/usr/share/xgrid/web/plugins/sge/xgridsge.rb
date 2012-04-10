@@ -77,7 +77,7 @@ end
 def addexecnode(name)
   system("sed -e 's/\$\{EXECHOSTNAME\}/"+name+"/' /usr/share/xgrid/templates/genocloud.exec.tpl > /tmp/genocloud.exec")
   system("qconf -Ae /tmp/genocloud.exec")
-  updatexeclist()
+  updateexeclist()
 end
 
 def updateexeclist

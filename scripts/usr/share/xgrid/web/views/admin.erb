@@ -25,6 +25,10 @@
         </tr>
         <%end%>
     </table>
+   <form action="<%= XgridConfig.baseurl+"/node/delete" %>" method="post">
+     <input type="submit" value="delete all"/>
+   </form>
+
 <% else %>
    <p>No node available</p>
 <% end %>

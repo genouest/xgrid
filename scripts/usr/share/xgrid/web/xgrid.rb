@@ -30,7 +30,7 @@ end
 
 before '/api/*' do
   if params[:apikey]!=settings.apikey
-    erb :error
+    erb :apierror
   end
 end
 
@@ -82,13 +82,13 @@ get '/admin/node/:id' do
   erb :node
 end
 
-delete '/admin/node/:id' do
+post '/admin/node/delete/:id' do
   node = XgridNode.get(params[:id])
   deletenode(node)
   node.destroy
 end
 
-delete '/admin/nodes' do
+post '/admin/node/delete' do
  # delete all nodes
  nodes = XgridNode.all
  nodes.each do |node|

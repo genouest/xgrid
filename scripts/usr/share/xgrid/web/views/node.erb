@@ -3,4 +3,7 @@
 <p>Id: <%= r.id %></p>
 <p>Name: <%= r.name %></p>
 <p>Status: <%= r.status %></p>
+<form action="<%= XgridConfig.baseurl+"/node/delete/"+r.id.to_s %>" method="post">
+<input type="submit" value="delete"/>
+</form>
 <% end %>
