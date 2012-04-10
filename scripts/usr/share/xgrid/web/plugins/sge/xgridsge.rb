@@ -15,13 +15,21 @@ class XgridSge < Sinatra::Base
   set :public_folder, File.dirname(__FILE__) + '/public'
   set :views, File.dirname(__FILE__) + '/views'
 
+error do
+  'Error occured' + env['sinatra.error'].message
+end
+
+
 get '/admin/sge' do
   @amis = XgridEC2.getamis
   erb :sge
 end
 
 post '/admin/sge' do
-  requestnewnode(params[:ami],params[:type])
+  err = requestnewnode(params[:ami],params[:type])
+  if err!=nil
+    raise ec2error, err
+  end
   redirect '/admin'
 end
 
@@ -32,10 +40,6 @@ post '/api/sge/:id' do
   node.save
   addexecnode(params[name])
   "{ \"status\": \"success\" }"
-end
-
-error EC2Error do
-  'EC2 error occured' + env['sinatra.error'].message
 end
 
 def requestnewnode(ami,type)
@@ -62,10 +66,10 @@ def requestnewnode(ami,type)
               :base64_encoded => true
               )
   rescue Exception => e
-     raise EC2Error, e.message
+     return e.message
   end
 
-
+  return nil
 
 end
 
