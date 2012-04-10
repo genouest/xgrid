@@ -27,15 +27,15 @@ if [ "$SGE" = "master" ]; then
 
   # Define queue
   perl -p -e 's/\$\{([^}]+)\}/defined $ENV{$1} ? $ENV{$1} : $&/eg' $TEMPLATES/genocloud.queue.tpl > /tmp/genocloud.queue
-  qconf -Aq /tmp/genocloud.queue.tpl
+  qconf -Aq /tmp/genocloud.queue
   # Add user
   export USER="vuser"
   perl -p -e 's/\$\{([^}]+)\}/defined $ENV{$1} ? $ENV{$1} : $&/eg' $TEMPLATES/genocloud.user.tpl > /tmp/genocloud.user
-  qconf -Au /tmp/gencloud.user
+  qconf -Auser /tmp/genocloud.user
   # Set current as submit host
   qconf -as $HOSTNAME.$DOMAIN
   # Define allhosts group
-  cp $TEMPLATES/genocloud.hostgroup.tpl > /tmp/genocloud.hostgroup
+  cp $TEMPLATES/genocloud.hostgroup.tpl /tmp/genocloud.hostgroup
   qconf -Ahgrp /tmp/genocloud.hostgroup
 
   DEBIAN_FRONTEND='noninteractive' apt-get -y install gridengine-exec
