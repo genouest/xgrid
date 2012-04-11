@@ -12,6 +12,7 @@
 <h2>Nodes</h2>
 <% if @nodes && @nodes.length>0 %>
     <table>
+        <tr><td>Node id</td><td>Host name</td><td>Status (1=pending, 2=ok)</td></tr>
         <%@nodes.each do |r|%>
         <tr valign="top">
             <td><a href="<%= settings.baseurl %>/admin/node/<%=r.id%>"><%=r.id%></a></td><td><%=r.name%></td><td><%=r.status%></td>
