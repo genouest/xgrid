@@ -55,7 +55,7 @@ if [ "$SGE" = "master" ]; then
   RPASS=$(makepasswd --char=10)
   sed -i "s/@@adminpwd = 'admin'/@@adminpwd = '"$RPASS"'/" /usr/share/xgrid/web/xgridconfig.rb
   echo "Starting xgrid web server"
-  /usr/share/xgrid/web/startup.sh&
+  service xgrid restart
 fi
 if [ "$SGE" = "node" ]; then
   mkdir -p /var/spool/gridengine
