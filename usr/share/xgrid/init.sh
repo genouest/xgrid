@@ -1,6 +1,6 @@
 #!/bin/bash
 
-if [ -e /var/lib/gone/firstboot ]; then
+if [ ! -e /var/lib/gone/firstboot ]; then
   echo "Not first boot, exiting"
   exit 0
 fi
