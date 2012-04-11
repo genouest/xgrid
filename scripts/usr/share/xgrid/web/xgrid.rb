@@ -86,6 +86,7 @@ post '/admin/node/delete/:id' do
   node = XgridNode.get(params[:id])
   deletenode(node)
   node.destroy
+  redirect settings.baseurl+'/admin'
 end
 
 post '/admin/node/delete' do
@@ -95,6 +96,7 @@ post '/admin/node/delete' do
    deletenode(node)
    node.destroy
  end
+ redirect settings.baseurl+'/admin'
 end
 
 get '/admin/ec2' do
@@ -125,7 +127,7 @@ post '/login' do
     session[:apikey] = settings.apikey
     redirect settings.baseurl+"/admin"
   else
-    redirect settings.baseurl+"/"
+    redirect settings.baseurl+"/login"
   end
 end
 
@@ -151,12 +153,16 @@ def requestaddnode()
 end
 
 def deletenode(node)
+  if node.name.empty?
+    # Not yet declared, id unknown, skip EC2 removal
+    return nil
+  end
   ec2keys = XgridEC2.first
   ec2_access_key = ec2keys.ec2key
   ec2_secret_key = ec2keys.ec2pwd
   ec2_secret_key = Digest::SHA1.hexdigest(ec2_secret_key)
-
-  vmid = node.name[3,node.name.length-1]
+  nodename = node.name.split('.')
+  vmid = nodename[3,nodename[0].length-1]
   ec2 = AWS::EC2::Base.new(:access_key_id => ec2_access_key, :secret_access_key => ec2_secret_key, :server => XgridConfig.url, :port => 4567, :use_ssl => false)
 
   begin
