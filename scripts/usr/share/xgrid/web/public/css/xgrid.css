@@ -1,7 +1,7 @@
-body {  }
+body { background-image: url(../images/largesky.jpg;  }
 
 .info { font: normal 1em RockoFLF, Omnes, Helvetica, sans-serif; color: grey;}
-.header { height: 240px; background-image: url(../images/sky.png); }
+.header { height: 240px; background-color: lightgray; }
 
 .header a { text-decoration: none; background-color: white; padding: 10px; border-radius: 15px; border-color: lightslategrey; border-width: 4px; border-style: solid; }
 
