@@ -35,7 +35,7 @@ before '/api/*' do
 end
 
 get '/' do 
-  redirect '/admin'
+  redirect settings.baseurl+'/admin'
 end
 
 get '/login' do
