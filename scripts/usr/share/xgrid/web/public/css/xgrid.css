@@ -1,5 +1,6 @@
 body {  }
 
+.info { font: normal 1em RockoFLF, Omnes, Helvetica, sans-serif; color: grey;}
 .header { height: 240px; background-image: url(../images/sky.png); }
 
 .footer { margin-top: 10px; min-height: 30px;  }

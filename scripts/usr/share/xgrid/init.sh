@@ -52,6 +52,8 @@ if [ "$SGE" = "master" ]; then
   # @@baseurl = ''
   LASTIP=`echo $IP| cut -d"." -f4`
   sed -i "s/@@baseurl = ''/@@baseurl = 'http:\/\/genocloud.genouest.org\/cloud\/"$LASTIP"\/xgrid'/" /usr/share/xgrid/web/xgridconfig.rb
+  RPASS=$(makepasswd --char=10)
+  sed -i "s/@@adminpwd = 'admin'/@@adminpwd = '"$RPASS"'/" /usr/share/xgrid/web/xgridconfig.rb
   echo "Starting xgrid web server"
   /usr/share/xgrid/web/startup.sh&
 fi
