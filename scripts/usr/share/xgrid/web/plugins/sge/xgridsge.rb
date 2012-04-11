@@ -22,13 +22,20 @@ end
 
 get '/admin/sge' do
   @amis = XgridEC2.getamis
+  if @amis==nil
+    redirect XgridConfig.baseurl+'/admin/ec2'
+  end
+  @qstat= `qstat -u '*'`
+  @qstat.gsub!("\n","<br/>")
   erb :sge
 end
 
 post '/admin/sge' do
-  err = requestnewnode(params[:ami],params[:type])
-  if err!=nil
-    raise ec2error, err
+  1.upto(params[:quantity].to_i) do
+     err = requestnewnode(params[:ami],params[:type])
+     if err!=nil
+       raise ec2error, err
+     end
   end
   redirect XgridConfig.baseurl+'/admin'
 end
@@ -77,7 +84,7 @@ end
 def addexecnode(name)
   cur = Time.now.to_i
   system("sed -e 's/\$\{EXECHOSTNAME\}/"+name+"/' /usr/share/xgrid/templates/genocloud.exec.tpl > /tmp/genocloud.exec."+cur.to_s)
-  system("qconf -Ae /tmp/genocloud.exec."+cur_to_s)
+  system("qconf -Ae /tmp/genocloud.exec."+cur.to_s)
   updateexeclist()
 end
 
@@ -89,7 +96,7 @@ def updateexeclist
   end
   cur = Time.now.to_i
   system("sed -e 's/NONE/"+execlist+"/' /usr/share/xgrid/templates/genocloud.hostgroup.tpl > /tmp/genocloud.hostgroup."+cur.to_s)
-  system ("qconf  -Mhgrp /tmp/genocloud.hostgroup."+cur_to_s)
+  system ("qconf  -Mhgrp /tmp/genocloud.hostgroup."+cur.to_s)
 end
 
 end

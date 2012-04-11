@@ -2,7 +2,7 @@ body {  }
 
 .header { height: 240px; background-image: url(../images/sky.png); }
 
-.footer { margin-top: 10px; min-height: 10px;  }
+.footer { margin-top: 10px; min-height: 30px;  }
 
   
 ul { list-style: none;  }
@@ -10,6 +10,15 @@ ul { list-style: none;  }
 .nav {
 	padding-top: 120px;
 }
+
+#qstat { background-color: lightgoldenrodyellow;}
+
+#trash { width: 40px; }
+
+.tabids { margin: auto; width: 30%; background-color: lemonchiffon; }
+
+table { border-style: solid; }
+td { padding: 10px; }
 
 
 .nav li {

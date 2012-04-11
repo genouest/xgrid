@@ -23,6 +23,9 @@ class XgridEC2
 
   def self.getamis
     ec2keys = XgridEC2.first
+    if ec2keys == nil
+      return nil
+    end
     ec2_access_key = ec2keys.ec2key
     ec2_secret_key = ec2keys.ec2pwd
     ec2_secret_key = Digest::SHA1.hexdigest(ec2_secret_key)

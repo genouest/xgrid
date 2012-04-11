@@ -1,17 +1,33 @@
 <form action="<%= settings.baseurl %>/admin/ec2" method="post">
+<table class="tabids">
+<tr>
+<td>
 <label for="ec2key">EC2 key</label>
+</td>
+<td>
 <input type="text" id="ec2key" name="ec2key" value="
 <% if @ec2!=nil %>
 <%= @ec2.ec2key %>
 <% end %>
 "/>
-<br class="skip"/>
+</td>
+</tr>
+<tr>
+<td>
 <label for="ec2password">EC2 password</label>
+</td>
+<td>
 <input type="text" id="ec2password" name="ec2password" value="
 <% if @ec2!=nil %>
 <%= @ec2.ec2pwd %>
 <% end %>
 "/>
-<br class="skip"/>
+</td>
+</tr>
+<tr>
+<td colspan="2">
 <input type="submit"></input>
+</td>
+</tr>
+</table>
 </form>

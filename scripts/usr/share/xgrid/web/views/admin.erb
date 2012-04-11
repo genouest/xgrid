@@ -6,20 +6,20 @@
 <form action="<%= settings.baseurl %>/admin/ec2">
 <input type="submit" value="Update"/>
 </form>
-<h2>Cluster</h2>
+<h2>Remote API</h2>
 <p>API key : <%= settings.apikey %></p>
 
 <h2>Nodes</h2>
-... list of node with removal capability....
-<% if @nodes %>
+<% if @nodes && @nodes.length>0 %>
     <table>
         <%@nodes.each do |r|%>
         <tr valign="top">
-            <td><a href="<%= settings.baseurl %>/admin/node/<%=r.id%>"><%=r.id%></a></td><td><%=r.status%></td>
+            <td><a href="<%= settings.baseurl %>/admin/node/<%=r.id%>"><%=r.id%></a></td><td><%=r.name%></td><td><%=r.status%></td>
         </tr>
         <%end%>
     </table>
    <form action="<%= XgridConfig.baseurl+"/node/delete" %>" method="post">
+     <img id="trash"  src="<%= XgridConfig.baseurl %>/images/trash.png" alt="Delete all nodes"/>
      <input type="submit" value="delete all"/>
    </form>
 
