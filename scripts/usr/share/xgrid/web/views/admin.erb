@@ -16,6 +16,9 @@
         <%@nodes.each do |r|%>
         <tr valign="top">
             <td><a href="<%= settings.baseurl %>/admin/node/<%=r.id%>"><%=r.id%></a></td><td><%=r.name%></td><td><%=r.status%></td>
+            <% if ! r.name.empty? %>
+            <td><img src="<%= settings.baseurl %>/images/rrd/mem-<%= r.name %>.mini.png" class="rrd"></td><td><img src="<%= settings.baseurl %>/images/rrd/cpu-<%= r.name %>.mini.png" class="rrd"></td>
+            <% end %>
         </tr>
         <%end%>
     </table>

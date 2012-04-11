@@ -73,4 +73,17 @@ if [ "$SGE" = "node" ]; then
   echo "Install grid node"
   DEBIAN_FRONTEND='noninteractive' apt-get -y install gridengine-exec  gridengine-client
   sed  -i 's/none/'$DOMAIN'/' /etc/gridengine/bootstrap
+
+  # RRD collect
+  xgrid-rrdcreate $HOSTNAME.$DOMAIN
+  echo "step = 60" > /etc/rrdcollect.conf
+  echo "directory = /var/lib/gridengine/rrdcollect/"$HOSTNAME.$DOMAIN >> /etc/rrdcollect.conf
+  echo "file:///proc/meminfo" >> /etc/rrdcollect.conf
+  echo "/^MemTotal:\s*(\d+) kB/         mem.rrd:mem_total" >> /etc/rrdcollect.conf
+  echo "/^MemFree:\s*(\d+) kB/          mem.rrd:mem_free" >> /etc/rrdcollect.conf
+  echo "file:///proc/stat" >> /etc/rrdcollect.conf
+  echo "/^cpu\s+(\d+)\s+(\d+)\s+(\d+)\s+(\d+)\s+(\d+)\s+(\d+)\s+(\d+)/  cpu.rrd:cpu_user,cpu_nice,cpu_system,cpu_idle,cpu_iowait,cpu_irq,cpu_softirq" >> /etc/rrdcollect.conf
+  echo "" > /etc/default/rrdcollect
+  service rrdcollect restart
+
 fi

@@ -1,10 +1,13 @@
 <h1>Node</h1>
-<% @node.each do |r|%>
-<p>Id: <%= r.id %></p>
-<p>Name: <%= r.name %></p>
-<p>Status: <%= r.status %></p>
-<form action="<%= XgridConfig.baseurl+"/node/delete/"+r.id.to_s %>" method="post">
+<p>Id: <%= @node.id %></p>
+<p>Name: <%= @node.name %></p>
+<p>Status: <%= @node.status %></p>
+<% if ! @node.name.empty? %>
+<p>
+<img src="<%= settings.baseurl %>/images/rrd/mem-<%= @node.name %>.png" class="rrd"></td><td><img src="<%= settings.baseurl %>/images/rrd/cpu-<%= @node.name %>.png" class="rrd">
+</p>
+<% end %>
+<form action="<%= XgridConfig.baseurl+"/admin/node/delete/"+@node.id.to_s %>" method="post">
 <img id="trash"  src="<%= XgridConfig.baseurl %>/images/trash.png" alt="Delete all nodes"/>
 <input type="submit" value="delete"/>
 </form>
-<% end %>

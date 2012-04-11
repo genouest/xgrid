@@ -1,0 +1,28 @@
+#!/bin/bash
+
+RRDPATH=/var/lib/gridengine/rrdcollect/$1
+mkdir -p /var/lib/gridengine/rrdcollect/$1
+
+rrdtool create $RRDPATH/mem.rrd \
+        --start `date +%s` \
+        --step 60 \
+        DS:mem_total:GAUGE:150:0:U \
+        DS:mem_free:GAUGE:150:0:U \
+        RRA:AVERAGE:0.5:1:1440 \
+        RRA:AVERAGE:0.5:10:1008 \
+        RRA:AVERAGE:0.5:60:744
+ 
+ 
+rrdtool create $RRDPATH/cpu.rrd \
+        --start `date +%s` \
+        --step 60 \
+        DS:cpu_user:COUNTER:150:0:100 \
+        DS:cpu_nice:COUNTER:150:0:100 \
+        DS:cpu_system:COUNTER:150:0:100 \
+        DS:cpu_idle:COUNTER:150:0:100 \
+        DS:cpu_iowait:COUNTER:150:0:100 \
+        DS:cpu_irq:COUNTER:150:0:100 \
+        DS:cpu_softirq:COUNTER:150:0:100 \
+        RRA:AVERAGE:0.5:1:1440 \
+        RRA:AVERAGE:0.5:10:1008 \
+        RRA:AVERAGE:0.5:60:744 

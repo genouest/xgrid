@@ -78,7 +78,7 @@ end
 #end
 
 get '/admin/node/:id' do
-  @node = XgridNode.find(params[:id])
+  @node = XgridNode.get(params[:id])
   erb :node
 end
 

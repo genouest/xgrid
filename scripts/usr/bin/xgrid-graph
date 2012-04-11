@@ -1,0 +1,77 @@
+#!/bin/bash
+
+. /mnt/context.sh
+
+if [ -z $SGE ]; then
+  exit 0
+fi
+
+if [ ! -d /var/lib/gridengine/rrdcollect ]; then
+  exit 0
+fi
+
+MEM_LIM=`grep MemTotal /proc/meminfo | awk '{print $2}'`
+
+for f in /var/lib/gridengine/rrdcollect/VM-*
+do
+  ID=`basename $f`
+
+  RRDPATH=/var/lib/gridengine/rrdcollect/$ID
+  WEBPATH=/usr/share/xgrid/web/public/images/rrd
+
+  rrdtool graph $WEBPATH/mem-$ID.png \
+        --title 'Memoire utilisée sur 3 heures' \
+        --start -3h --end now \
+        --base 1024 \
+        --upper-limit $MEM_LIM --lower-limit 0 -r \
+        DEF:mem_total=$RRDPATH/mem.rrd:mem_total:AVERAGE \
+        DEF:mem_free=$RRDPATH/mem.rrd:mem_free:AVERAGE \
+        CDEF:mem_used=mem_total,mem_free,-,1024,* \
+        'AREA:mem_used#00FF00:M\xe9moire utilis\xe9e' 
+ 
+  rrdtool graph $WEBPATH/cpu-$ID.png -o \
+        --title 'Charge CPU sur 3 heures' \
+        --start -3h --end now \
+        DEF:cpu_user=$RRDPATH/cpu.rrd:cpu_user:AVERAGE \
+        DEF:cpu_nice=$RRDPATH/cpu.rrd:cpu_nice:AVERAGE \
+        DEF:cpu_system=$RRDPATH/cpu.rrd:cpu_system:AVERAGE \
+        DEF:cpu_idle=$RRDPATH/cpu.rrd:cpu_idle:AVERAGE \
+        DEF:cpu_iowait=$RRDPATH/cpu.rrd:cpu_iowait:AVERAGE \
+        DEF:cpu_irq=$RRDPATH/cpu.rrd:cpu_irq:AVERAGE \
+        DEF:cpu_softirq=$RRDPATH/cpu.rrd:cpu_softirq:AVERAGE \
+        'AREA:cpu_iowait#0000FF:IO wait' \
+        'STACK:cpu_system#FF9999:system' \
+        'STACK:cpu_nice#FF99FF:nice' \
+        'STACK:cpu_user#99FF99:user' \
+        'STACK:cpu_idle#FFFFFF:idle'
+
+  rrdtool graph $WEBPATH/mem-$ID.mini.png \
+        --title 'Memoire utilisée sur 3 heures' \
+        --start -3h --end now \
+        --base 1024 \
+        --only-graph  -h 30 -w 30 \
+        --upper-limit $MEM_LIM --lower-limit 0 -r \
+        DEF:mem_total=$RRDPATH/mem.rrd:mem_total:AVERAGE \
+        DEF:mem_free=$RRDPATH/mem.rrd:mem_free:AVERAGE \
+        CDEF:mem_used=mem_total,mem_free,-,1024,* \
+        'AREA:mem_used#00FF00:M\xe9moire utilis\xe9e' 
+
+  rrdtool graph $WEBPATH/cpu-$ID.mini.png -o \
+        --title 'Charge CPU sur 3 heures' \
+        --start -3h --end now \
+        --only-graph  -h 30  -w 30\
+        DEF:cpu_user=$RRDPATH/cpu.rrd:cpu_user:AVERAGE \
+        DEF:cpu_nice=$RRDPATH/cpu.rrd:cpu_nice:AVERAGE \
+        DEF:cpu_system=$RRDPATH/cpu.rrd:cpu_system:AVERAGE \
+        DEF:cpu_idle=$RRDPATH/cpu.rrd:cpu_idle:AVERAGE \
+        DEF:cpu_iowait=$RRDPATH/cpu.rrd:cpu_iowait:AVERAGE \
+        DEF:cpu_irq=$RRDPATH/cpu.rrd:cpu_irq:AVERAGE \
+        DEF:cpu_softirq=$RRDPATH/cpu.rrd:cpu_softirq:AVERAGE \
+        'AREA:cpu_iowait#0000FF:IO wait' \
+        'STACK:cpu_system#FF9999:system' \
+        'STACK:cpu_nice#FF99FF:nice' \
+        'STACK:cpu_user#99FF99:user' \
+        'STACK:cpu_idle#FFFFFF:idle'
+
+
+done
