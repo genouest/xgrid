@@ -1,0 +1,14 @@
+This package sets up Sun Grid Engine for Open Nebula.
+It integrates with the GONE package.
+
+Packages expects in CONTEXT the following env variables:
+
+SGE: master or node
+
+When a new node is started via the xgrid interface, the software will add EC2 user data:
+SGE="node"
+SGEMASTER="x.x.x.x"
+XGRIDID="1"
+KEY="xxxxxxxx"
+
+The password in xgridconfig.rb is unique and generated at instance startup.
