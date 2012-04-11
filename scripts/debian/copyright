@@ -2,6 +2,11 @@ Format: http://dep.debian.net/deps/dep5
 Upstream-Name: xgrid
 Source: http://gitlab.irisa.fr/xgrid
 
+Files: usr/share/xgrid/web/public/images/largesky.png
+Copyright: 2007 Honou, http://www.flickr.com/photos/honou/
+License: Creative Commons By 2.0
+ Full licence can be found at http://creativecommons.org/licenses/by/2.0/legalcode
+
 Files: *
 Copyright: 2012 Olivier Sallou <osallou@debian.org>
 License: GPL-2+
