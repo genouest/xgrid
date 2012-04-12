@@ -4,7 +4,17 @@ require 'xgridconfig.rb'
 require 'xgridnode.rb'
 require 'AWS'
 
-XgridConfig.adddashboard('SGE','/admin/sge')
+if File.exists?( '/etc/xgrid/xgrid.yaml' )
+  configdoc = YAML::load( File.open( '/etc/xgrid/xgrid.yaml' ) )
+  modules = configdoc['config']['modules'].split(',')
+  modules.each do |mod|
+    if mod.strip=="XgridSge"
+      XgridConfig.adddashboard('SGE','/admin/sge')
+    end
+  end
+else
+  XgridConfig.adddashboard('SGE','/admin/sge')
+end
 
 class XgridSge < Sinatra::Base
 

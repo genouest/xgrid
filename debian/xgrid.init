@@ -16,7 +16,7 @@ case "$1" in
   start)
 	echo -n "Starting $DESC: "
         start-stop-daemon --start --quiet  --pidfile=/var/run/$NAME.pid \
-                --exec /usr/bin/rackup -- --daemonize --pid /var/run/$NAME.pid --env production --port 4567 \
+                --exec /usr/local/bin/rackup -- --daemonize --pid /var/run/$NAME.pid --env production --port 4567 \
                 --include /usr/share/xgrid/web /usr/share/xgrid/web/config.ru
 	;;
   stop)

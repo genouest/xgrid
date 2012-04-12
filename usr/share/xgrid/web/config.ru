@@ -19,6 +19,6 @@ modules = configdoc['config']['modules'].split(',')
 #run Rack::Cascade.new [Xgrid, XgridSge]
 myapp = Rack::Cascade.new []
 modules.each do |app|
-  myapp << Kernel.const_get(app)
+  myapp << Kernel.const_get(app.strip)
 end
 run myapp
