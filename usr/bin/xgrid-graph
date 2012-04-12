@@ -6,17 +6,17 @@ if [ -z $SGE ]; then
   exit 0
 fi
 
-if [ ! -d /var/lib/gridengine/rrdcollect ]; then
+if [ ! -d /var/lib/xgrid/rrdcollect ]; then
   exit 0
 fi
 
 MEM_LIM=`grep MemTotal /proc/meminfo | awk '{print $2}'`
 
-for f in /var/lib/gridengine/rrdcollect/VM-*
+for f in /var/lib/xgrid/rrdcollect/VM-*
 do
   ID=`basename $f`
 
-  RRDPATH=/var/lib/gridengine/rrdcollect/$ID
+  RRDPATH=/var/lib/xgrid/rrdcollect/$ID
   WEBPATH=/usr/share/xgrid/web/public/images/rrd
 
   rrdtool graph $WEBPATH/mem-$ID.png \

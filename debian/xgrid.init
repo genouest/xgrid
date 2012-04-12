@@ -3,7 +3,7 @@
 # Provides:          xgrid
 # Required-Start:    $network $named $remote_fs $syslog
 # Required-Stop:     $network $named $remote_fs $syslog
-# Default-Start:     
+# Default-Start:     2 3 4 5
 # Default-Stop:      0 1 6
 ### END INIT INFO 
 
@@ -16,7 +16,7 @@ case "$1" in
   start)
 	echo -n "Starting $DESC: "
         start-stop-daemon --start --quiet  --pidfile=/var/run/$NAME.pid \
-                --exec /usr/local/bin/rackup -- --daemonize --pid /var/run/$NAME.pid --env production --port 4567 \
+                --exec /usr/bin/rackup -- --daemonize --pid /var/run/$NAME.pid --env production --port 4567 \
                 --include /usr/share/xgrid/web /usr/share/xgrid/web/config.ru
 	;;
   stop)
