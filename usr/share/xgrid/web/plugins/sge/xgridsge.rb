@@ -83,7 +83,7 @@ end
 
 def addexecnode(name)
   cur = Time.now.to_i
-  system("sed -e 's/\$\{EXECHOSTNAME\}/"+name+"/' /usr/share/xgrid/templates/genocloud.exec.tpl > /tmp/genocloud.exec."+cur.to_s)
+  system("sed -e 's/\$\{EXECHOSTNAME\}/"+name+"/' /usr/share/xgrid/plugins/sge/templates/genocloud.exec.tpl > /tmp/genocloud.exec."+cur.to_s)
   system("qconf -Ae /tmp/genocloud.exec."+cur.to_s)
   updateexeclist()
 end
@@ -95,7 +95,7 @@ def updateexeclist
     execlist+= node.name+" "
   end
   cur = Time.now.to_i
-  system("sed -e 's/NONE/"+execlist+"/' /usr/share/xgrid/templates/genocloud.hostgroup.tpl > /tmp/genocloud.hostgroup."+cur.to_s)
+  system("sed -e 's/NONE/"+execlist+"/' /usr/share/xgrid/plugins/sge/templates/genocloud.hostgroup.tpl > /tmp/genocloud.hostgroup."+cur.to_s)
   system ("qconf  -Mhgrp /tmp/genocloud.hostgroup."+cur.to_s)
 end
 
