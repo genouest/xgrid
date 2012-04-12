@@ -21,9 +21,13 @@ case "$1" in
 	;;
   stop)
 	echo -n "Stopping $DESC: "
+        if [ ! -e /var/run/$NAME.pid ]; then
+          start-stop-daemon --stop --name rackup --signal 9
+        else
         start-stop-daemon --stop --signal 9 --quiet --oknodo --pidfile=/var/run/$NAME.pid \
                 2>&1 > /dev/null
 	rm -f /var/run/$NAME.pid
+        fi
 	;;
   reload)
   ;;
