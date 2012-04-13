@@ -48,6 +48,7 @@ get '/admin/sge' do
   end
   @qstat= `qstat -u '*'`
   @qstat.gsub!("\n","<br/>")
+  @slots = XgridPlugin.get('sge.slots').value
   erb :sge
 end
 
