@@ -4,6 +4,7 @@ require 'xgridconfig.rb'
 require 'xgridnode.rb'
 require 'AWS'
 
+# Add class to dashboard routes if set in configuration
 if File.exists?( '/etc/xgrid/xgrid.yaml' )
   configdoc = YAML::load( File.open( '/etc/xgrid/xgrid.yaml' ) )
   modules = configdoc['config']['modules'].split(',')
@@ -15,6 +16,16 @@ if File.exists?( '/etc/xgrid/xgrid.yaml' )
 else
   XgridConfig.adddashboard('SGE','/admin/sge')
 end
+
+# Initialize slot allocation
+slot = XgridPlugin.get('sge.slots')
+if slot==nil
+  slot = XgridPlugin.new
+  slot.id = 'sge.slots'
+  slot.value = 1
+  slot.save
+end
+
 
 class XgridSge < Sinatra::Base
 
@@ -59,6 +70,19 @@ post '/api/sge/:id' do
   "{ \"status\": \"success\" }"
 end
 
+# Update queue slots allocation
+post '/admin/sge/slots' do
+  slots = XgridPlugin.get('sge.slots')
+  slots.value = params[:slots]
+  slots.save
+  updateSlotAllocation(params[:slots])
+  redirect XgridConfig.baseurl+'/admin/sge'
+end
+
+
+##
+# Sends an EC2 request for a new node
+#
 def requestnewnode(ami,type)
   ec2keys = XgridEC2.first
   ec2_access_key = ec2keys.ec2key
@@ -90,7 +114,9 @@ def requestnewnode(ami,type)
 
 end
 
-
+##
+# Add host as an execution host
+#
 def addexecnode(name)
   cur = Time.now.to_i
   system("sed -e 's/\$\{EXECHOSTNAME\}/"+name+"/' /usr/share/xgrid/plugins/sge/templates/genocloud.exec.tpl > /tmp/genocloud.exec."+cur.to_s)
@@ -98,6 +124,9 @@ def addexecnode(name)
   updateexeclist()
 end
 
+##
+# Update host group, add all nodes with status=2
+#
 def updateexeclist
   nodes = XgridNode.all(:status => 2)
   execlist = ''
@@ -108,6 +137,17 @@ def updateexeclist
   system("sed -e 's/NONE/"+execlist+"/' /usr/share/xgrid/plugins/sge/templates/genocloud.hostgroup.tpl > /tmp/genocloud.hostgroup."+cur.to_s)
   system ("qconf  -Mhgrp /tmp/genocloud.hostgroup."+cur.to_s)
 end
+
+##
+# Update the queue with selected default allocation
+#
+def updateSlotAllocation(slots)
+  cur = Time.now.to_i
+  system("sed -e 's/slots                 1/slots                 "+slots+"/' /usr/share/xgrid/plugins/sge/templates/genocloud.queue.tpl > /tmp/genocloud.queue."+cur.to_s)
+  system ("qconf  -Mq /tmp/genocloud.queue."+cur.to_s)
+
+end
+
 
 end
 

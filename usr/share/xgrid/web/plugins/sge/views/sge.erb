@@ -14,6 +14,15 @@
 </script>
 
 <h1>Sun Grid Engine management</h1>
+<h2>Configuration</h2>
+<form action="<%= XgridConfig.baseurl %>/admin/sge/slots" method="post">
+<table>
+<tr><td><label for="slots">Maximum number of slots/jobs per instance</label></td>
+<td><input type="text" id="slots" name="slots" value="<%= @slots %>"></td>
+<td><input type="submit"/></td>
+</tr>
+</table>
+
 
 <h2>Request a new grid node</h2>
 <form action="<%= XgridConfig.baseurl %>/admin/sge" method="post">

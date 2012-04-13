@@ -5,6 +5,7 @@ require 'dm-migrations'
 
 DataMapper.setup( :default, "sqlite3://#{Dir.pwd}/xgrid.db")
 
+# Contains 1 record per node with its current status
 class XgridNode
   include DataMapper::Resource
 
@@ -15,6 +16,7 @@ class XgridNode
 
 end
 
+# Contains EC2 key and password
 class XgridEC2
    include DataMapper::Resource
 
@@ -36,12 +38,22 @@ class XgridEC2
 
 end
 
+# contains a single key used for APIs
 class XgridKey
    include DataMapper::Resource
 
    property :id, Integer, :key => true
    property :value, String
 end
+
+# Table with key/value for plugins
+class XgridPlugin
+  include DataMapper::Resource
+
+  property :id, String, :key =>  true
+  property :value, String
+end
+
 
 DataMapper.finalize
 DataMapper.auto_upgrade!
