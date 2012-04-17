@@ -73,6 +73,13 @@ post '/admin/node' do
   redirect settings.baseurl+"/admin"
 end
 
+post '/api/node/:id' do
+  node = XgridNode.get(params[:id])
+  node.name = params[:name]
+  node.status = 2
+  node.save
+  "{ \"status\": \"success\" }"
+end
 #patch 'api/node/:id' do
   # Update node
 #end
