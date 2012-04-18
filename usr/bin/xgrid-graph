@@ -2,10 +2,6 @@
 
 . /mnt/context.sh
 
-if [ -z $SGE ]; then
-  exit 0
-fi
-
 if [ ! -d /var/lib/xgrid/rrdcollect ]; then
   exit 0
 fi

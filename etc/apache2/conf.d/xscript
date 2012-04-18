@@ -1,2 +1,0 @@
-ProxyPass       /xgrid  http://127.0.0.1:4567
-ProxyPassReverse /xgrid http://127.0.0.1:4567

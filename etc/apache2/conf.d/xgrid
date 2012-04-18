@@ -1,0 +1,8 @@
+ProxyPass       /xgrid  http://127.0.0.1:4567
+ProxyPassReverse /xgrid http://127.0.0.1:4567
+
+ProxyPass       /hdfs  http://127.0.0.1:50070
+ProxyPassReverse /hdfs http://127.0.0.1:50070
+
+ProxyPass       /mapred  http://127.0.0.1:50030
+ProxyPassReverse /mapred http://127.0.0.1:50030

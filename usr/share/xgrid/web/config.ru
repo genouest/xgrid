@@ -9,6 +9,7 @@ end
 
 require 'xgrid.rb'
 require 'plugins/sge/xgridsge.rb'
+require 'plugins/hadoop/xgridhadoop.rb'
 require 'yaml'
 
 
