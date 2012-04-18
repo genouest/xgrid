@@ -62,6 +62,6 @@ if [ "$SGE" = "node" ]; then
   ruby /usr/share/xgrid/plugins/sge/sendstatus.rb --master $XGRIDMASTER --name $HOSTNAME.$DOMAIN --id $XGRIDID --key $KEY
   sleep 60
   echo "Install grid node"
-  DEBIAN_FRONTEND='noninteractive' apt-get -y install gridengine-exec  gridengine-client
+  DEBIAN_FRONTEND='noninteractive' apt-get -y install gridengine-exec
   sed  -i 's/none/'$DOMAIN'/' /etc/gridengine/bootstrap
 fi

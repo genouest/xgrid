@@ -45,7 +45,7 @@ fi
 for f in /usr/share/xgrid/plugins/*/init.sh
 do
   echo "Execute plugin init: "$f
-  bash $f
+  bash $f  >> /var/log/xgrid.log
 done
 
 if [ -z $XGRIDMASTER ]; then
