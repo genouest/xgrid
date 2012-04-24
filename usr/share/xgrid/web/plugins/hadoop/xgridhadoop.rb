@@ -44,7 +44,8 @@ post '/admin/hadoop' do
   1.upto(params[:quantity].to_i) do
      err = requestnewnode(params[:ami],params[:type])
      if err!=nil
-       raise ec2error, err
+       @error = err 
+       erb :error
      end
   end
   redirect XgridConfig.baseurl+'/admin'
