@@ -23,6 +23,9 @@ if [ -e /var/lib/gone/firstboot ]; then
     sed -i "s/@@baseurl = ''/@@baseurl = 'http:\/\/genocloud.genouest.org\/cloud\/"$LASTIP"\/xgrid'/" /usr/share/xgrid/web/xgridconfig.rb
     RPASS=$(makepasswd --char=10)
     sed -i "s/@@adminpwd = 'admin'/@@adminpwd = '"$RPASS"'/" /usr/share/xgrid/web/xgridconfig.rb
+    # Mysql, listen on all interfaces
+    sed -i "s/127.0.0.1/0.0.0.0/" /etc/mysql/my.cnf
+    service mysql restart
     echo "Starting xgrid web server"
     service xgrid restart
   else
@@ -39,6 +42,8 @@ if [ -e /var/lib/gone/firstboot ]; then
     echo "/^cpu\s+(\d+)\s+(\d+)\s+(\d+)\s+(\d+)\s+(\d+)\s+(\d+)\s+(\d+)/  cpu.rrd:cpu_user,cpu_nice,cpu_system,cpu_idle,cpu_iowait,cpu_irq,cpu_softirq" >> /etc/rrdcollect.conf
     echo "" > /etc/default/rrdcollect
     service rrdcollect restart
+    # mysql, required if client is needed
+    mkdir -p /etc/mysql/conf.d
   fi
 fi
 
