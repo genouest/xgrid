@@ -14,15 +14,16 @@ fi
 if [ -e /var/lib/gone/firstboot ]; then
   if [ -z $XGRIDMASTER ]; then
     # This is the xgridmaster
+    sed -i '/xgrid/d' /etc/exports
     echo "/var/lib/xgrid 192.168.2.0/255.255.255.0(rw,sync,no_subtree_check,no_root_squash)" >> /etc/exports
     # Web frontend
     gem install dm-core dm-sqlite-adapter dm-migrations amazon-ec2 rack
-    sed -i "s/@@ip = ''/@@ip = '"$IP"'/" /usr/share/xgrid/web/xgridconfig.rb
+    sed -i "s/@@ip = '.*'/@@ip = '"$IP"'/" /usr/share/xgrid/web/xgridconfig.rb
     # @@baseurl = ''
     LASTIP=`echo $IP| cut -d"." -f4`
-    sed -i "s/@@baseurl = ''/@@baseurl = 'http:\/\/genocloud.genouest.org\/cloud\/"$LASTIP"\/xgrid'/" /usr/share/xgrid/web/xgridconfig.rb
+    sed -i "s/@@baseurl = '.*'/@@baseurl = 'http:\/\/genocloud.genouest.org\/cloud\/"$LASTIP"\/xgrid'/" /usr/share/xgrid/web/xgridconfig.rb
     RPASS=$(makepasswd --char=10)
-    sed -i "s/@@adminpwd = 'admin'/@@adminpwd = '"$RPASS"'/" /usr/share/xgrid/web/xgridconfig.rb
+    sed -i "s/@@adminpwd = '.*'/@@adminpwd = '"$RPASS"'/" /usr/share/xgrid/web/xgridconfig.rb
     # Mysql, listen on all interfaces
     sed -i "s/127.0.0.1/0.0.0.0/" /etc/mysql/my.cnf
     service mysql restart
