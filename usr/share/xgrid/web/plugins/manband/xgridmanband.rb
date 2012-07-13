@@ -94,19 +94,19 @@ end
 
 post '/admin/manband/config' do
   wfconfig_mysql = XgridPlugin.get('manband.mysql')
-  wfconfig_mysql.value = params[:mysql]
+  wfconfig_mysql.value = params[:manband_mysql]
   wfconfig_mysql.save
   wfconfig_amqp = XgridPlugin.get('manband.amqp')
-  wfconfig_amqp.value = params[:amqp]
+  wfconfig_amqp.value = params[:manband_amqp]
   wfconfig_amqp.save
   wfconfig_s3host = XgridPlugin.get('manband.s3host')
-  wfconfig_s3host.value = params[:s3host]
+  wfconfig_s3host.value = params[:manband_s3host]
   wfconfig_s3host.save
   wfconfig_s3port = XgridPlugin.get('manband.s3port')
-  wfconfig_s3port.value = params[:s3port].to_i
+  wfconfig_s3port.value = params[:manband_s3port].to_i
   wfconfig_s3port.save
   wfconfig_s3path = XgridPlugin.get('manband.s3path')
-  wfconfig_s3path.value = params[:s3path]
+  wfconfig_s3path.value = params[:manband_s3path]
   wfconfig_s3path.save
   redirect XgridConfig.baseurl+'/admin/manband'
 end

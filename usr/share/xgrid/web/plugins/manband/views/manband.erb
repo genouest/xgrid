@@ -18,15 +18,15 @@
 <form action="<%= XgridConfig.baseurl %>/admin/manband/config" method="post">
 <table>
 <tr><td><label for="manband.mysql">MySQL connection string</label></td>
-<td><input type="text" id="manband.mysql" name="manband.mysql" value="<%= @wfmysql %>"></td>
+<td><input type="text" id="manband_mysql" name="manband_mysql" value="<%= @wfmysql %>"></td>
 <tr><td><label for="manband.amqp">AMQP connection string</label></td>
-<td><input type="text" id="manband.amqp" name="manband.amqp" value="<%= @wfamqp %>"></td>
+<td><input type="text" id="manband_amqp" name="manband_amqp" value="<%= @wfamqp %>"></td>
 <tr><td><label for="manband.s3host">S3 hostname</label></td>
-<td><input type="text" id="manband.s3host" name="manband.s3host" value="<%= @wfs3host %>"></td>
+<td><input type="text" id="manband_s3host" name="manband_s3host" value="<%= @wfs3host %>"></td>
 <tr><td><label for="manband.s3port">S3 host port</label></td>
-<td><input type="text" id="manband.s3port" name="manband.s3port" value="<%= @wfs3port %>"></td>
+<td><input type="text" id="manband_s3port" name="manband_s3port" value="<%= @wfs3port %>"></td>
 <tr><td><label for="manband.s3path">S3 connection path</label></td>
-<td><input type="text" id="manband.s3path" name="manband.s3path" value="<%= @wfs3path %>"></td>
+<td><input type="text" id="manband_s3path" name="manband_s3path" value="<%= @wfs3path %>"></td>
 <td><input type="submit"/></td>
 </tr>
 </table>
