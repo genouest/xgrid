@@ -17,7 +17,7 @@ if [ -e /var/lib/gone/firstboot ]; then
     sed -i '/xgrid/d' /etc/exports
     echo "/var/lib/xgrid 192.168.2.0/255.255.255.0(rw,sync,no_subtree_check,no_root_squash)" >> /etc/exports
     # Web frontend
-    gem install dm-core dm-sqlite-adapter dm-migrations amazon-ec2 rack
+    gem install dm-core dm-sqlite-adapter dm-migrations amazon-ec2 rack rack-protection
     sed -i "s/@@ip = '.*'/@@ip = '"$IP"'/" /usr/share/xgrid/web/xgridconfig.rb
     # @@baseurl = ''
     LASTIP=`echo $IP| cut -d"." -f4`

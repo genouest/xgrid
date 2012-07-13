@@ -6,3 +6,6 @@ ProxyPassReverse /hdfs http://127.0.0.1:50070
 
 ProxyPass       /mapred  http://127.0.0.1:50030
 ProxyPassReverse /mapred http://127.0.0.1:50030
+
+ProxyPass       /manband  http://127.0.0.1:4444
+ProxyPassReverse /manband http://127.0.0.1:4444

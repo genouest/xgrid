@@ -11,6 +11,8 @@ class Xgrid < Sinatra::Base
   set :static, true
   set :root, File.dirname(__FILE__)
 
+  disable :protection
+
   set :public_folder, File.dirname(__FILE__) + '/public'
 
   set :password, XgridConfig.adminpwd
