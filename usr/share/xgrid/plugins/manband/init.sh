@@ -42,14 +42,16 @@ if [ "$WORKFLOW" = "master" ]; then
 
   # Install RabbitMQ
   echo "Install messaging"
-  DEBIAN_FRONTEND='noninteractive' apt-get -y install rabbitmq-server
+  DEBIAN_FRONTEND='noninteractive' apt-get -y install rabbitmq-server ruby-amqp libmysqlclient-dev
+  gem install uuid mb-aws-s3 json data_mapper dm-myql-adapter dm-migrations zip  activesupport bunny
+  gem install --ignore-dependencies manband
+
   rabbitmqctl change_password guest $RPASS
   echo "amqp: amqp://guest:"$RPASS"@$IP"/" >> /var/lib/xgrid/.manband
   echo "Install workflow manager"
 
   cp /var/lib/xgrid/.manband ~/.manband
 
-  gem install manband
   cd /usr/share/xgrid/
   git clone https://gforge.inria.fr/git/manband/manband.git 
   cd webband
@@ -62,7 +64,10 @@ fi
 
 if [ "$WORKFLOW" = "wfmaster" ]; then
   echo "Install software"
-  gem install manband
+  DEBIAN_FRONTEND='noninteractive' apt-get -y install ruby-amqp libmysqlclient-dev
+  gem install uuid mb-aws-s3 json data_mapper dm-myql-adapter dm-migrations zip  activesupport bunny
+  gem install --ignore-dependencies manband
+
   echo "s3:" > ~/.manband
   echo "  host: $S3HOST" >> ~/.manband
   echo "  port: $S3PORT" >> ~/.manband
@@ -82,7 +87,9 @@ fi
 
 if [ "$WORKFLOW" = "wfslave" ]; then
   echo "Install software"
-  gem install manband
+  DEBIAN_FRONTEND='noninteractive' apt-get -y install ruby-amqp libmysqlclient-dev
+  gem install uuid mb-aws-s3 json data_mapper dm-myql-adapter dm-migrations zip  activesupport bunny
+  gem install --ignore-dependencies manband
 
   echo "Install workflow node"
   cd /usr/share/xgrid/manband/
