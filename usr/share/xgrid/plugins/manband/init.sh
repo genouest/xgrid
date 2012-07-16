@@ -56,7 +56,7 @@ if [ "$WORKFLOW" = "master" ]; then
 
   cd /usr/share/xgrid/
   git clone https://gforge.inria.fr/git/manband/manband.git 
-  cd webband
+  cd manband/webband
   export MYSQL_URL=mysql://manband:$RPASS@$IP/manband
   export AMQP_URL=amqp://guest:$RPASS@$IP/
   rackup -p 4444 -I . -D
@@ -80,7 +80,8 @@ if [ "$WORKFLOW" = "wfmaster" ]; then
   echo "Start workflow handler"
   export AMQP_URL
   export MYSQL_URL
-  cd /usr/share/xgrid/manband/
+  cd /usr/share/xgrid
+  git clone https://gforge.inria.fr/git/manband/manband.git
   cd manband/bin
   ruby -rubygems workflowhandler.rb &
 
@@ -94,7 +95,7 @@ if [ "$WORKFLOW" = "wfslave" ]; then
   gem install manband
 
   echo "Install workflow node"
-  cd /usr/share/xgrid/manband/
+  cd /usr/share/xgrid
   git clone https://gforge.inria.fr/git/manband/manband.git
   echo "s3:" > ~/.manband
   echo "  host: $S3HOST" >> ~/.manband
@@ -111,3 +112,5 @@ if [ "$WORKFLOW" = "wfslave" ]; then
   ruby -rubygems jobhandler.rb -i $HOSTNAME &
 
 fi
+
+touch /var/lib/xgrid/manband.done

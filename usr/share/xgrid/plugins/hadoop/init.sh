@@ -150,3 +150,5 @@ if [ "$HADOOP" == "node" ]; then
   # Declare to xgrid master
   ruby /usr/share/xgrid/plugins/hadoop/sendstatus.rb --master $XGRIDMASTER --name $HOSTNAME.$DOMAIN --id $XGRIDID --key $KEY
 fi
+
+touch /var/lib/xgrid/hadoop.done

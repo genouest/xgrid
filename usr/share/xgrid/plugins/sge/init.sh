@@ -65,3 +65,6 @@ if [ "$SGE" = "node" ]; then
   DEBIAN_FRONTEND='noninteractive' apt-get -y install gridengine-exec
   sed  -i 's/none/'$DOMAIN'/' /etc/gridengine/bootstrap
 fi
+
+
+touch /var/lib/xgrid/sge.done
