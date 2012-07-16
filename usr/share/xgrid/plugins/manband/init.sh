@@ -49,7 +49,7 @@ if [ "$WORKFLOW" = "master" ]; then
   #gem install --ignore-dependencies manband
 
   rabbitmqctl change_password guest $RPASS
-  echo "amqp: amqp://guest:"$RPASS"@$IP"/" >> /var/lib/xgrid/.manband
+  echo "amqp: amqp://guest:"$RPASS"@"$IP"/" >> /var/lib/xgrid/.manband
   echo "Install workflow manager"
 
   cp /var/lib/xgrid/.manband ~/.manband
