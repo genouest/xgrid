@@ -25,6 +25,9 @@ if [ "$WORKFLOW" = "master" ]; then
   echo "  host: $S3HOST" >> /var/lib/xgrid/.manband
   echo "  port: $S3PORT" >> /var/lib/xgrid/.manband
   echo "  path: $S3PATH" >> /var/lib/xgrid/.manband
+  echo "  workdir: /omaha-beach/manband" >> /var/lib/xgrid/.manband
+  echo "  uploaddir: /omaha-beach/manband/upload" >> /var/lib/xgrid/.manband
+  mkdir -p /omaha-beach/manband/upload
 
   echo "CREATE DATABASE manband;" > /tmp/manband.sql
   echo "CREATE USER 'manband'@'localhost' IDENTIFIED BY '"$RPASS"';" >> /tmp/manband.sql
@@ -34,31 +37,43 @@ if [ "$WORKFLOW" = "master" ]; then
   mysql -u root < /tmp/manband.sql
 
   sed -i "s/modules: Xgrid/modules: Xgrid,XgridManband/" /etc/xgrid/xgrid.yaml
+
+  # Install RabbitMQ
+  echo "Install messaging"
+  DEBIAN_FRONTEND='noninteractive' apt-get -y install rabbitmq-server
+  rabbitmqctl change_password guest $RPASS
+  echo "amqp: amqp://guest:"$RPASS"@$IP"/" >> /var/lib/xgrid/.manband
+  echo "Install workflow manager"
+
+  cp /var/lib/xgrid/.manband ~/.manband
+
+  gem install manband
+  cd /usr/share/xgrid/
+  git clone https://gforge.inria.fr/git/manband/manband.git 
+  cd webband
+  export MYSQL_URL=mysql://manband:$RPASS@$IP/manband
+  export AMQP_URL=amqp://guest:$RPASS@$IP/
+  rackup -p 4444 -I . -D
+
  
 fi
 
 if [ "$WORKFLOW" = "wfmaster" ]; then
   echo "Install software"
   gem install manband
-  echo "Install web server and workflow manager"
-  cd /usr/share/xgrid/manband/
-  git clone https://gforge.inria.fr/git/manband/manband.git
   echo "s3:" > ~/.manband
   echo "  host: $S3HOST" >> ~/.manband
   echo "  port: $S3PORT" >> ~/.manband
   echo "  path: $S3PATH" >> ~/.manband
   echo "  workdir: /omaha-beach/manband" >> ~/.manband
   echo "  uploaddir: /omaha-beach/manband/upload" >> ~/.manband
-  mkdir -p /omaha-beach/manband/upload
 
   echo "Start workflow handler"
   export AMQP_URL
   export MYSQL_URL
+  cd /usr/share/xgrid/manband/
   cd manband/bin
   ruby -rubygems workflowhandler.rb &
-  cd ../..
-  cd webband
-  rackup -p 4444 -D
 
 
 fi

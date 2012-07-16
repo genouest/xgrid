@@ -30,7 +30,7 @@ if manbandmysql == nil
 
     manbandconfig  = XgridPlugin.new
     manbandconfig.id = 'manband.amqp'
-    manbandconfig.value = 'amqp://'
+    manbandconfig.value = configdoc['amqp']
     manbandconfig.save
 
     manbandconfig  = XgridPlugin.new
