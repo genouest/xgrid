@@ -27,8 +27,8 @@ if [ "$WORKFLOW" = "master" ]; then
   echo "  host: $S3HOST" >> /var/lib/xgrid/.manband
   echo "  port: $S3PORT" >> /var/lib/xgrid/.manband
   echo "  path: $S3PATH" >> /var/lib/xgrid/.manband
-  echo "  workdir: /omaha-beach/manband" >> /var/lib/xgrid/.manband
-  echo "  uploaddir: /omaha-beach/manband/upload" >> /var/lib/xgrid/.manband
+  echo "workdir: /omaha-beach/manband" >> /var/lib/xgrid/.manband
+  echo "uploaddir: /omaha-beach/manband/upload" >> /var/lib/xgrid/.manband
   mkdir -p /omaha-beach/manband/upload
 
   echo "CREATE DATABASE manband;" > /tmp/manband.sql
@@ -68,12 +68,12 @@ if [ "$WORKFLOW" = "wfmaster" ]; then
   gem install eventmachine --pre
   gem install manband
 
-  echo "s3:" > ~/.manband
-  echo "  host: $S3HOST" >> ~/.manband
-  echo "  port: $S3PORT" >> ~/.manband
-  echo "  path: $S3PATH" >> ~/.manband
-  echo "  workdir: /omaha-beach/manband" >> ~/.manband
-  echo "  uploaddir: /omaha-beach/manband/upload" >> ~/.manband
+  echo "s3:" > /root/.manband
+  echo "  host: $S3HOST" >> /root/.manband
+  echo "  port: $S3PORT" >> /root/.manband
+  echo "  path: $S3PATH" >> /root/.manband
+  echo "workdir: /omaha-beach/manband" >> /root/.manband
+  echo "uploaddir: /omaha-beach/manband/upload" >> /root/.manband
 
   echo "Start workflow handler"
   export AMQP_URL
@@ -81,7 +81,7 @@ if [ "$WORKFLOW" = "wfmaster" ]; then
   cd /usr/share/xgrid
   git clone https://gforge.inria.fr/git/manband/manband.git
   cd manband/bin
-  ruby -rubygems workflowhandler.rb &
+  ruby -rubygems workflowhandler.rb -c /root/.manband -d > /var/log/manband.log &
 
 
 fi
@@ -95,19 +95,19 @@ if [ "$WORKFLOW" = "wfslave" ]; then
   echo "Install workflow node"
   cd /usr/share/xgrid
   git clone https://gforge.inria.fr/git/manband/manband.git
-  echo "s3:" > ~/.manband
-  echo "  host: $S3HOST" >> ~/.manband
-  echo "  port: $S3PORT" >> ~/.manband
-  echo "  path: $S3PATH" >> ~/.manband
-  echo "  workdir: /omaha-beach/manband" >> ~/.manband
-  echo "  uploaddir: /omaha-beach/manband/upload" >> ~/.manband
+  echo "s3:" > /root/.manband
+  echo "  host: $S3HOST" >> /root/.manband
+  echo "  port: $S3PORT" >> /root/.manband
+  echo "  path: $S3PATH" >> /root/.manband
+  echo "workdir: /omaha-beach/manband" >> /root/.manband
+  echo "uploaddir: /omaha-beach/manband/upload" >> /root/.manband
   mkdir -p /omaha-beach/manband/upload
 
   echo "Start workflow node"
   export AMQP_URL
   export MYSQL_URL
   cd manband/bin
-  ruby -rubygems jobhandler.rb -i $HOSTNAME &
+  ruby -rubygems jobhandler.rb -i $HOSTNAME -c /root/.manband > /var/log/manband.log &
 
 fi
 
