@@ -56,5 +56,6 @@ done
 
 if [ -z $XGRIDMASTER ]; then
   exportfs -ra
+  service nfs-kernel-server restart
 fi
 
