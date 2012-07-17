@@ -84,6 +84,8 @@ if [ "$WORKFLOW" = "wfmaster" ]; then
   cd manband/manband/bin
   ruby -rubygems workflowhandler.rb -c /root/.manband -d > /var/log/manband.log &
 
+  # Declare to xgrid master
+  ruby /usr/share/xgrid/plugins/manband/sendstatus.rb --master $XGRIDMASTER --name $HOSTNAME.$DOMAIN --id $XGRIDID --key $KEY
 
 fi
 
@@ -109,6 +111,9 @@ if [ "$WORKFLOW" = "wfslave" ]; then
   export MYSQL_URL
   cd manband/manband/bin
   ruby -rubygems jobhandler.rb -i $HOSTNAME -c /root/.manband > /var/log/manband.log &
+
+  # Declare to xgrid master
+  ruby /usr/share/xgrid/plugins/manband/sendstatus.rb --master $XGRIDMASTER --name $HOSTNAME.$DOMAIN --id $XGRIDID --key $KEY
 
 fi
 
