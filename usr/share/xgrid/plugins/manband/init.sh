@@ -50,7 +50,7 @@ if [ "$WORKFLOW" = "master" ]; then
   echo "amqp: amqp://guest:"$RPASS"@"$IP"/" >> /var/lib/xgrid/.manband
   echo "Install workflow manager"
 
-  cp /var/lib/xgrid/.manband ~/.manband
+  cp /var/lib/xgrid/.manband /root/.manband
 
   cd /usr/share/xgrid/
   git clone https://gforge.inria.fr/git/manband/manband.git 
