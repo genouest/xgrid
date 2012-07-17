@@ -2,6 +2,9 @@
 <p>Id: <%= @node.id %></p>
 <p>Name: <%= @node.name %></p>
 <p>Status: <%= @node.status %></p>
+<% if ! @node.info.empty? %>
+<p>Info: <%= @node.info %></p>
+<% end %>
 <% if ! @node.name.empty? %>
 <p>
 <img src="<%= settings.baseurl %>/images/rrd/mem-<%= @node.name %>.png" class="rrd"></td><td><img src="<%= settings.baseurl %>/images/rrd/cpu-<%= @node.name %>.png" class="rrd">
