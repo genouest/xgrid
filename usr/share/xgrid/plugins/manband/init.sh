@@ -81,7 +81,7 @@ if [ "$WORKFLOW" = "wfmaster" ]; then
   export MYSQL_URL
   cd /usr/share/xgrid
   git clone https://gforge.inria.fr/git/manband/manband.git
-  cd manband/bin
+  cd manband/manband/bin
   ruby -rubygems workflowhandler.rb -c /root/.manband -d > /var/log/manband.log &
 
 
@@ -107,7 +107,7 @@ if [ "$WORKFLOW" = "wfslave" ]; then
   echo "Start workflow node"
   export AMQP_URL
   export MYSQL_URL
-  cd manband/bin
+  cd manband/manband/bin
   ruby -rubygems jobhandler.rb -i $HOSTNAME -c /root/.manband > /var/log/manband.log &
 
 fi
