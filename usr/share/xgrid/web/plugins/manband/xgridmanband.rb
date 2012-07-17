@@ -133,9 +133,6 @@ def requestnewnode(ami,type,kind)
   wfs3port = XgridPlugin.get('manband.s3port').value
   wfs3path = XgridPlugin.get('manband.s3path').value
 
-  masterid = `hostname`.strip
-  masterip = XgridConfig.ip
-  masterkey = File.open('/var/lib/hadoop/hdfs/.ssh/id_rsa.pub', 'rb') { |f| f.read.chomp }
   user_data = "WORKFLOW=\""+kind+"\"\n"
   user_data +="AMQP_URL=\""+wfamqp+"\"\n"
   user_data +="MYSQL_URL=\""+wfmysql+"\"\n"
@@ -158,8 +155,11 @@ def requestnewnode(ami,type,kind)
               :base64_encoded => true
               )
   rescue Exception => e
+     node.destroy
      return e.message
   end
+
+  node.update(:info => response["instancesSet"]["item"][0]["instanceId"]+' - '+kind)
 
   return nil
 
