@@ -57,6 +57,7 @@ if [ "$WORKFLOW" = "master" ]; then
   cd manband/webband
   export MYSQL_URL=mysql://manband:$RPASS@$IP/manband
   export AMQP_URL=amqp://guest:$RPASS@$IP/
+  export MANBANDCONF=/root/.manband
   rackup -p 4444 -I . -D
 
  
