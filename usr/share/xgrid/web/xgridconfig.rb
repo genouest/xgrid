@@ -7,6 +7,8 @@ class XgridConfig
   # Update to base url
   @@baseurl = ''
 
+  @@instancetypes = [ 'small', 'large', 'large' ]
+
   @@ip = ''
 
   @@url = '192.168.2.91'
@@ -33,6 +35,10 @@ class XgridConfig
 
   def self.baseurl
     @@baseurl
+  end
+
+  def self.instancetypes
+    @@instancetypes
   end
 
   def self.adminpwd

@@ -45,8 +45,9 @@
  </tr><tr>
  <td><label for="type">Instance type</label></td>
  <td><select id="type" name="type">
-   <option value="m1.small">small</option>
-   <option value="m1.medium">medium</option>
+ <% XgridConfig.instancetypes.each do |type| %>
+    <option value="m1.<%= type %>"><%= type %></option>
+ <% end %>
  </select></td>
  </tr><tr>
  <td colspan="2">
