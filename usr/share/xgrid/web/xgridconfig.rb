@@ -7,7 +7,7 @@ class XgridConfig
   # Update to base url
   @@baseurl = ''
 
-  @@instancetypes = [ 'small', 'large', 'large' ]
+  @@instancetypes = [ 'small', 'large', 'xlarge' ]
 
   @@ip = ''
 
