@@ -27,6 +27,8 @@ class XgridHadoop < Sinatra::Base
   set :public_folder, File.dirname(__FILE__) + '/public'
   set :views, File.dirname(__FILE__) + '/views'
 
+  disable :protection
+
 error do
   'Error occured' + env['sinatra.error'].message
 end
