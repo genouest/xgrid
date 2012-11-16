@@ -2,7 +2,7 @@
 <p>Id: <%= @node.id %></p>
 <p>Name: <%= @node.name %></p>
 <p>Status: <%= @node.status %></p>
-<% if ! @node.info.empty? %>
+<% if !@node.info.nil? && ! @node.info.empty? %>
 <p>Info: <%= @node.info %></p>
 <% end %>
 <% if ! @node.name.empty? %>
