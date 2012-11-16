@@ -20,7 +20,7 @@ TEMPLATES=/usr/share/xgrid/plugins/sge/templates
 
 if [ "$SGE" = "master" ]; then
   echo "Installing packages"
-  DEBIAN_FRONTEND='noninteractive' apt-get -y install gridengine-master gridengine-client libdrmaa1.0
+  DEBIAN_FRONTEND='noninteractive' apt-get -y install gridengine-master gridengine-client gridengine-drmaa1.0
   # Update config
   sed  -i 's/none/'$DOMAIN'/' /etc/gridengine/bootstrap
   su -s /bin/sh -c "/usr/share/gridengine/scripts/init_cluster /var/lib/gridengine default /var/spool/gridengine/spooldb sgeadmin" sgeadmin
