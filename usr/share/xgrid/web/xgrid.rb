@@ -175,6 +175,18 @@ def deletenode(node)
   ec2 = AWS::EC2::Base.new(:access_key_id => ec2_access_key, :secret_access_key => ec2_secret_key, :server => XgridConfig.url, :port => 4567, :use_ssl => false)
 
   begin
+    # Get running instances
+    response = ec2.describe_instances()
+    response['reservationSet']['item'][0]['instancesSet']['item'].each do | instance |
+      if  instance['instanceId'].match('i-0+'+vmid)
+         # Rewrite instance id with EC2 format i-0000vmid
+         vmid =  instance['instanceId']
+      end
+
+
+    end
+
+    # terminate VM
     response = ec2.terminate_instances(
               :instance_id => [ vmid ]
               )
