@@ -22,8 +22,10 @@ if [ -e /var/lib/gone/firstboot ]; then
     # @@baseurl = ''
     LASTIP=`echo $IP| cut -d"." -f4`
     sed -i "s/@@baseurl = '.*'/@@baseurl = 'http:\/\/genocloud.genouest.org\/cloud\/"$LASTIP"\/xgrid'/" /usr/share/xgrid/web/xgridconfig.rb
-    RPASS=$(makepasswd --char=10)
-    sed -i "s/@@adminpwd = '.*'/@@adminpwd = '"$RPASS"'/" /usr/share/xgrid/web/xgridconfig.rb
+    if [ -z $XGRID_PWD ]; then
+    	XGRID_PWD=$(makepasswd --char=10)
+    fi
+    sed -i "s/@@adminpwd = '.*'/@@adminpwd = '"$XGRID_PWD"'/" /usr/share/xgrid/web/xgridconfig.rb
     # Mysql, listen on all interfaces
     sed -i "s/127.0.0.1/0.0.0.0/" /etc/mysql/my.cnf
     service mysql restart
