@@ -1,0 +1,20 @@
+.TH GHADOOP-ADD-NODE 1 LOCAL
+.SH NAME
+ghadoop-add-node \- Starts a new Hadoop node
+.SH CONFIGURATION
+Configuration is in /etc/gone/ec2.yaml in the YAML format.
+.SH CONFIGURATION EXAMPLE
+config:
+    # Type: one|ec2
+    type: one
+    # For amazon, use user with ssh keys, or put a keypair in .ssh and authorized_keys 
+    ami_id: ami-00000016
+    ami_type: m1.small
+    ec2_access_key: my_ec2_userid
+    ec2_secret_key: my_ec2_clear_password
+    ec2_url: 192.168.2.91
+
+.SH AUTHOR
+Olivier Sallou <olivier.sallou@irisa.fr>
+.SH "SEE ALSO"
+.BR gone (1)

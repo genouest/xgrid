@@ -1,0 +1,43 @@
+
+body { background-color: #EAE7B3; }
+table { border-style: solid; }
+td { padding: 10px; }
+
+.header { min-height: 75px; width: 100%; margin: auto;}
+
+.header-band { background-color: #13BAEE; margin-top: 2.083%; margin-bottom: 2.083%; margin-left: 6.25%; margin-right: 6.25%; height: 9.66%; }
+
+.logo { float: left; margin-top: -1%; margin-left: 41.25%; ; width: 15%; height: 15%; min-height: 75px; min-width: 75px; max-height: 120px; max-width: 120px;}
+.logo:after { clear:both; }
+
+.menu { width: 100%; margin: auto;  }
+
+.item { display: inline-block;
+        margin-top: 1%; margin-left: 2%;
+        padding: 10px; background-color: white; border-radius: 15px;
+        text-transform: uppercase;
+        border-style: solid;
+}
+
+.items { float: left; width: 100%; }
+
+.band {  width: 100%;  margin: auto; height: 2.8333%; min-height: 7px; }
+
+.content { width: 90%; min-height: 60%; margin: auto; background-color: white;
+	border-left-style: solid; border-left-color: #13BAEE; border-left-width: 8px;
+	border-right-style: solid; border-right-color: #b6e415; border-right-width: 8px;
+	padding-left: 30px; padding-top: 20px;
+}
+
+.footer { height: 120px; width: 100%; background-image: url('../images/footer.png'); background-repeat: no-repeat;}
+
+.info { float: left; font-size: 0.8em; margin-left: 20%; margin-top: 8%;}
+
+.rrd { border-style: solid; border-width: 1px; }
+
+#qstat { background-color: lightgoldenrodyellow;}
+
+#trash { width: 40px; }
+
+.tabids { margin: auto; width: 30%; background-color: lemonchiffon; }
+

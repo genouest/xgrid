@@ -1,0 +1,59 @@
+<script>
+        $(function() {
+                $( "#slider" ).slider({
+                        value:1,
+                        min: 1,
+                        max: 20,
+                        step: 1,
+                        slide: function( event, ui ) {
+                                $( "#quantity" ).val( ui.value );
+                        }
+                });
+                $( "#quantity" ).val( $( "#slider" ).slider( "value" ) );
+        });
+</script>
+
+<h1>Sun Grid Engine management</h1>
+<h2>Configuration</h2>
+<form action="<%= XgridConfig.baseurl %>/admin/sge/slots" method="post">
+<table>
+<tr><td><label for="slots">Maximum number of slots/jobs per instance</label></td>
+<td><input type="text" id="slots" name="slots" value="<%= @slots %>"></td>
+<td><input type="submit"/></td>
+</tr>
+</table>
+</form>
+
+<h2>Request a new grid node</h2>
+<form action="<%= XgridConfig.baseurl %>/admin/sge" method="post">
+ <table class="tabids">
+ <tr>
+ <td><label for="ami">Id of the image</label></td>
+ <td><select id="ami" name="ami">
+  <% @amis.each do |image| %>
+   <option value="<%= image.imageId %>"><%= image.imageId %></option>
+  <% end %>
+ </select></td>
+ </tr><tr>
+ <td><label for="type">Instance type</label></td>
+ <td><select id="type" name="type">
+ <% XgridConfig.instancetypes.each do |type| %>
+    <option value="m1.<%= type %>"><%= type %></option>
+ <% end %>
+ </select></td>
+ </tr><tr>
+ <td colspan="2">
+  <p>
+  <label for="quantity">Quantity:</label><input type="text" name="quantity" id="quantity" style="border:0; color:#f6931f; font-weight:bold;"/>
+  </p>
+  <div id="slider"></div>
+ </td>
+ </tr><tr>
+ <td colspan="2"><input type="submit"/></td>
+ </tr>
+ </table>
+</form>
+<h2>List of jobs</h2>
+<div id="qstat">
+<%= @qstat %>
+</div>

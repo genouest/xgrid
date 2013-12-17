@@ -1,0 +1,12 @@
+Package: xgrid
+Version: 1.3.1
+Architecture: all
+Maintainer: Olivier Sallou <osallou@debian.org>
+Installed-Size: 626
+Depends: ruby, libsinatra-ruby, rubygems, gone, sqlite3, libsqlite3-dev, gcc, make, ruby-amazon-ec2, nfs-server | nfs-kernel-server, makepasswd, rrdcollect, rrdtool, git, mysql-server
+Section: science
+Priority: optional
+Homepage: http://gitlab.irisa.fr/xgrid
+Description: Auto SGE installer
+ Install in OpenNebula a SGE cluster with a user
+ web interface to add new nodes.

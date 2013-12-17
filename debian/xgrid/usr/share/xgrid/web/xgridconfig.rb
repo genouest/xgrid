@@ -11,7 +11,7 @@ class XgridConfig
 
   @@ip = ''
 
-  @@url = ''
+  @@url = '192.168.2.91'
 
   @@adminpwd = 'admin'
 

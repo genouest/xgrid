@@ -1,0 +1,71 @@
+<script>
+        $(function() {
+                $( "#slider" ).slider({
+                        value:1,
+                        min: 1,
+                        max: 20,
+                        step: 1,
+                        slide: function( event, ui ) {
+                                $( "#quantity" ).val( ui.value );
+                        }
+                });
+                $( "#quantity" ).val( $( "#slider" ).slider( "value" ) );
+        });
+</script>
+
+<h1>Manband management</h1>
+<h2>Configuration</h2>
+<form action="<%= XgridConfig.baseurl %>/admin/manband/config" method="post">
+<table>
+<tr><td><label for="manband.mysql">MySQL connection string</label></td>
+<td><input type="text" id="manband_mysql" name="manband_mysql" value="<%= @wfmysql %>"></td>
+<tr><td><label for="manband.amqp">AMQP connection string</label></td>
+<td><input type="text" id="manband_amqp" name="manband_amqp" value="<%= @wfamqp %>"></td>
+<tr><td><label for="manband.s3host">S3 hostname</label></td>
+<td><input type="text" id="manband_s3host" name="manband_s3host" value="<%= @wfs3host %>"></td>
+<tr><td><label for="manband.s3port">S3 host port</label></td>
+<td><input type="text" id="manband_s3port" name="manband_s3port" value="<%= @wfs3port %>"></td>
+<tr><td><label for="manband.s3path">S3 connection path</label></td>
+<td><input type="text" id="manband_s3path" name="manband_s3path" value="<%= @wfs3path %>"></td>
+<td><input type="submit"/></td>
+</tr>
+</table>
+</form>
+
+<h2>Request a new grid node</h2>
+<form action="<%= XgridConfig.baseurl %>/admin/manband" method="post">
+ <table class="tabids">
+ <tr>
+ <td><label for="ami">Id of the image</label></td>
+ <td><select id="ami" name="ami">
+  <% @amis.each do |image| %>
+   <option value="<%= image.imageId %>"><%= image.imageId %></option>
+  <% end %>
+ </select></td>
+ </tr><tr>
+ <td><label for="type">Instance type</label></td>
+ <td><select id="type" name="type">
+ <% XgridConfig.instancetypes.each do |type| %>
+    <option value="m1.<%= type %>"><%= type %></option>
+ <% end %>
+ </select></td>
+ </tr><tr>
+ <td colspan="2">
+  <p>
+  <label for="quantity">Quantity:</label><input type="text" name="quantity" id="quantity" style="border:0; color:#f6931f; font-weight:bold;"/>
+  </p>
+  <div id="slider"></div>
+ </td>
+ </tr><tr>
+ </tr><tr>
+ <td colspan="2">
+  <p>
+  <label for="kind">Kind:</label><select id="kind" name="kind"><option value="wfmaster">Orchestrator</option><option value="wfslave">Workflow node</option></select>
+  </p>
+  <div id="slider"></div>
+ </td>
+ </tr><tr>
+ <td colspan="2"><input type="submit"/></td>
+ </tr>
+ </table>
+</form>

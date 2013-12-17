@@ -1,0 +1,5 @@
+#!/bin/bash
+
+. /mnt/context.sh
+
+ruby /usr/share/xgrid/plugins/hadoop/hadoop-add-node.rb $HOSTNAME $IP

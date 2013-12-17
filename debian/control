@@ -13,7 +13,7 @@ Architecture: all
 Depends: ruby, libsinatra-ruby, rubygems, gone, sqlite3,
  libsqlite3-dev, gcc, make,
  ruby-amazon-ec2, nfs-server|nfs-kernel-server, makepasswd,
- rrdcollect, rrdtool, mysql-server, git
+ rrdcollect, rrdtool, git, mysql-server
 Description: Auto SGE installer
  Install in OpenNebula a SGE cluster with a user
  web interface to add new nodes.
