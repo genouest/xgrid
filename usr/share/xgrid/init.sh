@@ -14,7 +14,7 @@ fi
 if [ -n "$ETH0_MASK" ]; then
   export MASK=$ETH0_MASK
 else
-  export MASK = "192.168.2.0"
+  export MASK="192.168.2.0"
 fi
 
 if [ -e /var/lib/gone/firstboot ]; then
