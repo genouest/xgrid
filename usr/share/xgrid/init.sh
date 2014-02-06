@@ -17,6 +17,10 @@ else
   export MASK="192.168.2.0"
 fi
 
+if [ -z $XGRID_EC2_PORT ]; then
+  export XGRID_EC2_PORT=4567
+fi
+
 if [ -e /var/lib/gone/firstboot ]; then
   if [ -z $XGRIDMASTER ]; then
     # This is the xgridmaster
@@ -25,6 +29,7 @@ if [ -e /var/lib/gone/firstboot ]; then
     # Web frontend
     gem install dm-core dm-sqlite-adapter dm-migrations amazon-ec2 rack rack-protection
     sed -i "s/@@url = '.*'/@@url = '"$XGRID_EC2"'/" /usr/share/xgrid/web/xgridconfig.rb
+    sed -i "s/@@port = '.*'/@@port = '"$XGRID_EC2_PORT"'/" /usr/share/xgrid/web/xgridconfig.rb
     sed -i "s/@@ip = '.*'/@@ip = '"$IP"'/" /usr/share/xgrid/web/xgridconfig.rb
     # @@baseurl = ''
     LASTIP=`echo $IP| cut -d"." -f4`

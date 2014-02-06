@@ -12,6 +12,8 @@ ec2_secret_key = configdoc['config']['ec2_secret_key']
 
 ec2_url = configdoc['config']['ec2_url']
 
+ec2_port = configdoc['config']['ec2_port']
+
 #user_data = configdoc['config']['user_data']
 masterid = ARGV[0]
 masterip = ARGV[1]
@@ -22,7 +24,7 @@ user_data ="HADOOP=\"node\"\nMASTERIP=\""+masterip+"\"\nMASTERID=\""+masterid+"\
 
 ec2_secret_key = Digest::SHA1.hexdigest(ec2_secret_key)
 
-ec2 = AWS::EC2::Base.new(:access_key_id => ec2_access_key, :secret_access_key => ec2_secret_key, :server => ec2_url, :port => 4567, :use_ssl => false)
+ec2 = AWS::EC2::Base.new(:access_key_id => ec2_access_key, :secret_access_key => ec2_secret_key, :server => ec2_url, :port => ec2_port.to_i, :use_ssl => false)
 
 puts "-- Calling "+ec2_url+" with user "+ec2_access_key
 puts "-- Create an image --"

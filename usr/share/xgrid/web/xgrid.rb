@@ -186,7 +186,7 @@ def deletenode(node)
   ec2_secret_key = Digest::SHA1.hexdigest(ec2_secret_key)
   nodename = node.name.split('.')
   vmid = nodename[0][3,nodename[0].length-1]
-  ec2 = AWS::EC2::Base.new(:access_key_id => ec2_access_key, :secret_access_key => ec2_secret_key, :server => XgridConfig.url, :port => 4567, :use_ssl => false)
+  ec2 = AWS::EC2::Base.new(:access_key_id => ec2_access_key, :secret_access_key => ec2_secret_key, :server => XgridConfig.url, :port => XgridConfig.port.to_i, :use_ssl => false)
 
   begin
     # Get running instances

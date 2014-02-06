@@ -13,6 +13,8 @@ class XgridConfig
 
   @@url = ''
 
+  @@port = ''
+
   @@adminpwd = 'admin'
 
   @@dashboard = Hash.new
