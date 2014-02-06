@@ -17,6 +17,8 @@ class XgridConfig
 
   @@dashboard = Hash.new
 
+  @@apikey = 'admin'
+
   def self.apikey
     @@apikey
   end

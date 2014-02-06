@@ -109,8 +109,8 @@ def requestnewnode(ami,type)
   node.save
 
   ec2 = AWS::EC2::Base.new(:access_key_id => ec2_access_key, :secret_access_key => ec2_secret_key, :server => XgridConfig.url, :port => 4567, :use_ssl => false)
-  apikey = XgridKey.get(1)
-  user_data = "SGE=\"node\"\nSGEMASTER=\""+XgridConfig.ip+"\"\nXGRIDID=\""+node.id.to_s+"\"\nKEY=\""+apikey.value+"\"\nXGRIDMASTER=\""+XgridConfig.ip+"\"\n"
+  apikey = Xgridconfig.apikey
+  user_data = "SGE=\"node\"\nSGEMASTER=\""+XgridConfig.ip+"\"\nXGRIDID=\""+node.id.to_s+"\"\nKEY=\""+apikey+"\"\nXGRIDMASTER=\""+XgridConfig.ip+"\"\n"
   begin
     response = ec2.run_instances(
               :image_id       => ami,

@@ -33,11 +33,14 @@ if [ -e /var/lib/gone/firstboot ]; then
     	XGRID_PWD=$(makepasswd --char=10)
     fi
     sed -i "s/@@adminpwd = '.*'/@@adminpwd = '"$XGRID_PWD"'/" /usr/share/xgrid/web/xgridconfig.rb
+    export APIKEY=$(cat /dev/urandom | tr -dc 'a-zA-Z0-9' | fold -w 16 | head -n 1)
+    sed -i "s/@@apikey = '.*'/@@apikey = '"$APIKEY"'/" /usr/share/xgrid/web/xgridconfig.rb
     # Mysql, listen on all interfaces
     sed -i "s/127.0.0.1/0.0.0.0/" /etc/mysql/my.cnf
     service mysql restart
     echo "Starting xgrid web server"
     service xgrid restart
+
   else
     # This is a xgrid node
     mount -t nfs $XGRIDMASTER:/var/lib/xgrid /var/lib/xgrid
@@ -66,5 +69,12 @@ done
 if [ -z $XGRIDMASTER ]; then
   exportfs -ra
   service nfs-kernel-server restart
+
+  # Should we start nodes ?
+  if [ -z $XGRID_AMI ]; then
+      echo "No node execution requested"
+  else
+      ruby /usr/share/xgrid/web/xgrid-addnode.rb -i $XGRID_AMI -s $XGRID_AMITYPE -t $XGRID_NODETYPE -k $APIKEY -a XGRID_EC2ACCESS -p $XGRID_EC2PASSWORD -q $XGRID_QUANTITY
+  fi
 fi
 

@@ -81,8 +81,8 @@ def requestnewnode(ami,type)
   masterip = XgridConfig.ip
   masterkey = File.open('/var/lib/hadoop/hdfs/.ssh/id_rsa.pub', 'rb') { |f| f.read.chomp }
   user_data ="HADOOP=\"node\"\nMASTERIP=\""+masterip+"\"\nMASTERID=\""+masterid+"\"\nMASTERKEY=\""+masterkey+"\"\n"
-  apikey = XgridKey.get(1)
-  user_data += "XGRIDID=\""+node.id.to_s+"\"\nKEY=\""+apikey.value+"\"\nXGRIDMASTER=\""+XgridConfig.ip+"\"\n"
+  apikey = XgridConfig.apikey
+  user_data += "XGRIDID=\""+node.id.to_s+"\"\nKEY=\""+apikey+"\"\nXGRIDMASTER=\""+XgridConfig.ip+"\"\n"
 
   ec2 = AWS::EC2::Base.new(:access_key_id => ec2_access_key, :secret_access_key => ec2_secret_key, :server => XgridConfig.url, :port => 4567, :use_ssl => false)
 

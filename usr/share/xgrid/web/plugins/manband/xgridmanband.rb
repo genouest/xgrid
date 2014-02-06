@@ -140,8 +140,8 @@ def requestnewnode(ami,type,kind)
   user_data +="S3PORT=\""+wfs3port.to_s+"\"\n"
   user_data +="S3PATH=\""+wfs3path+"\"\n"
 
-  apikey = XgridKey.get(1)
-  user_data += "XGRIDID=\""+node.id.to_s+"\"\nKEY=\""+apikey.value+"\"\nXGRIDMASTER=\""+XgridConfig.ip+"\"\n"
+  apikey = XgridConfig.apikey
+  user_data += "XGRIDID=\""+node.id.to_s+"\"\nKEY=\""+apikey+"\"\nXGRIDMASTER=\""+XgridConfig.ip+"\"\n"
 
   ec2 = AWS::EC2::Base.new(:access_key_id => ec2_access_key, :secret_access_key => ec2_secret_key, :server => XgridConfig.url, :port => 4567, :use_ssl => false)
 

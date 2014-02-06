@@ -18,7 +18,7 @@ class Xgrid < Sinatra::Base
   set :password, XgridConfig.adminpwd
   set :baseurl, XgridConfig.baseurl
 
-  set :apikey, nil
+  set :apikey, XgridConfig.apikey
 
 before '/admin*' do
    if session[:authenticated]==nil ||  session[:authenticated]==false
