@@ -74,7 +74,7 @@ if [ -z $XGRIDMASTER ]; then
   if [ -z $XGRID_AMI ]; then
       echo "No node execution requested"
   else
-      ruby /usr/share/xgrid/web/xgrid-addnode.rb -i $XGRID_AMI -s $XGRID_AMITYPE -t $XGRID_NODETYPE -k $APIKEY -a XGRID_EC2ACCESS -p $XGRID_EC2PASSWORD -q $XGRID_QUANTITY
+      ruby /usr/share/xgrid/web/xgrid-addnode.rb -i $XGRID_AMI -s $XGRID_AMITYPE -t $XGRID_NODETYPE -k $APIKEY -a $XGRID_EC2ACCESS -p $XGRID_EC2PASSWORD -q $XGRID_QUANTITY
   fi
 fi
 
