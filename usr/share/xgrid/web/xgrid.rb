@@ -128,6 +128,20 @@ post '/admin/ec2' do
   redirect settings.baseurl+'/admin'
 end
 
+post '/api/ec2' do
+  ec2 = XgridEC2.first
+  if(ec2==nil)
+    ec2 = XgridEC2.new
+  end
+  if params[:ec2key].empty? || params[:ec2password].empty?
+    raise 403
+  end
+  ec2.ec2key = params[:ec2key]
+  ec2.ec2pwd = params[:ec2password]
+  ec2.save
+  "{ \"status\": \"success\" }"
+end
+
 post '/login' do
   admin = XgridAdmin.new(settings.password)
   admin.authenticate(params[:login],params[:password])

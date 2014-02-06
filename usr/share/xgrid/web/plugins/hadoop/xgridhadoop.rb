@@ -53,7 +53,15 @@ post '/admin/hadoop' do
   redirect XgridConfig.baseurl+'/admin'
 end
 
-
+post '/api/hadoop' do
+  1.upto(params[:quantity].to_i) do
+     err = requestnewnode(params[:ami],params[:type])
+     if err!=nil
+       raise 500
+     end
+  end
+  "{ \"status\": \"success\" }"
+end
 
 ##
 # Sends an EC2 request for a new node
