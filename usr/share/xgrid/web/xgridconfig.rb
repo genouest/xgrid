@@ -25,6 +25,10 @@ class XgridConfig
     @@apikey
   end
 
+  def self.port
+    @@port
+  end
+
   def self.url
     @@url
   end
