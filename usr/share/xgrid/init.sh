@@ -33,7 +33,7 @@ if [ -e /var/lib/gone/firstboot ]; then
     sed -i "s/@@ip = '.*'/@@ip = '"$IP"'/" /usr/share/xgrid/web/xgridconfig.rb
     # @@baseurl = ''
     LASTIP=`echo $IP| cut -d"." -f4`
-    sed -i "s/@@baseurl = '.*'/@@baseurl = 'http:\/\/genocloud.genouest.org\/cloud\/"$LASTIP"\/xgrid'/" /usr/share/xgrid/web/xgridconfig.rb
+    sed -i "s/@@baseurl = '.*'/@@baseurl = 'http:\/\/one-"$LASTIP".genouest.org\/xgrid'/" /usr/share/xgrid/web/xgridconfig.rb
     if [ -z $XGRID_PWD ]; then
     	XGRID_PWD=$(makepasswd --char=10)
     fi
@@ -43,8 +43,8 @@ if [ -e /var/lib/gone/firstboot ]; then
     # Mysql, listen on all interfaces
     sed -i "s/127.0.0.1/0.0.0.0/" /etc/mysql/my.cnf
     service mysql restart
-    echo "Starting xgrid web server"
-    service xgrid restart
+    echo "Starting xgrid web server" >> /var/log/xgrid.log
+    service xgrid restart >> /var/log/xgrid.log
 
   else
     # This is a xgrid node
@@ -80,7 +80,7 @@ if [ -z $XGRIDMASTER ]; then
       echo "No node execution requested" >>  /var/log/xgrid.log
   else
       echo "Start nodes" >> /var/log/xgrid.log
-      sleep 5
+      sleep 15
       ruby /usr/share/xgrid/web/xgrid-addnode.rb -i $XGRID_AMI -s $XGRID_AMITYPE -t $XGRID_NODETYPE -k $APIKEY -a $XGRID_EC2ACCESS -p $XGRID_EC2PASSWORD -q $XGRID_QUANTITY >> /var/log/xgrid.log
   fi
 fi

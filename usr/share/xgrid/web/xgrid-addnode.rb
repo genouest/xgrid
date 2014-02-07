@@ -60,15 +60,22 @@ optparse.parse!
 
 puts options
 
-uri = URI('http://'+options[:host]+':4567/api/ec2')
-res = Net::HTTP.post_form(uri, 'apikey' => options[:apikey], 'ec2key' => options[:ec2_access], 'ec2password' => options[:ec2_password])
+begin
+  uri = URI('http://'+options[:host]+':4567/api/ec2')
+  res = Net::HTTP.post_form(uri, 'apikey' => options[:apikey], 'ec2key' => options[:ec2_access], 'ec2password' => options[:ec2_password])
 
-puts res.code
-puts res.body.body
+  puts "CODE: "+res.code.to_s
+  puts "RESPONSE: "+res.body
 
+  uri = URI('http://'+options[:host]+':4567/api/'+options[:type])
+  res = Net::HTTP.post_form(uri, 'apikey' => options[:apikey], 'ami' => options[:ami], 'type' => options[:size], 'quantity' => options[:quantity])
 
-uri = URI('http://'+options[:host]+':4567/api/'+options[:type])
-res = Net::HTTP.post_form(uri, 'apikey' => options[:apikey], 'ami' => options[:ami], 'type' => options[:size], 'quantity' => options[:quantity])
+  puts "CODE: "+res.code.to_s
+  puts "RESPONSE: "+res.body
 
-puts res.code
-puts res.body.body
+rescue Exception => e
+  puts "An error occured while sending request"
+  puts e.message
+  puts e.backtrace.inspect
+
+end
