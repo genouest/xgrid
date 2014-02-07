@@ -63,7 +63,12 @@ puts options
 uri = URI('http://'+options[:host]+':4567/api/ec2')
 res = Net::HTTP.post_form(uri, 'apikey' => options[:apikey], 'ec2key' => options[:ec2_access], 'ec2password' => options[:ec2_password])
 
+puts res.code
+puts res.body.body
+
 
 uri = URI('http://'+options[:host]+':4567/api/'+options[:type])
 res = Net::HTTP.post_form(uri, 'apikey' => options[:apikey], 'ami' => options[:ami], 'type' => options[:size], 'quantity' => options[:quantity])
 
+puts res.code
+puts res.body.body
