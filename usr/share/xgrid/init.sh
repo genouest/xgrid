@@ -44,8 +44,6 @@ if [ -e /var/lib/gone/firstboot ]; then
     sed -i "s/127.0.0.1/0.0.0.0/" /etc/mysql/my.cnf
     service mysql restart
     echo "Starting xgrid web server" >> /var/log/xgrid.log
-    service xgrid stop >> /var/log/xgrid.log
-    service xgrid start >> /var/log/xgrid.log
 
   else
     # This is a xgrid node
@@ -75,6 +73,10 @@ done
 if [ -z $XGRIDMASTER ]; then
   exportfs -ra
   service nfs-kernel-server restart
+
+  service xgrid stop >> /var/log/xgrid.log
+  service xgrid start >> /var/log/xgrid.log
+
 
   # Should we start nodes ?
   if [ -z $XGRID_AMI ]; then
