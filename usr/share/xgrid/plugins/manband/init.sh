@@ -22,7 +22,7 @@ if [ "$WORKFLOW" = "master" ]; then
   RPASS=$(makepasswd --char=10)
   echo  "mysql: mysql://manband:"$RPASS"@"$IP"/manband" >  /var/lib/xgrid/.manband
   LASTIP=`echo $IP| cut -d"." -f4`
-  echo  "baseurl: http://one-"$LASTIP".genouest.org/manband" >> /var/lib/xgrid/.manband
+  echo  "baseurl: http://cloud-"$LASTIP".genouest.org/manband" >> /var/lib/xgrid/.manband
   echo "s3:" >> /var/lib/xgrid/.manband
   echo "  host: $S3HOST" >> /var/lib/xgrid/.manband
   echo "  port: $S3PORT" >> /var/lib/xgrid/.manband

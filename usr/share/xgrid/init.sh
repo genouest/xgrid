@@ -33,7 +33,7 @@ if [ -e /var/lib/gone/firstboot ]; then
     sed -i "s/@@ip = '.*'/@@ip = '"$IP"'/" /usr/share/xgrid/web/xgridconfig.rb
     # @@baseurl = ''
     LASTIP=`echo $IP| cut -d"." -f4`
-    sed -i "s/@@baseurl = '.*'/@@baseurl = 'http:\/\/one-"$LASTIP".genouest.org\/xgrid'/" /usr/share/xgrid/web/xgridconfig.rb
+    sed -i "s/@@baseurl = '.*'/@@baseurl = 'http:\/\/cloud-"$LASTIP".genouest.org\/xgrid'/" /usr/share/xgrid/web/xgridconfig.rb
     if [ -z $XGRID_PWD ]; then
     	XGRID_PWD=$(makepasswd --char=10)
     fi
