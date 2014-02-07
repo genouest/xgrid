@@ -77,9 +77,11 @@ if [ -z $XGRIDMASTER ]; then
 
   # Should we start nodes ?
   if [ -z $XGRID_AMI ]; then
-      echo "No node execution requested"
+      echo "No node execution requested" >>  /var/log/xgrid.log
   else
-      ruby /usr/share/xgrid/web/xgrid-addnode.rb -i $XGRID_AMI -s $XGRID_AMITYPE -t $XGRID_NODETYPE -k $APIKEY -a $XGRID_EC2ACCESS -p $XGRID_EC2PASSWORD -q $XGRID_QUANTITY
+      echo "Start nodes" >> /var/log/xgrid.log
+      sleep 5
+      ruby /usr/share/xgrid/web/xgrid-addnode.rb -i $XGRID_AMI -s $XGRID_AMITYPE -t $XGRID_NODETYPE -k $APIKEY -a $XGRID_EC2ACCESS -p $XGRID_EC2PASSWORD -q $XGRID_QUANTITY >> /var/log/xgrid.log
   fi
 fi
 
