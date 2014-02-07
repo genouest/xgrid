@@ -44,7 +44,8 @@ if [ -e /var/lib/gone/firstboot ]; then
     sed -i "s/127.0.0.1/0.0.0.0/" /etc/mysql/my.cnf
     service mysql restart
     echo "Starting xgrid web server" >> /var/log/xgrid.log
-    service xgrid restart >> /var/log/xgrid.log
+    service xgrid stop >> /var/log/xgrid.log
+    service xgrid start >> /var/log/xgrid.log
 
   else
     # This is a xgrid node
