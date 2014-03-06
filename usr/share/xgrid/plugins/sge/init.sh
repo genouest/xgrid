@@ -50,11 +50,11 @@ if [ "$SGE" = "master" ]; then
 fi
 if [ "$SGE" = "node" ]; then
   mkdir -p /var/spool/gridengine
-  mount -t nfs $SGEMASTER:/var/spool/gridengine /var/spool/gridengine
+  mount -t nfs -o vers=3 $SGEMASTER:/var/spool/gridengine /var/spool/gridengine
   mkdir -p /var/lib/gridengine
-  mount -t nfs $SGEMASTER:/var/lib/gridengine /var/lib/gridengine
+  mount -t nfs -o vers=3 $SGEMASTER:/var/lib/gridengine /var/lib/gridengine
   mkdir -p /usr/lib/gridengine
-  mount -t nfs $SGEMASTER:/usr/lib/gridengine /usr/lib/gridengine
+  mount -t nfs -o vers=3 $SGEMASTER:/usr/lib/gridengine /usr/lib/gridengine
   # Wait for DNS to be ready (5 minutes refresh)
   echo "Waiting for DNS refresh"
   sleep 300

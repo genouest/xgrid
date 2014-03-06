@@ -47,7 +47,7 @@ if [ -e /var/lib/gone/firstboot ]; then
 
   else
     # This is a xgrid node
-    mount -t nfs $XGRIDMASTER:/var/lib/xgrid /var/lib/xgrid
+    mount -t nfs -o vers=3 $XGRIDMASTER:/var/lib/xgrid /var/lib/xgrid
     # RRD collect
     xgrid-rrdcreate $HOSTNAME.$DOMAIN
     echo "step = 60" > /etc/rrdcollect.conf
