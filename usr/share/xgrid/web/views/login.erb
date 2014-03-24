@@ -1,12 +1,21 @@
 <div>
+<h1>Welcome to Xgrid</h1>
+<p>
+XGrid is an internal tool developed to ease the deployment of tools in the cloud.
+</p>
+<p>
+It is used to setup Hadoop, SGE or manband workflows environments and can be extended with plugins to get more.
+</p>
+<br/>
 <form action="<%= settings.baseurl %>/login" method="post">
 <table class="tabids">
+<caption>Enter your Xgrid credentials</caption>
 <tr>
 <td>
 <label for="login">Login</label>
 </td>
 <td>
-<input type="text" id="login" name="login"></input>
+<input type="text" id="login" name="login" value="admin"></input>
 </td>
 </tr>
 <tr>
@@ -23,4 +32,4 @@
 </table>
 </form>
 </div>
-<div class="info">Generated admin password can be found in /usr/share/xgrid/web/xgridconfig.rb</div>
+<div class="info">Generated <b>admin</b> password can be found in /usr/share/xgrid/web/xgridconfig.rb</div>

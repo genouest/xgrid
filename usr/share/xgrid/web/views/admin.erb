@@ -1,4 +1,7 @@
-<h1>Administration page</h1>
+<h1>Administration section</h1>
+<p>
+This administration page gives you an EC2 access and informations about your nodes.
+<p>
 <h2>Update EC2 access</h2>
 <% if  @ec2.length==0 %>
   <p>EC2 parameters are not set, they are needed to add new nodes</p>
@@ -7,9 +10,11 @@
 <input type="submit" value="Update"/>
 </form>
 <h2>Remote API</h2>
-<p>API key : <%= settings.apikey %></p>
+<p>You can manage your cloud with the API key below.</p>
+<p><b>API key</b> : <%= settings.apikey %></p>
 
-<h2>Nodes</h2>
+<h2>Nodes information</h2>
+<p>You can viewing more informations about your cluster nodes.</p>
 <% if @nodes && @nodes.length>0 %>
     <table>
         <tr><td>Node id</td><td>Host name</td><td>Status (1=pending, 2=ok)</td></tr>

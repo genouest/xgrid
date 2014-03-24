@@ -114,6 +114,10 @@ get '/admin/ec2' do
   erb :ec2
 end
 
+get '/admin/cookbook' do
+  erb :cookbook
+end
+
 post '/admin/ec2' do
   ec2 = XgridEC2.first
   if(ec2==nil)
