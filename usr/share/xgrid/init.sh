@@ -27,10 +27,17 @@ if [ -e /var/lib/gone/firstboot ]; then
     sed -i '/xgrid/d' /etc/exports
     echo "/var/lib/xgrid "$MASK"/255.255.255.0(rw,sync,no_subtree_check,no_root_squash)" >> /etc/exports
     # Web frontend
-    gem install dm-core dm-sqlite-adapter dm-migrations amazon-ec2 rack rack-protection
+    gem install dm-core dm-sqlite-adapter dm-migrations amazon-ec2 rack rack-protection chef --no-ri --no-rdoc
     sed -i "s/@@url = '.*'/@@url = '"$XGRID_EC2"'/" /usr/share/xgrid/web/xgridconfig.rb
     sed -i "s/@@port = '.*'/@@port = '"$XGRID_EC2_PORT"'/" /usr/share/xgrid/web/xgridconfig.rb
     sed -i "s/@@ip = '.*'/@@ip = '"$IP"'/" /usr/share/xgrid/web/xgridconfig.rb
+    sed -i "s/@@hostname = '.*'/@@hostname = '"$HOSTNAME"'/" /usr/share/xgrid/web/xgridconfig.rb
+    # chef section configuration
+    sed -i "s/@@chefserver = '.*'/@@chefserver = '"$CHEFSERVER"'/" /usr/share/xgrid/web/xgridconfig.rb
+    echo "-----BEGIN RSA PRIVATE KEY-----" > /usr/share/xgrid/web/chef_keys/chef-validator.pem
+    echo $CHEFVALIDATIONKEY | sed s/" "/"\n"/g >> /usr/share/xgrid/web/chef_keys/chef-validator.pem
+    echo "-----END RSA PRIVATE KEY-----" >> /usr/share/xgrid/web/chef_keys/chef-validator.pem
+
     # @@baseurl = ''
     LASTIP=`echo $IP| cut -d"." -f4`
     sed -i "s/@@baseurl = '.*'/@@baseurl = 'http:\/\/cloud-"$LASTIP".genouest.org\/xgrid'/" /usr/share/xgrid/web/xgridconfig.rb
@@ -38,6 +45,7 @@ if [ -e /var/lib/gone/firstboot ]; then
     	XGRID_PWD=$(makepasswd --char=10)
     fi
     sed -i "s/@@adminpwd = '.*'/@@adminpwd = '"$XGRID_PWD"'/" /usr/share/xgrid/web/xgridconfig.rb
+    echo $XGRID_PWD > /root/admin_pwd
     export APIKEY=$(cat /dev/urandom | tr -dc 'a-zA-Z0-9' | fold -w 16 | head -n 1)
     sed -i "s/@@apikey = '.*'/@@apikey = '"$APIKEY"'/" /usr/share/xgrid/web/xgridconfig.rb
     # Mysql, listen on all interfaces

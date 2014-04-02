@@ -1,4 +1,12 @@
-<h1>Cookbook section</h1>
-<p>
-Hello World
-</p>
+<h1>Chef and the cookbooks</h1>
+<h2>Chef</h2>
+<p>Chef is a systems and cloud infrastructure automation framework that makes it easy to deploy applications to any p$
+<h2>Cookbook</h2>
+<p>A cookbook is the fundamental unit of configuration and policy distribution.</p>
+<p>Each cookbook defines a scenario, such as everything needed to install and configure MySQL, and then it contains a$
+<h1>Cookbook list</h1>
+<p>Please click an item to access its installation page:</p>
+<% @list.each do |cookbook| %>
+<p><a href="<%= settings.baseurl %>/admin/cookbook/<%=cookbook%>""><%= cookbook %></a></p>
+<% end %>
+

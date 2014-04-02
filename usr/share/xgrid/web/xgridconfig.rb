@@ -11,6 +11,8 @@ class XgridConfig
 
   @@ip = ''
 
+  @@hostname = ''
+
   @@url = ''
 
   @@port = ''
@@ -20,6 +22,8 @@ class XgridConfig
   @@dashboard = Hash.new
 
   @@apikey = 'admin'
+
+  @@chefserver = ''
 
   def self.apikey
     @@apikey
@@ -59,6 +63,14 @@ class XgridConfig
 
   def self.adddashboard(menu,route)
     @@dashboard[ menu ] =  route
+  end
+
+  def self.chefserver
+    @@chefserver
+  end 
+
+  def self.hostname
+    @@hostname
   end
 
 end
