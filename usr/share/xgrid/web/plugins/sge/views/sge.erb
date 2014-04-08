@@ -18,8 +18,8 @@
 <form action="<%= XgridConfig.baseurl %>/admin/sge/slots" method="post">
 <table>
 <tr><td><label for="slots">Maximum number of slots/jobs per instance</label></td>
-<td><input type="text" id="slots" name="slots" value="<%= @slots %>"></td>
-<td><input type="submit"/></td>
+<td><input type="text" id="slots" name="slots" value="<%= @slots %>" maxlength="2" size="2"></td></tr>
+<tr><td><input type="submit" value="Save slots configuration" /></td>
 </tr>
 </table>
 </form>
@@ -49,7 +49,7 @@
   <div id="slider"></div>
  </td>
  </tr><tr>
- <td colspan="2"><input type="submit"/></td>
+ <td colspan="2"><input type="submit" value="Create node(s)"/></td>
  </tr>
  </table>
 </form>

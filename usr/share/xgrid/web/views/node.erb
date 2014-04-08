@@ -10,7 +10,7 @@
 <img src="<%= settings.baseurl %>/images/rrd/mem-<%= @node.name %>.png" class="rrd"></td><td><img src="<%= settings.baseurl %>/images/rrd/cpu-<%= @node.name %>.png" class="rrd">
 </p>
 <% end %>
-<form action="<%= XgridConfig.baseurl+"/admin/node/delete/"+@node.id.to_s %>" method="post">
 <img id="trash"  src="<%= XgridConfig.baseurl %>/images/trash.png" alt="Delete all nodes"/>
-<input type="submit" value="delete"/>
+<form action="<%= XgridConfig.baseurl+"/admin/node/delete/"+@node.id.to_s %>" method="post">
+<input type="submit" value="delete this node"/>
 </form>

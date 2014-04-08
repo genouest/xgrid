@@ -14,22 +14,22 @@ This administration page gives you an EC2 access and informations about your nod
 <p><b>API key</b> : <%= settings.apikey %></p>
 
 <h2>Nodes information</h2>
-<p>You can viewing more informations about your cluster nodes.</p>
 <% if @nodes && @nodes.length>0 %>
-    <table>
-        <tr><td>Node id</td><td>Host name</td><td>Status (1=pending, 2=ok)</td></tr>
+    <table class="tabnodes">
+        <tr><td><label>Node id</label></td><td><label>Host name</label></td><td><label>Status (1=pending, 2=ok)</label></td><td><label>System statistical viewer</label></td></tr>
         <%@nodes.each do |r|%>
         <tr valign="top">
             <td><a href="<%= settings.baseurl %>/admin/node/<%=r.id%>"><%=r.id%></a></td><td><%=r.name%></td><td><%=r.status%></td>
             <% if ! r.name.empty? %>
-            <td><img src="<%= settings.baseurl %>/images/rrd/mem-<%= r.name %>.mini.png" class="rrd"></td><td><img src="<%= settings.baseurl %>/images/rrd/cpu-<%= r.name %>.mini.png" class="rrd"></td>
+            <td><img src="<%= settings.baseurl %>/images/rrd/mem-<%= r.name %>.mini.png" class="rrd"><img src="<%= settings.baseurl %>/images/rrd/cpu-<%= r.name %>.mini.png" class="rrd"></td>
             <% end %>
         </tr>
         <%end%>
     </table>
-   <form action="<%= XgridConfig.baseurl+"/admin/node/delete" %>" method="post">
+<h2>Nodes deletion</h2>
      <img id="trash"  src="<%= XgridConfig.baseurl %>/images/trash.png" alt="Delete all nodes"/>
-     <input type="submit" value="delete all"/>
+   <form action="<%= XgridConfig.baseurl+"/admin/node/delete" %>" method="post">
+     <input type="submit" value="delete all nodes"/>
    </form>
 
 <% else %>
