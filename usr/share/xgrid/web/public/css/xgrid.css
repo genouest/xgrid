@@ -10,7 +10,22 @@ body { background: none repeat scroll 0 0 #E2E2E2;
 
 /* table section*/
 
-table { border-color: e2e2e2}
+.tabnodes { 
+border-width:1px; 
+border-style:solid; 
+border-color: #666666;
+margin-top: 10px;
+margin-bottom: 20px;}
+
+.tabnodes label{
+color: #666666;
+font-weight:bold;
+}
+
+.tabnodes td{
+
+padding-right: 40px;
+}
 
 .tabids caption{
     color: #045980;
@@ -26,9 +41,9 @@ table { border-color: e2e2e2}
 
 tbody{margin: 4px;}
 
-td { padding: 10px; }
+td { padding: 10px; color: #666666;}
 
-/* title section */
+/* text section */
 
 h1{ color: #045980;
     font-size: 2.2em;
@@ -45,7 +60,7 @@ h2{ color: #045980;
     line-height: 1.2;
     margin-bottom: 1%;
     margin-left: 0.5%;
-    margin-top: 3%;
+    margin-top: 50px;
     text-shadow: 2px 2px 2px #DDCCB5;}
 
 p {
@@ -65,6 +80,12 @@ a:hover, a:focus, a:active {
     color: #4486C7;
 }
 
+/* image section */
+
+.content img{
+    margin-right: 4px;
+    margin-bottom: 10px;
+}
 
 /* body contents */
 
@@ -98,7 +119,7 @@ a:hover, a:focus, a:active {
 
 .content { background: none repeat scroll 0 0 #ffffff; margin: auto; padding-left: 30px;
 	padding-top: 40px; padding-bottom: 20px; padding-right: 30px;
-	min-height: 800px;
+	min-height: 1200px;
 }
 
 .footer { height: 100px; width: 100%; background-image: url('../images/footer.png'); 
