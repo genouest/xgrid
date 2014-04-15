@@ -6,7 +6,7 @@
 <p>Each cookbook defines a scenario, such as everything needed to install and configure MySQL, and then it contains all of the components that are required to support that scenario.
 <h1>Cookbook list</h1>
 <p>Please click an item to access its installation page:</p>
-<% @list.each do |cookbook| %>
+<% @list.sort.each do |cookbook| %>
 <p><a href="<%= settings.baseurl %>/admin/cookbook/<%=cookbook%>""><%= cookbook %></a></p>
 <% end %>
 
