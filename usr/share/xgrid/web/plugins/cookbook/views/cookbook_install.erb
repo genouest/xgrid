@@ -1,0 +1,21 @@
+<h1>Cookbook "<%= @cookbook_name %>"</h1>
+<p>A cookbook installation may take a few minutes. Click the install button to begin the process.</p>
+<h2>Installation</h2>
+<img id="install" src="<%= XgridConfig.baseurl %>/images/logo_install.png" alt="Install this cookbook"/>
+<form action="<%= XgridConfig.baseurl+"/admin/cookbook/install/"+@cookbook_name %>" method="post">
+<input type="submit" value="<%= @cookbook_name %> installation" />
+</form>
+<% if @result %>
+  <h2> Installation launched </h2>
+  <p>You can check details on the installation by consulting the /var/log/chef_<%= @cookbook_name %>_install.log file within your virtual machine.</p>
+  <p>You can also print the log file within the page using the section below.<p>
+  <h2> Installation details </h2>
+  <% @result.split(/\n/).each do |line| %>
+  <p><%= line %></p>
+  <% end %>
+  <p><b>Refresh the page to follow cookbook installation.</b></p>
+  <form action="<%= XgridConfig.baseurl+"/admin/cookbook/details_install/"+@cookbook_name %>" method="post">
+  <button type="submit" value="<%= @cookbook_name %> details" ><img src="<%= XgridConfig.baseurl %>/images/refresh.png" /></button>
+  </form>
+<% end %>
+

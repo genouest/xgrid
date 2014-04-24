@@ -54,6 +54,30 @@
  </table>
 </form>
 <h2>List of jobs</h2>
-<div id="qstat">
-<%= @qstat %>
-</div>
+<!--% unless @qstat.nil? || @qstat == "" %-->
+<% if @qstat == "" %>
+<p> No jobs running </p>
+<% else %>
+<table class="tabnodes">
+<tr>
+<td><label>job-ID</label></td>
+<td><label>prior</label></td>
+<td><label>name</label></td>
+<td><label>user</label></td>
+<td><label>state</label></td>
+<td><label>submit/start</label></td>
+<td><label>at</label></td>
+<td><label>queue</label></td>
+<td><label>slots ja-task-ID</label></td>
+</tr>
+<!-- remove the qstat command header -->
+<% @qstat = @qstat.split("\n")[2..-1].join("\n") %>
+<% @qstat.each_line do |line| %>
+<tr>
+<% line.split(' ').each do |block| %>
+<td><%= block %></td>
+<% end %>
+</tr>
+<% end %>
+<% end %>
+</table>

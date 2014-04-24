@@ -14,7 +14,7 @@ body { background: none repeat scroll 0 0 #E2E2E2;
 border-width:1px; 
 border-style:solid; 
 border-color: #666666;
-margin-top: 10px;
+margin-top: 13x;
 margin-bottom: 20px;}
 
 .tabnodes label{
@@ -80,12 +80,36 @@ a:hover, a:focus, a:active {
     color: #4486C7;
 }
 
+li {
+    color: #666666;
+    font-size: 14px;
+    margin-left: 2%;
+}
+
+code {
+    border: 1px solid #CCCCCC;
+    border-radius: 0 0 5px 5px;
+    padding: 0.5%;
+    margin-top: 1%;
+    margin-left: 4%;
+    color: #666666;
+}
+
+
 /* image section */
 
 .content img{
     margin-right: 4px;
     margin-bottom: 10px;
 }
+
+.content button img{
+
+    margin-right: 2px;
+    margin-bottom: 2px;
+
+}
+
 
 /* body contents */
 
@@ -125,14 +149,22 @@ a:hover, a:focus, a:active {
 .footer { height: 100px; width: 100%; background-image: url('../images/footer.png'); 
 }
 
-.info { float: left; font-size: 1.0em; margin-left: 20%; margin-top: 18px;}
+.info { float: left; font-size: 1.1em; margin-left: 20%; margin-top: 18px;}
 
 .rrd { border-style: solid; border-width: 1px; }
 
-#qstat { background-color: lightgoldenrodyellow;}
+#qstat { border: 1px solid #CCCCCC;
+         border-radius: 0 0 5px 5px;
+         padding: 0.5%;
+         margin-top: 1%;
+         margin-left: 4%;
+         color: #666666;
+         background-color: lightgoldenrodyellow;}
 
 #trash { width: 40px; }
 
 #install { width: 60px; }
 
 .tabids { margin: auto; width: 34%; background-color: #5c97b0; }
+
+

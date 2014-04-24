@@ -27,16 +27,11 @@ if [ -e /var/lib/gone/firstboot ]; then
     sed -i '/xgrid/d' /etc/exports
     echo "/var/lib/xgrid "$MASK"/255.255.255.0(rw,sync,no_subtree_check,no_root_squash)" >> /etc/exports
     # Web frontend
-    gem install dm-core dm-sqlite-adapter dm-migrations amazon-ec2 rack rack-protection chef --no-ri --no-rdoc
+    gem install dm-core dm-sqlite-adapter dm-migrations amazon-ec2 rack rack-protection --no-ri --no-rdoc
     sed -i "s/@@url = '.*'/@@url = '"$XGRID_EC2"'/" /usr/share/xgrid/web/xgridconfig.rb
     sed -i "s/@@port = '.*'/@@port = '"$XGRID_EC2_PORT"'/" /usr/share/xgrid/web/xgridconfig.rb
     sed -i "s/@@ip = '.*'/@@ip = '"$IP"'/" /usr/share/xgrid/web/xgridconfig.rb
     sed -i "s/@@hostname = '.*'/@@hostname = '"$HOSTNAME"'/" /usr/share/xgrid/web/xgridconfig.rb
-    # chef section configuration
-    sed -i "s/@@chefserver = '.*'/@@chefserver = '"$CHEFSERVER"'/" /usr/share/xgrid/web/xgridconfig.rb
-    echo "-----BEGIN RSA PRIVATE KEY-----" > /usr/share/xgrid/web/chef_keys/chef-validator.pem
-    echo $CHEFVALIDATIONKEY | sed s/" "/"\n"/g >> /usr/share/xgrid/web/chef_keys/chef-validator.pem
-    echo "-----END RSA PRIVATE KEY-----" >> /usr/share/xgrid/web/chef_keys/chef-validator.pem
 
     # @@baseurl = ''
     LASTIP=`echo $IP| cut -d"." -f4`
@@ -96,3 +91,14 @@ if [ -z $XGRIDMASTER ]; then
   fi
 fi
 
+if [ -n $CHEFSERVER ]; then
+
+  gem install chef --no-ri --no-rdoc
+
+  sed -i "s/@@chefserver = '.*'/@@chefserver = '"$CHEFSERVER"'/" /usr/share/xgrid/web/xgridconfig.rb
+  echo "-----BEGIN RSA PRIVATE KEY-----" > /usr/share/xgrid/web/chef_keys/chef-validator.pem
+  echo $CHEFVALIDATIONKEY | sed s/" "/"\n"/g >> /usr/share/xgrid/web/chef_keys/chef-validator.pem
+  echo "-----END RSA PRIVATE KEY-----" >> /usr/share/xgrid/web/chef_keys/chef-validator.pem
+
+
+fi

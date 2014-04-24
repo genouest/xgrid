@@ -3,7 +3,6 @@ require 'sinatra/base'
 require 'xgridadmin.rb'
 require 'xgridnode.rb'
 require 'xgridconfig.rb'
-require 'xgrid-cookbook.rb'
 require 'AWS'
 
 class Xgrid < Sinatra::Base
@@ -108,25 +107,6 @@ post '/admin/node/delete' do
  end
  redirect settings.baseurl+'/admin'
 end
-
-get '/admin/cookbook' do
-  chefsession = XgridChefSession.getinstance
-  @list = chefsession.getlist
-  erb :cookbook
-end
-
-get '/admin/cookbook/:name' do
- @cookbook_name = params[:name]
- erb :cookbook_install
-end
-
-post '/admin/cookbook/install/:name' do
- chefsession = XgridChefSession.getinstance
- @cookbook_name = params[:name]
- @result = chefsession.installcookbook(params[:name])
- erb :cookbook_install
-end
-
 
 get '/admin/ec2' do
   @ec2 = XgridEC2.first

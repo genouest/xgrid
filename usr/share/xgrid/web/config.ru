@@ -11,6 +11,7 @@ require 'xgrid.rb'
 require 'plugins/sge/xgridsge.rb'
 require 'plugins/hadoop/xgridhadoop.rb'
 require 'plugins/manband/xgridmanband.rb'
+require 'plugins/cookbook/xgridcookbook.rb'
 require 'yaml'
 
 
