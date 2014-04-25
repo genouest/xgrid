@@ -76,7 +76,7 @@ class XgridChefSession
   def self.getinstance
     if @instance.nil?
 
-       if !File.exists? '/usr/share/xgrid/web/chef_keys/chef-validator.pem'
+       if !File.exists? '/usr/share/xgrid/web/chef_keys/client.pem'
            # create a new client/node on the Chef server
            command = "/usr/local/bin/chef-client --validation_key /usr/share/xgrid/web/chef_keys/chef-validator.pem -S  http://"+XgridConfig.chefserver+" -k /usr/share/xgrid/web/chef_keys/client.pem -l info"
            result = `#{command}`
