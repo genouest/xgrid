@@ -1,14 +1,16 @@
 #!/bin/bash
 
-if [ ! -e /mnt/context.sh ]; then
-  echo "No context file available, exiting"
-  exit 1
+# If OpenNebula, get EC2_USER_DATA from context file
+if [ -e /mnt/context.sh ]; then
+  . /mnt/context.sh
+
+  if [ -n "$EC2_USER_DATA" ]; then
+    /usr/share/xgrid/one-ec2.rb $EC2_USER_DATA
+  fi
 fi
 
-. /mnt/context.sh
-
-if [ -e  /var/lib/gone/ec2.properties ]; then
-  . /var/lib/gone/ec2.properties
+if [ -e  /var/lib/xgrid/ec2.properties ]; then
+  . /var/lib/xgrid/ec2.properties
 fi
 
 if [ -n "$ETH0_MASK" ]; then
@@ -21,7 +23,8 @@ if [ -z $XGRID_EC2_PORT ]; then
   export XGRID_EC2_PORT=4567
 fi
 
-if [ -e /var/lib/gone/firstboot ]; then
+if [ -e /var/lib/xgrid/firstboot ]; then
+  rm /var/lib/xgrid/firstboot
   if [ -z $XGRIDMASTER ]; then
     # This is the xgridmaster
     sed -i '/xgrid/d' /etc/exports
@@ -63,6 +66,16 @@ if [ -e /var/lib/gone/firstboot ]; then
     mkdir -p /etc/mysql/conf.d
   fi
 fi
+
+if [ ! -e /var/lib/xgrid/firstboot ]; then
+  if [ -z $XGRIDMASTER ]; then
+    echo "Not first boot, nothing to do on master"
+  else
+    # This is a xgrid node
+    mount -t nfs -o vers=3 $XGRIDMASTER:/var/lib/xgrid /var/lib/xgrid 
+  fi
+fi
+
 
 for f in /usr/share/xgrid/plugins/*/init.sh
 do
