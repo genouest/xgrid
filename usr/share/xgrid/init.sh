@@ -26,6 +26,7 @@ if [ -e /var/lib/gone/firstboot ]; then
     # This is the xgridmaster
     sed -i '/xgrid/d' /etc/exports
     echo "/var/lib/xgrid "$MASK"/255.255.255.0(rw,sync,no_subtree_check,no_root_squash)" >> /etc/exports
+    #echo "/opt "$MASK"/255.255.255.0(rw,sync,no_subtree_check,no_root_squash)" >> /etc/exports
     # Web frontend
     gem install dm-core dm-sqlite-adapter dm-migrations amazon-ec2 rack rack-protection --no-ri --no-rdoc
     sed -i "s/@@url = '.*'/@@url = '"$XGRID_EC2"'/" /usr/share/xgrid/web/xgridconfig.rb
@@ -51,6 +52,7 @@ if [ -e /var/lib/gone/firstboot ]; then
   else
     # This is a xgrid node
     mount -t nfs -o vers=3 $XGRIDMASTER:/var/lib/xgrid /var/lib/xgrid
+    # mount -t nfs -o vers=3 $XGRIDMASTER:/opt /opt
     # RRD collect
     xgrid-rrdcreate $HOSTNAME.$DOMAIN
     echo "step = 60" > /etc/rrdcollect.conf
