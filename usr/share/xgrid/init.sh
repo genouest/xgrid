@@ -19,6 +19,13 @@ else
   export MASK="192.168.2.0"
 fi
 
+if [ -n "$ETH0_IP" ]; then
+  export IP=$ETH0_IP
+else
+  export IP=`hostname  -I | cut -f1 -d' '`
+fi
+
+
 if [ -z $XGRID_EC2_PORT ]; then
   export XGRID_EC2_PORT=4567
 fi
