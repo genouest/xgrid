@@ -1,6 +1,6 @@
 #!/bin/bash
 
-. /mnt/context.sh
+. /var/lib/xgrid/context.sh
 
 if [ ! -d /var/lib/xgrid/rrdcollect ]; then
   exit 0

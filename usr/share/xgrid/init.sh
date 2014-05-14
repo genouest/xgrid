@@ -3,6 +3,7 @@
 # If OpenNebula, get EC2_USER_DATA from context file
 if [ -e /mnt/context.sh ]; then
   . /mnt/context.sh
+  cp /mnt/context.sh /var/lib/xgrid/context.sh
 
   if [ -n "$EC2_USER_DATA" ]; then
     /usr/share/xgrid/one-ec2.rb $EC2_USER_DATA
