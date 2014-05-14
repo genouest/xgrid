@@ -118,6 +118,7 @@ do
 done
 
 if [ -e /var/lib/xgrid/firstboot ]; then
+  echo "Deleting firstboot"
   rm /var/lib/xgrid/firstboot
 fi
 
