@@ -34,6 +34,13 @@ if [ -e /var/lib/xgrid/firstboot ]; then
 
   apt-get update
 
+  if [ -n "$HOSTNAME" ]; then
+    echo $HOSTNAME > /etc/hostname
+    echo $IP" "$HOSTNAME$DOMAIN" "$HOSTNAME >> /etc/hosts
+    hostname $HOSTNAME
+fi
+
+
   if [ -z $XGRIDMASTER ]; then
     # This is the xgridmaster
     sed -i '/xgrid/d' /etc/exports
