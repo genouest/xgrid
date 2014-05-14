@@ -34,6 +34,24 @@ if [ -e /var/lib/xgrid/firstboot ]; then
 
   apt-get update
 
+  # Mount omaha-beach
+  echo "Mount user esb"
+  mkdir -p /omaha-beach
+
+  if [ -n "$SHAREDFS" ]; then
+    echo $SHAREDFS" /omaha-beach   nfs _netdev,defaults  0  0" >> /etc/fstab
+    mount -a
+  fi
+
+
+  if [ -n "$DOMAIN" ]; then
+    domainname $DOMAIN
+    DOMAIN=.$DOMAIN
+  else
+    DOMAIN=.localhost
+  fi
+
+
   if [ -n "$HOSTNAME" ]; then
     echo $HOSTNAME > /etc/hostname
     echo $IP" "$HOSTNAME$DOMAIN" "$HOSTNAME >> /etc/hosts
