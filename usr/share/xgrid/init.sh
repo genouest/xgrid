@@ -32,6 +32,9 @@ fi
 
 if [ -e /var/lib/xgrid/firstboot ]; then
   rm /var/lib/xgrid/firstboot
+
+  apt-get update
+
   if [ -z $XGRIDMASTER ]; then
     # This is the xgridmaster
     sed -i '/xgrid/d' /etc/exports
