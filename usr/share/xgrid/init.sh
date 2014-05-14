@@ -46,15 +46,15 @@ if [ -e /var/lib/xgrid/firstboot ]; then
 
   if [ -n "$DOMAIN" ]; then
     domainname $DOMAIN
-    DOMAIN=.$DOMAIN
+    DOMAIN=$DOMAIN
   else
-    DOMAIN=.localhost
+    DOMAIN=localhost
   fi
 
 
   if [ -n "$HOSTNAME" ]; then
     echo $HOSTNAME > /etc/hostname
-    echo $IP" "$HOSTNAME$DOMAIN" "$HOSTNAME >> /etc/hosts
+    echo $IP" "$HOSTNAME.$DOMAIN" "$HOSTNAME >> /etc/hosts
     hostname $HOSTNAME
   fi
 
