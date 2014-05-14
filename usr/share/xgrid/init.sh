@@ -31,7 +31,6 @@ if [ -z $XGRID_EC2_PORT ]; then
 fi
 
 if [ -e /var/lib/xgrid/firstboot ]; then
-  rm /var/lib/xgrid/firstboot
 
   apt-get update
 
@@ -92,6 +91,10 @@ do
   echo "Execute plugin init: "$f
   bash $f  >> /var/log/xgrid.log
 done
+
+if [ -e /var/lib/xgrid/firstboot ]; then
+  rm /var/lib/xgrid/firstboot
+fi
 
 if [ -z $XGRIDMASTER ]; then
   exportfs -ra
