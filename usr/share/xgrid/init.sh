@@ -56,7 +56,7 @@ if [ -e /var/lib/xgrid/firstboot ]; then
     echo $HOSTNAME > /etc/hostname
     echo $IP" "$HOSTNAME$DOMAIN" "$HOSTNAME >> /etc/hosts
     hostname $HOSTNAME
-fi
+  fi
 
 
   if [ -z $XGRIDMASTER ]; then
@@ -84,7 +84,7 @@ fi
 
   else
     # This is a xgrid node
-    mount -t nfs -o vers=3 $XGRIDMASTER:/var/lib/xgrid /var/lib/xgrid
+    mount -t nfs -o vers=3 $XGRIDMASTER:/var/lib/xgrid/rrdcollect /var/lib/xgrid/rrdcollect
     # RRD collect
     xgrid-rrdcreate $HOSTNAME.$DOMAIN
     echo "step = 60" > /etc/rrdcollect.conf
@@ -106,7 +106,7 @@ if [ ! -e /var/lib/xgrid/firstboot ]; then
     echo "Not first boot, nothing to do on master"
   else
     # This is a xgrid node
-    mount -t nfs -o vers=3 $XGRIDMASTER:/var/lib/xgrid /var/lib/xgrid 
+    mount -t nfs -o vers=3 $XGRIDMASTER:/var/lib/xgrid/rrdcollect /var/lib/xgrid/rrdcollect
   fi
 fi
 
