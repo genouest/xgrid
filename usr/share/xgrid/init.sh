@@ -113,12 +113,12 @@ fi
 
 for f in /usr/share/xgrid/plugins/*/init.sh
 do
-  echo "Execute plugin init: "$f
+  echo "Execute plugin init: "$f >> /var/log/xgrid.log
   bash $f  >> /var/log/xgrid.log
 done
 
 if [ -e /var/lib/xgrid/firstboot ]; then
-  echo "Deleting firstboot"
+  echo "Deleting firstboot" >> /var/log/xgrid.log
   rm /var/lib/xgrid/firstboot
 fi
 
