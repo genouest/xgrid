@@ -1,5 +1,7 @@
 #!/bin/bash
 
+echo "SGE plugin"
+
 if [ ! -e /var/lib/xgrid/firstboot ]; then
   echo "Not first boot, exiting"
   exit 0
