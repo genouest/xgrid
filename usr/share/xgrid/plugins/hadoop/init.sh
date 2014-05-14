@@ -5,8 +5,8 @@
 
 . /mnt/context.sh
 
-if [ -e  /var/lib/gone/ec2.properties ]; then
-  . /var/lib/gone/ec2.properties
+if [ -e  /var/lib/xgrid/ec2.properties ]; then
+  . /var/lib/xgrid/ec2.properties
 fi
 
 
@@ -16,7 +16,7 @@ if [ -z $HADOOP ]; then
   exit 0;
 fi
 
-if [ -e /var/lib/gone/firstboot ]; then
+if [ -e /var/lib/xgrid/firstboot ]; then
   echo "First boot, initializing Hadoop"
 else
   echo "This is not the first boot, skipping install"

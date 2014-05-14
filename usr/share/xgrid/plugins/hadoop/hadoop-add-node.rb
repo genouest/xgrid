@@ -5,7 +5,7 @@ require 'yaml'
 require 'AWS'
 require 'json'
 
-configdoc = YAML::load( File.open( '/etc/gone/ec2.yaml' ) )
+configdoc = YAML::load( File.open( '/etc/xgrid/ec2.yaml' ) )
 
 ec2_access_key = configdoc['config']['ec2_access_key']
 ec2_secret_key = configdoc['config']['ec2_secret_key']

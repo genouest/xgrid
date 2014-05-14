@@ -1,6 +1,6 @@
 #!/bin/bash
 
-if [ ! -e /var/lib/gone/firstboot ]; then
+if [ ! -e /var/lib/xgrid/firstboot ]; then
   echo "Not first boot, exiting"
   exit 0
 fi
@@ -12,8 +12,8 @@ fi
 
 . /mnt/context.sh
 
-if [ -e  /var/lib/gone/ec2.properties ]; then
-  . /var/lib/gone/ec2.properties
+if [ -e  /var/lib/xgrid/ec2.properties ]; then
+  . /var/lib/xgrid/ec2.properties
 fi
 
 TEMPLATES=/usr/share/xgrid/plugins/sge/templates
