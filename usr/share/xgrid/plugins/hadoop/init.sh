@@ -3,6 +3,8 @@
 # History:
 # Fix bug #87: add hadoop.tmp.dir
 
+echo "Hadoop plugin"
+
 . /mnt/context.sh
 
 if [ -e  /var/lib/xgrid/ec2.properties ]; then

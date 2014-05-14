@@ -34,6 +34,31 @@ if [ -e /var/lib/xgrid/firstboot ]; then
 
   apt-get update
 
+  # Mount omaha-beach
+  echo "Mount user esb"
+  mkdir -p /omaha-beach
+
+  if [ -n "$SHAREDFS" ]; then
+    echo $SHAREDFS" /omaha-beach   nfs _netdev,defaults  0  0" >> /etc/fstab
+    mount -a
+  fi
+
+
+  if [ -n "$DOMAIN" ]; then
+    domainname $DOMAIN
+    DOMAIN=.$DOMAIN
+  else
+    DOMAIN=.localhost
+  fi
+
+
+  if [ -n "$HOSTNAME" ]; then
+    echo $HOSTNAME > /etc/hostname
+    echo $IP" "$HOSTNAME$DOMAIN" "$HOSTNAME >> /etc/hosts
+    hostname $HOSTNAME
+fi
+
+
   if [ -z $XGRIDMASTER ]; then
     # This is the xgridmaster
     sed -i '/xgrid/d' /etc/exports
@@ -98,6 +123,7 @@ do
 done
 
 if [ -e /var/lib/xgrid/firstboot ]; then
+  echo "Deleting firstboot"
   rm /var/lib/xgrid/firstboot
 fi
 
