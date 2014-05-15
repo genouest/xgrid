@@ -3,6 +3,7 @@
 # If OpenNebula, get EC2_USER_DATA from context file
 if [ -e /mnt/context.sh ]; then
   . /mnt/context.sh
+  cp /mnt/context.sh /var/lib/xgrid/context.sh
 
   if [ -n "$EC2_USER_DATA" ]; then
     /usr/share/xgrid/one-ec2.rb $EC2_USER_DATA
@@ -46,17 +47,17 @@ if [ -e /var/lib/xgrid/firstboot ]; then
 
   if [ -n "$DOMAIN" ]; then
     domainname $DOMAIN
-    DOMAIN=.$DOMAIN
+    DOMAIN=$DOMAIN
   else
-    DOMAIN=.localhost
+    DOMAIN=localhost
   fi
 
 
   if [ -n "$HOSTNAME" ]; then
     echo $HOSTNAME > /etc/hostname
-    echo $IP" "$HOSTNAME$DOMAIN" "$HOSTNAME >> /etc/hosts
+    echo $IP" "$HOSTNAME.$DOMAIN" "$HOSTNAME >> /etc/hosts
     hostname $HOSTNAME
-fi
+  fi
 
 
   if [ -z $XGRIDMASTER ]; then
@@ -88,8 +89,9 @@ fi
 
   else
     # This is a xgrid node
-    mount -t nfs -o vers=3 $XGRIDMASTER:/var/lib/xgrid /var/lib/xgrid
+    mount -t nfs -o vers=3 $XGRIDMASTER:/var/lib/xgrid/rrdcollect /var/lib/xgrid/rrdcollect
     # mount -t nfs -o vers=3 $XGRIDMASTER:/opt /opt
+
     # RRD collect
     xgrid-rrdcreate $HOSTNAME.$DOMAIN
     echo "step = 60" > /etc/rrdcollect.conf
@@ -111,19 +113,19 @@ if [ ! -e /var/lib/xgrid/firstboot ]; then
     echo "Not first boot, nothing to do on master"
   else
     # This is a xgrid node
-    mount -t nfs -o vers=3 $XGRIDMASTER:/var/lib/xgrid /var/lib/xgrid 
+    mount -t nfs -o vers=3 $XGRIDMASTER:/var/lib/xgrid/rrdcollect /var/lib/xgrid/rrdcollect
   fi
 fi
 
 
 for f in /usr/share/xgrid/plugins/*/init.sh
 do
-  echo "Execute plugin init: "$f
+  echo "Execute plugin init: "$f >> /var/log/xgrid.log
   bash $f  >> /var/log/xgrid.log
 done
 
 if [ -e /var/lib/xgrid/firstboot ]; then
-  echo "Deleting firstboot"
+  echo "Deleting firstboot" >> /var/log/xgrid.log
   rm /var/lib/xgrid/firstboot
 fi
 

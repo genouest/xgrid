@@ -78,7 +78,7 @@ class XgridChefSession
 
        if !File.exists? '/usr/share/xgrid/web/chef_keys/client.pem'
            # create a new client/node on the Chef server
-           command = "/usr/local/bin/chef-client --validation_key /usr/share/xgrid/web/chef_keys/chef-validator.pem -S  http://"+XgridConfig.chefserver+" -k /usr/share/xgrid/web/chef_keys/client.pem -l info"
+           command = "/usr/local/bin/chef-client --node-name "+XgridConfig.hostname+".genouest.org --validation_key /usr/share/xgrid/web/chef_keys/chef-validator.pem -S  http://"+XgridConfig.chefserver+" -k /usr/share/xgrid/web/chef_keys/client.pem -l info"
            result = `#{command}`
 
            # write into the xgrid_chef.log the result
@@ -126,7 +126,7 @@ class XgridChefSession
  def installcookbook(cookbook)
   # install the chef cookbook 
 
-	command = "/usr/local/bin/chef-client -k #{@signing_key_filename} -S #{@chef_server_url} -o #{cookbook} -l info > /var/log/chef_#{cookbook}_install.log &"
+	command = "/usr/local/bin/chef-client --node-name #{@client_name} -k #{@signing_key_filename} -S #{@chef_server_url} -o #{cookbook} -l info > /var/log/chef_#{cookbook}_install.log &"
 	system("#{command}")
 
 	return ""
