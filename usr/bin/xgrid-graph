@@ -1,7 +1,5 @@
 #!/bin/bash
 
-. /var/lib/xgrid/context.sh
-
 if [ ! -d /var/lib/xgrid/rrdcollect ]; then
   exit 0
 fi
@@ -14,6 +12,10 @@ do
 
   RRDPATH=/var/lib/xgrid/rrdcollect/$ID
   WEBPATH=/usr/share/xgrid/web/public/images/rrd
+
+  if [ ! -e /usr/share/xgrid/web/public/images/rrd ]; then
+    mkdir -p /usr/share/xgrid/web/public/images/rrd
+  fi
 
   rrdtool graph $WEBPATH/mem-$ID.png \
         --title 'Memoire utilisée sur 3 heures' \
