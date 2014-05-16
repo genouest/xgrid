@@ -64,7 +64,7 @@ if [ -e /var/lib/xgrid/firstboot ]; then
     # This is the xgridmaster
     sed -i '/xgrid/d' /etc/exports
     echo "/var/lib/xgrid "$MASK"/255.255.255.0(rw,sync,no_subtree_check,no_root_squash)" >> /etc/exports
-    #echo "/opt "$MASK"/255.255.255.0(rw,sync,no_subtree_check,no_root_squash)" >> /etc/exports
+    echo "/opt "$MASK"/255.255.255.0(rw,sync,no_subtree_check,no_root_squash)" >> /etc/exports
     # Web frontend
     gem install dm-core dm-sqlite-adapter dm-migrations amazon-ec2 rack rack-protection --no-ri --no-rdoc
     sed -i "s/@@url = '.*'/@@url = '"$XGRID_EC2"'/" /usr/share/xgrid/web/xgridconfig.rb
@@ -90,7 +90,7 @@ if [ -e /var/lib/xgrid/firstboot ]; then
   else
     # This is a xgrid node
     mount -t nfs -o vers=3 $XGRIDMASTER:/var/lib/xgrid/rrdcollect /var/lib/xgrid/rrdcollect
-    # mount -t nfs -o vers=3 $XGRIDMASTER:/opt /opt
+    mount -t nfs -o vers=3 $XGRIDMASTER:/opt /opt
 
     # RRD collect
     xgrid-rrdcreate $HOSTNAME.$DOMAIN
@@ -114,6 +114,7 @@ if [ ! -e /var/lib/xgrid/firstboot ]; then
   else
     # This is a xgrid node
     mount -t nfs -o vers=3 $XGRIDMASTER:/var/lib/xgrid/rrdcollect /var/lib/xgrid/rrdcollect
+    mount -t nfs -o vers=3 $XGRIDMASTER:/opt /opt
   fi
 fi
 
@@ -147,14 +148,15 @@ if [ -z $XGRIDMASTER ]; then
   fi
 fi
 
+# CHEFSERVER configuration
 if [ -n $CHEFSERVER ]; then
-
   gem install chef --no-ri --no-rdoc
-
   sed -i "s/@@chefserver = '.*'/@@chefserver = '"$CHEFSERVER"'/" /usr/share/xgrid/web/xgridconfig.rb
   echo "-----BEGIN RSA PRIVATE KEY-----" > /usr/share/xgrid/web/chef_keys/chef-validator.pem
   echo $CHEFVALIDATIONKEY | sed s/" "/"\n"/g >> /usr/share/xgrid/web/chef_keys/chef-validator.pem
   echo "-----END RSA PRIVATE KEY-----" >> /usr/share/xgrid/web/chef_keys/chef-validator.pem
-
-
 fi
+
+# edit the welcome apache page
+echo '<html><body><h1>It works!</h1><p>Welcome to your virtual machine</p><p>You can access to <b>Xgrid</b> manager to deploy a cluster (SGE or Hadoop) <a href="/xgrid">here</a></p></body></html>' > /var/www/index.html
+
