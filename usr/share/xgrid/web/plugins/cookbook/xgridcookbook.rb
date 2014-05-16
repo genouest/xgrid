@@ -59,13 +59,12 @@ class XgridCookbook < Sinatra::Base
      @result = chefsession.installcookbook(params[:name])
      erb :cookbook_install
    end
-
-   post '/admin/cookbook/details_install/:name' do
-     chefsession = XgridChefSession.getinstance
-     @cookbook_name = params[:name]
-     @result = chefsession.getdetailsinstallcookbook(params[:name])
-     erb :cookbook_install
-   end
+   #post '/admin/cookbook/details_install/:name' do
+   #  chefsession = XgridChefSession.getinstance
+   #  @cookbook_name = params[:name]
+   #  @result = chefsession.getdetailsinstallcookbook(params[:name])
+   #  erb :cookbook_install
+   #end
 end
 
 # Contains CHEF calls
@@ -129,24 +128,24 @@ class XgridChefSession
 	command = "/usr/local/bin/chef-client --node-name #{@client_name} -k #{@signing_key_filename} -S #{@chef_server_url} -o #{cookbook} -l info > /var/log/chef_#{cookbook}_install.log &"
 	system("#{command}")
 
-	return ""
+	return "in progress"
 
   end
 
- def getdetailsinstallcookbook(cookbook)
+ 
+ #def getdetailsinstallcookbook(cookbook)
   # install the chef cookbook 
 
 	# initialize variable
-	details = String.new
+	#details = String.new
 
 	# read the log file
-	File.open("/var/log/chef_#{cookbook}_install.log", "r").each_line { |line| details << line }	
+	#File.open("/var/log/chef_#{cookbook}_install.log", "r").each_line { |line| details << line }	
         
 	#return details
-	return details
+	#return details
 
-  end
-
+  #end
 
 end
 
