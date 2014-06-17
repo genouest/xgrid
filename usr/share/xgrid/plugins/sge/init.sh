@@ -48,6 +48,9 @@ if [ "$SGE" = "master" ]; then
   echo "/usr/lib/gridengine 192.168.2.0/255.255.255.0(rw,sync,no_subtree_check,no_root_squash)" >> /etc/exports
 
   sed -i "s/modules: Xgrid/modules: Xgrid,XgridSge/" /etc/xgrid/xgrid.yaml
+
+# edit the welcome apache page
+echo '<html><body><h1>It works!</h1><p>Welcome to your virtual machine</p><p>You can access to <b>Xgrid</b> manager to deploy your SGE cluster <a href="/xgrid">here</a></p></body></html>' > /var/www/index.html
  
 fi
 if [ "$SGE" = "node" ]; then

@@ -87,6 +87,9 @@ if [ -e /var/lib/xgrid/firstboot ]; then
     service mysql restart
     echo "Starting xgrid web server" >> /var/log/xgrid.log
 
+    # edit the welcome apache page
+    echo '<html><body><h1>It works!</h1><p>Welcome to your virtual machine</p></body></html>' > /var/www/index.html
+
   else
     # This is a xgrid node
     mount -t nfs -o vers=3 $XGRIDMASTER:/var/lib/xgrid/rrdcollect /var/lib/xgrid/rrdcollect
@@ -149,14 +152,14 @@ if [ -z $XGRIDMASTER ]; then
 fi
 
 # CHEFSERVER configuration
-if [ -n $CHEFSERVER ]; then
+if [ -n "$CHEFSERVER" ]; then
   gem install chef --no-ri --no-rdoc
   sed -i "s/@@chefserver = '.*'/@@chefserver = '"$CHEFSERVER"'/" /usr/share/xgrid/web/xgridconfig.rb
   echo "-----BEGIN RSA PRIVATE KEY-----" > /usr/share/xgrid/web/chef_keys/chef-validator.pem
   echo $CHEFVALIDATIONKEY | sed s/" "/"\n"/g >> /usr/share/xgrid/web/chef_keys/chef-validator.pem
   echo "-----END RSA PRIVATE KEY-----" >> /usr/share/xgrid/web/chef_keys/chef-validator.pem
-fi
 
-# edit the welcome apache page
-echo '<html><body><h1>It works!</h1><p>Welcome to your virtual machine</p><p>You can access to <b>Xgrid</b> manager to deploy a cluster (SGE or Hadoop) <a href="/xgrid">here</a></p></body></html>' > /var/www/index.html
+  # edit the welcome apache page
+  sed -i "s/<\/body>/<p>You can install some CHEF cookbooks via <a href=\/xgrid>Xgrid<\/a> web application<\/p><\/body>/" /var/www/index.html
+fi
 

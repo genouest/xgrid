@@ -62,6 +62,8 @@ if [ "$WORKFLOW" = "master" ]; then
   export MANBANDCONF=/root/.manband
   rackup -p 4444 -I . -D
 
+  # edit the welcome apache page
+  echo '<html><body><h1>It works!</h1><p>Welcome to your virtual machine</p><p>You can access to <b>Xgrid</b> manager to deploy your Workflow cluster <a href="/xgrid">here</a></p></body></html>' > /var/www/index.html
  
 fi
 
