@@ -1,3 +1,10 @@
+xgrid (1.3.5) UNRELEASED; urgency=medium
+
+  * Support cloud-init for other clouds integration
+  * Add Chef cookbooks installation 
+
+ -- Olivier Sallou <osallou@localhost>  Thu, 19 Jun 2014 12:02:38 +0200
+
 xgrid (1.3.4) unstable; urgency=medium
 
   * Use opennebula-context instead of gone 
