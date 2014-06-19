@@ -10,6 +10,11 @@ if [ -e /mnt/context.sh ]; then
   fi
 fi
 
+# cloud-init user data file
+if [ -e /var/lib/cloud/instance/user-data.txt ]; then
+    ln -s /var/lib/cloud/instance/user-data.txt /var/lib/xgrid/ec2.properties
+fi
+
 if [ -e  /var/lib/xgrid/ec2.properties ]; then
   . /var/lib/xgrid/ec2.properties
 fi
