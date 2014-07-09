@@ -1,9 +1,12 @@
-This package sets up Sun Grid Engine for Open Nebula.
-It integrates with the GONE package.
+This package sets up Sun Grid Engine for Open Nebula or cloud-init compatible
+clouds.
 
 Packages expects in CONTEXT the following env variables:
 
-SGE: master or node
+Optional:
+XGRID_EC2_PORT
+SHAREDFS
+DOMAIN
 
 When a new node is started via the xgrid interface, the software will add EC2 user data:
 SGE="node"
