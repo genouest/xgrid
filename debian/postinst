@@ -20,10 +20,10 @@ set -e
 
 case "$1" in
     configure)
-    touch /var/lib/xgrid/firstboot
-	a2enmod rewrite
+        touch /var/lib/xgrid/firstboot
+        a2enmod rewrite
         a2enmod proxy_http
-	invoke-rc.d apache2 restart
+        invoke-rc.d apache2 restart
     ;;
 
     abort-upgrade|abort-remove|abort-deconfigure)
