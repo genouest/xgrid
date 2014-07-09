@@ -16,10 +16,9 @@ if [ -e /var/lib/xgrid/ec2.properties ]; then
   . /var/lib/xgrid/ec2.properties
 fi
 
+gem install chef --no-ri --no-rdoc
 
 if [ -n "$CHEFSERVER" ]; then
-
-  gem install chef --no-ri --no-rdoc
 
   # chef section configuration
   sed -i "s/@@chefserver = '.*'/@@chefserver = '"$CHEFSERVER"'/" /usr/share/xgrid/web/xgridconfig.rb

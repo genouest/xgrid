@@ -157,9 +157,9 @@ if [ -z $XGRIDMASTER ]; then
   fi
 fi
 
+gem install chef --no-ri --no-rdoc
 # CHEFSERVER configuration
 if [ -n "$CHEFSERVER" ]; then
-  gem install chef --no-ri --no-rdoc
   sed -i "s/@@chefserver = '.*'/@@chefserver = '"$CHEFSERVER"'/" /usr/share/xgrid/web/xgridconfig.rb
   echo "-----BEGIN RSA PRIVATE KEY-----" > /usr/share/xgrid/web/chef_keys/chef-validator.pem
   echo $CHEFVALIDATIONKEY | sed s/" "/"\n"/g >> /usr/share/xgrid/web/chef_keys/chef-validator.pem

@@ -8,6 +8,10 @@ XGRID_EC2_PORT
 SHAREDFS
 DOMAIN
 
+After boot, /usr/share/xgrid/web/xgridconfig.rb:
+
+- one may need to adapt baseurl parameter depending on deployment to get VM url.
+
 When a new node is started via the xgrid interface, the software will add EC2 user data:
 SGE="node"
 SGEMASTER="x.x.x.x"
