@@ -6,6 +6,7 @@ Packages expects in CONTEXT the following env variables:
 XGRID_EC2 : EC2 ip address
 XGRID_EC2_PORT: EC2 port
 SGE=master OR HADOOP=master
+XGRID_AMI : id of the image to use
 
 Optional:
   CHEFSERVER: if cookbooks are used

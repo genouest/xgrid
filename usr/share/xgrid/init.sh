@@ -73,6 +73,9 @@ if [ -e /var/lib/xgrid/firstboot ]; then
     echo "/opt "$MASK"/255.255.255.0(rw,sync,no_subtree_check,no_root_squash)" >> /etc/exports
     # Web frontend
     gem install dm-core dm-sqlite-adapter dm-migrations amazon-ec2 rack rack-protection --no-ri --no-rdoc
+    if [ -n $XGRID_AMI ]; then
+    sed -i "s/@@ami = '.*'/@@ami = '"$XGRID_AMI"'/" /usr/share/xgrid/web/xgridconfig.rb$
+    fi
     sed -i "s/@@url = '.*'/@@url = '"$XGRID_EC2"'/" /usr/share/xgrid/web/xgridconfig.rb
     sed -i "s/@@port = '.*'/@@port = '"$XGRID_EC2_PORT"'/" /usr/share/xgrid/web/xgridconfig.rb
     sed -i "s/@@ip = '.*'/@@ip = '"$IP"'/" /usr/share/xgrid/web/xgridconfig.rb

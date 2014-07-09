@@ -16,6 +16,13 @@ class XgridNode
 
 end
 
+class XgridAmi
+    attr_accessor :imageId
+    def initialize(image_id)
+      @imageId = image_id
+    end
+end
+
 # Contains EC2 key and password
 class XgridEC2
    include DataMapper::Resource
@@ -24,6 +31,10 @@ class XgridEC2
    property :ec2pwd, String
 
   def self.getamis
+    if not XgridConfig.ami.empty?
+      amis = [XgridAmi.new(XgridConfig.ami)]
+      return amis
+    end
     ec2keys = XgridEC2.first
     if ec2keys == nil
       return nil
