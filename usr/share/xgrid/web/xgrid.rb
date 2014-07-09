@@ -124,6 +124,9 @@ post '/admin/ec2' do
   end
   ec2.ec2key = params[:ec2key]
   ec2.ec2pwd = params[:ec2password]
+  if not params[:ec2crypt].empty? and params[:ec2crypt].to_i == 1
+    ec2.ec2pwd = Digest::SHA1.hexdigest(ec2.ec2pwd)
+  end
   ec2.save
   redirect settings.baseurl+'/admin'
 end
@@ -183,7 +186,7 @@ def deletenode(node)
   ec2keys = XgridEC2.first
   ec2_access_key = ec2keys.ec2key
   ec2_secret_key = ec2keys.ec2pwd
-  ec2_secret_key = Digest::SHA1.hexdigest(ec2_secret_key)
+  #ec2_secret_key = Digest::SHA1.hexdigest(ec2_secret_key)
   nodename = node.name.split('.')
   vmid = nodename[0][3,nodename[0].length-1]
   ec2 = AWS::EC2::Base.new(:access_key_id => ec2_access_key, :secret_access_key => ec2_secret_key, :server => XgridConfig.url, :port => XgridConfig.port.to_i, :use_ssl => false)

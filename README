@@ -3,10 +3,14 @@ clouds.
 
 Packages expects in CONTEXT the following env variables:
 
+XGRID_EC2 : EC2 ip address
+XGRID_EC2_PORT: EC2 port
+SGE=master OR HADOOP=master
+
 Optional:
-XGRID_EC2_PORT
-SHAREDFS
-DOMAIN
+  CHEFSERVER: if cookbooks are used
+  SHAREDFS: mount point
+  DOMAIN: domain of the instance
 
 After boot, /usr/share/xgrid/web/xgridconfig.rb:
 

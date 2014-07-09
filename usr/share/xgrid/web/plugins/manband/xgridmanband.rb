@@ -120,7 +120,7 @@ def requestnewnode(ami,type,kind)
   ec2keys = XgridEC2.first
   ec2_access_key = ec2keys.ec2key
   ec2_secret_key = ec2keys.ec2pwd
-  ec2_secret_key = Digest::SHA1.hexdigest(ec2_secret_key)
+  #ec2_secret_key = Digest::SHA1.hexdigest(ec2_secret_key)
 
   node = XgridNode.new
   node.name = ""

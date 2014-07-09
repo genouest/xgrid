@@ -30,7 +30,7 @@ class XgridEC2
     end
     ec2_access_key = ec2keys.ec2key
     ec2_secret_key = ec2keys.ec2pwd
-    ec2_secret_key = Digest::SHA1.hexdigest(ec2_secret_key)
+    #ec2_secret_key = Digest::SHA1.hexdigest(ec2_secret_key)
     ec2 = AWS::EC2::Base.new(:access_key_id => ec2_access_key, :secret_access_key => ec2_secret_key, :server => XgridConfig.url, :port => XgridConfig.port.to_i, :use_ssl => false)
     return ec2.describe_images.imagesSet.item
   end
