@@ -51,6 +51,10 @@ class XgridConfig
     @@baseurl
   end
 
+  def self.ami
+    @@ami
+  end
+
   def self.instancetypes
     @@instancetypes
   end
