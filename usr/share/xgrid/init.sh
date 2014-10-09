@@ -160,15 +160,24 @@ if [ -z $XGRIDMASTER ]; then
   fi
 fi
 
-gem install chef --no-ri --no-rdoc
-# CHEFSERVER configuration
-if [ -n "$CHEFSERVER" ]; then
-  sed -i "s/@@chefserver = '.*'/@@chefserver = '"$CHEFSERVER"'/" /usr/share/xgrid/web/xgridconfig.rb
-  echo "-----BEGIN RSA PRIVATE KEY-----" > /usr/share/xgrid/web/chef_keys/chef-validator.pem
-  echo $CHEFVALIDATIONKEY | sed s/" "/"\n"/g >> /usr/share/xgrid/web/chef_keys/chef-validator.pem
-  echo "-----END RSA PRIVATE KEY-----" >> /usr/share/xgrid/web/chef_keys/chef-validator.pem
-
   # edit the welcome apache page
   sed -i "s/<\/body>/<p>You can install some CHEF cookbooks via <a href=\/xgrid>Xgrid<\/a> web application<\/p><\/body>/" /var/www/index.html
 fi
+
+############################
+#  Specific Xgrid version  #
+############################
+
+# for NGS image
+#if [ -e /opt/install_NGS_tools.sh ]; then
+#sh /opt/install_NGS_tools.sh
+#mv /opt/install_NGS_tools.sh /tmp/
+#fi
+
+# for Galaxy image
+# echo '<html><body><h1>It works!</h1><p>Welcome to your virtual machine</p><p>You can access to your Galaxy server <a href=/galaxy>here</a></p></body></html>' > /var/www/index.html
+# sh /opt/galaxy-dist/run.sh --daemon
+
+# for Galaxy proteomics image
+# sed -i "s/<\/body>/<p>Trans Proteomic Pipeline GUI access <a href=\/tpp\/cgi-bin\/tpp_gui.pl> here<\/a><\/p><\/body>/" /var/www/index.html
 

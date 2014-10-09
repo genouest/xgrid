@@ -1,3 +1,11 @@
+xgrid (1.3.6) UNRELEASED; urgency=medium
+
+  * Change Cookbook plugin to work with https protocol
+  * Use one-context or opennebula-context package
+  * Allow correct save_as with xgrid
+
+ -- Olivier Sallou <osallou@localhost>  Thu, 08 Oct 2014 17:13:38 +0200
+
 xgrid (1.3.5) UNRELEASED; urgency=medium
 
   * Support cloud-init for other clouds integration

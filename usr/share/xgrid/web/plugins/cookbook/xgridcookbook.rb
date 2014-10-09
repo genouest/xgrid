@@ -77,11 +77,12 @@ class XgridChefSession
 
        if !File.exists? '/usr/share/xgrid/web/chef_keys/client.pem'
            # create a new client/node on the Chef server
-           command = "/usr/local/bin/chef-client --node-name "+XgridConfig.hostname+".genouest.org --validation_key /usr/share/xgrid/web/chef_keys/chef-validator.pem -S  http://"+XgridConfig.chefserver+" -k /usr/share/xgrid/web/chef_keys/client.pem -l info"
+           command = "/usr/local/bin/chef-client --node-name "+XgridConfig.hostname+".genouest.org --validation_key /usr/share/xgrid/web/chef_keys/chef-validator.pem -S https://"+XgridConfig.chefserver+" -k /usr/share/xgrid/web/chef_keys/client.pem -l info"
            result = `#{command}`
 
            # write into the xgrid_chef.log the result
            File.open("/var/log/xgrid_chef.log", "a") do |aFile|
+	      aFile.write(command)
               aFile.write(result)
            end
        end
@@ -98,7 +99,7 @@ class XgridChefSession
 
   def initialize
   # initialize the chef user credentials 
-     @chef_server_url='http://'+XgridConfig.chefserver
+     @chef_server_url='https://'+XgridConfig.chefserver
      @client_name = XgridConfig.hostname+'.genouest.org'
      @signing_key_filename = '/usr/share/xgrid/web/chef_keys/client.pem'
   end

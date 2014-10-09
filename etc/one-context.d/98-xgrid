@@ -1,3 +1,35 @@
 #!/bin/bash
 
+# remove xgrid log if it's already launched
+
+if [ -e /var/log/xgrid.log ]; then
+
+	# remove xgrid log files
+	rm /var/log/xgrid.log
+	rm -r /var/log/xgrid
+	rm /var/log/chef*
+
+	# remove xgrid files
+	rm /var/lib/xgrid/context.sh
+	rm /var/lib/xgrid/manband.done
+	rm /var/lib/xgrid/sge.done
+
+	# remove chef validation key
+	if [ -e /usr/share/xgrid/chef_keys/chef-validator.pem ]; then
+		rm /usr/share/xgrid/chef_keys/chef-validator.pem
+	fi
+
+	# create the firstboot file to init xgrid
+	touch /var/lib/xgrid/firstboot
+
+	# remove sge configuration if exist
+	DEBIAN_FRONTEND='noninteractive' apt-get --purge -y remove gridengine-master gridengine-client gridengine-drmaa1.0 gridengine-exec
+	if [ -e /var/spool/gridengine/spooldb/sge ]; then
+		rm /var/spool/gridengine/spooldb/sge
+	fi
+
+	umount /omaha-beach/
+
+fi
+
 /usr/share/xgrid/init.sh

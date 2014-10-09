@@ -14,7 +14,7 @@ Depends: ruby, ruby-dev, libsinatra-ruby, rubygems, sqlite3,
  libsqlite3-dev, gcc, make, apache2,
  ruby-amazon-ec2, nfs-server|nfs-kernel-server, makepasswd,
  rrdcollect, rrdtool, git, mysql-server,
- opennebula-context|cloud-init
+ opennebula-context|cloud-init|one-context
 Description: Auto SGE installer
  Install in OpenNebula a SGE cluster with a user
  web interface to add new nodes.
