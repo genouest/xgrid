@@ -165,19 +165,21 @@ fi
 fi
 
 ############################
-#  Specific Xgrid version  #
+#   Specific Xgrid images  #
 ############################
 
 # for NGS image
-#if [ -e /opt/install_NGS_tools.sh ]; then
-#sh /opt/install_NGS_tools.sh
-#mv /opt/install_NGS_tools.sh /tmp/
-#fi
+if [ -e /opt/install_NGS_tools.sh ]; then
+sh /opt/install_NGS_tools.sh
+mv /opt/install_NGS_tools.sh /tmp/
+fi
 
 # for Galaxy image
-# echo '<html><body><h1>It works!</h1><p>Welcome to your virtual machine</p><p>You can access to your Galaxy server <a href=/galaxy>here</a></p></body></html>' > /var/www/index.html
+# sed -i "s/<\/body>/<p>You can access to your Galaxy server <a href=\/galaxy>here<\/a><\/p><\/body>/" /var/www/index.html
 # sh /opt/galaxy-dist/run.sh --daemon
 
 # for Galaxy proteomics image
 # sed -i "s/<\/body>/<p>Trans Proteomic Pipeline GUI access <a href=\/tpp\/cgi-bin\/tpp_gui.pl> here<\/a><\/p><\/body>/" /var/www/index.html
+# sed -i "s/<\/body>/<p>Access to Galaxy proteomics server <a href=\/galaxy> here<\/a><\/p><\/body>/" /var/www/index.html
+# sh /opt/galaxy-dist/run.sh --daemon
 
