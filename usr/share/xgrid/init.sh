@@ -160,26 +160,29 @@ if [ -z $XGRIDMASTER ]; then
   fi
 fi
 
-  # edit the welcome apache page
-  sed -i "s/<\/body>/<p>You can install some CHEF cookbooks via <a href=\/xgrid>Xgrid<\/a> web application<\/p><\/body>/" /var/www/index.html
-
 
 ############################
 #   Specific Xgrid images  #
 ############################
-
+#
+# Uncomment when you're built your image
+#
 # for NGS image
-if [ -e /opt/install_NGS_tools.sh ]; then
-sh /opt/install_NGS_tools.sh
-mv /opt/install_NGS_tools.sh /tmp/
-fi
+# if [ -e /opt/install_NGS_tools.sh ]; then
+#     sh /opt/install_NGS_tools.sh
+#     mv /opt/install_NGS_tools.sh /tmp/
+# fi
 
 # for Galaxy image
-# sed -i "s/<\/body>/<p>You can access to your Galaxy server <a href=\/galaxy>here<\/a><\/p><\/body>/" /var/www/index.html
-# sh /opt/galaxy-dist/run.sh --daemon
+# if [ -z $XGRIDMASTER ]; then
+#     sed -i "s/<\/body>/<p>You can access to your Galaxy server <a href=\/galaxy>here<\/a><\/p><\/body>/" /var/www/index.html
+#     sh /opt/galaxy-dist/run.sh --daemon
+# fi
 
-# for Galaxy proteomics image
-# sed -i "s/<\/body>/<p>Trans Proteomic Pipeline GUI access <a href=\/tpp\/cgi-bin\/tpp_gui.pl> here<\/a><\/p><\/body>/" /var/www/index.html
-# sed -i "s/<\/body>/<p>Access to Galaxy proteomics server <a href=\/galaxy> here<\/a><\/p><\/body>/" /var/www/index.html
-# sh /opt/galaxy-dist/run.sh --daemon
 
+# for Proteomics image
+# if [ -z $XGRIDMASTER ]; then
+#     sed -i "s/<\/body>/<p>Trans Proteomic Pipeline GUI access <a href=\/tpp\/cgi-bin\/tpp_gui.pl> here<\/a><\/p><\/body>/" /var/www/index.html
+#     sed -i "s/<\/body>/<p>Access to Galaxy proteomics server <a href=\/galaxy> here<\/a><\/p><\/body>/" /var/www/index.html
+#     sh /opt/galaxy-dist/run.sh --daemon
+# fi

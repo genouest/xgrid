@@ -29,5 +29,7 @@ if [ -n "$CHEFSERVER" ]; then
   # add module in xgrid.yaml
   sed -i "s/modules: Xgrid/modules: Xgrid,XgridCookbook/" /etc/xgrid/xgrid.yaml
 
+  # edit the welcome apache page
+  sed -i "s/<\/body>/<p>You can install some CHEF cookbooks via <a href=\/xgrid>Xgrid<\/a> web application<\/p><\/body>/" /var/www/index.html
 
 fi
