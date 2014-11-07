@@ -159,30 +159,3 @@ if [ -z $XGRIDMASTER ]; then
       ruby /usr/share/xgrid/web/xgrid-addnode.rb -i $XGRID_AMI -s $XGRID_AMITYPE -t $XGRID_NODETYPE -k $APIKEY -a $XGRID_EC2ACCESS -p $XGRID_EC2PASSWORD -q $XGRID_QUANTITY >> /var/log/xgrid.log
   fi
 fi
-
-
-############################
-#   Specific Xgrid images  #
-############################
-#
-# Uncomment when you're built your image
-#
-# for NGS image
-# if [ -e /opt/install_NGS_tools.sh ]; then
-#     sh /opt/install_NGS_tools.sh
-#     mv /opt/install_NGS_tools.sh /tmp/
-# fi
-
-# for Galaxy image
-# if [ -z $XGRIDMASTER ]; then
-#     sed -i "s/<\/body>/<p>You can access to your Galaxy server <a href=\/galaxy>here<\/a><\/p><\/body>/" /var/www/index.html
-#     sh /opt/galaxy-dist/run.sh --daemon
-# fi
-
-
-# for Proteomics image
-# if [ -z $XGRIDMASTER ]; then
-#     sed -i "s/<\/body>/<p>Trans Proteomic Pipeline GUI access <a href=\/tpp\/cgi-bin\/tpp_gui.pl> here<\/a><\/p><\/body>/" /var/www/index.html
-#     sed -i "s/<\/body>/<p>Access to Galaxy proteomics server <a href=\/galaxy> here<\/a><\/p><\/body>/" /var/www/index.html
-#     sh /opt/galaxy-dist/run.sh --daemon
-# fi
