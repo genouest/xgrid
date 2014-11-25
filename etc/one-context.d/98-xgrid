@@ -16,6 +16,12 @@ if [ -e /var/log/xgrid.log ]; then
 	rm /var/lib/xgrid/manband.done
 	rm /var/lib/xgrid/sge.done
 
+	# remove mounts
+	sed -i '/\/var\/lib\/xgrid/d' /etc/exports
+	sed -i '/\/opt/d' /etc/exports
+	sed -i '/\/omaha-beach/d' /etc/fstab
+	umount /omaha-beach
+
 	# remove chef validation key
 	if [ -e /usr/share/xgrid/chef_keys/chef-validator.pem ]; then
 		rm /usr/share/xgrid/chef_keys/chef-validator.pem
