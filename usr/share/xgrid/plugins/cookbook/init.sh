@@ -16,7 +16,7 @@ if [ -e /var/lib/xgrid/ec2.properties ]; then
   . /var/lib/xgrid/ec2.properties
 fi
 
-gem install chef --no-ri --no-rdoc
+gem install chef -v 11.16.4 --no-ri --no-rdoc
 
 if [ -n "$CHEFSERVER" ]; then
 
