@@ -20,7 +20,9 @@ if [ -e /var/log/xgrid.log ]; then
 	sed -i '/\/var\/lib\/xgrid/d' /etc/exports
 	sed -i '/\/opt/d' /etc/exports
 	sed -i '/\/omaha-beach/d' /etc/fstab
+	sed -i '/\/db/d' /etc/fstab
 	umount /omaha-beach
+	umount /db
 
 	# remove chef validation key
 	if [ -e /usr/share/xgrid/chef_keys/chef-validator.pem ]; then

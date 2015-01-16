@@ -41,15 +41,22 @@ if [ -e /var/lib/xgrid/firstboot ]; then
 
   apt-get update
 
-  # Mount omaha-beach
-  echo "Mount user esb"
-  mkdir -p /omaha-beach
-
+  # /omaha-beach config
   if [ -n "$SHAREDFS" ]; then
+    mkdir -p /omaha-beach
+    echo "Mount /omaha-beach"
     echo $SHAREDFS" /omaha-beach   nfs _netdev,defaults  0  0" >> /etc/fstab
-    mount -a
   fi
 
+  # /db config
+  if [ -n "$DATABANKS" ]; then
+    echo "Mount /db"
+    mkdir -p /db
+    echo $DATABANKS" /db nfs  ro  0  0" >> /etc/fstab
+  fi
+
+  # Mount all stuff from /etc/fstab
+  mount -a
 
   if [ -n "$DOMAIN" ]; then
     domainname $DOMAIN
@@ -71,8 +78,12 @@ if [ -e /var/lib/xgrid/firstboot ]; then
     sed -i '/xgrid/d' /etc/exports
     echo "/var/lib/xgrid "$MASK"/255.255.255.0(rw,sync,no_subtree_check,no_root_squash)" >> /etc/exports
     echo "/opt "$MASK"/255.255.255.0(rw,sync,no_subtree_check,no_root_squash)" >> /etc/exports
+
     # Web frontend
+    echo "Install gem libraries"
     gem install dm-core dm-sqlite-adapter dm-migrations amazon-ec2 rack rack-protection --no-ri --no-rdoc
+
+    echo "Xgrid configuration"
     if [ -n $XGRID_AMI ]; then
     sed -i "s/@@ami = '.*'/@@ami = '"$XGRID_AMI"'/" /usr/share/xgrid/web/xgridconfig.rb
     fi
@@ -94,6 +105,7 @@ if [ -e /var/lib/xgrid/firstboot ]; then
     # Mysql, listen on all interfaces
     sed -i "s/127.0.0.1/0.0.0.0/" /etc/mysql/my.cnf
     service mysql restart
+    echo "Starting xgrid web server"
     echo "Starting xgrid web server" >> /var/log/xgrid.log
 
     # edit the welcome apache page
@@ -101,10 +113,12 @@ if [ -e /var/lib/xgrid/firstboot ]; then
 
   else
     # This is a xgrid node
+    echo "mount shared directory"
     mount -t nfs -o vers=3 $XGRIDMASTER:/var/lib/xgrid/rrdcollect /var/lib/xgrid/rrdcollect
     mount -t nfs -o vers=3 $XGRIDMASTER:/opt /opt
 
     # RRD collect
+    echo "rddcollect configuration"
     xgrid-rrdcreate $HOSTNAME.$DOMAIN
     echo "step = 60" > /etc/rrdcollect.conf
     echo "directory = /var/lib/xgrid/rrdcollect/"$HOSTNAME.$DOMAIN >> /etc/rrdcollect.conf
