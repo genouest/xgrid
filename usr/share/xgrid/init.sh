@@ -31,6 +31,7 @@ if [ -z $XGRID_EC2_PORT ]; then
   export XGRID_EC2_PORT=4567
 fi
 
+
 if [ -e /var/lib/xgrid/firstboot ]; then
 
   apt-get update
@@ -57,6 +58,12 @@ if [ -e /var/lib/xgrid/firstboot ]; then
     echo $HOSTNAME > /etc/hostname
     echo $IP" "$HOSTNAME.$DOMAIN" "$HOSTNAME >> /etc/hosts
     hostname $HOSTNAME
+  fi
+
+  ssh-keygen -f ~/.ssh/id_rsa -t rsa -N ''
+
+  if [ -n "$XGRID_ROOT_SSHKEY" ]; then
+    echo $XGRID_ROOT_SSHKEY >> ~/.ssh/authorized_keys
   fi
 
 

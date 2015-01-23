@@ -3,6 +3,8 @@ require 'sinatra/base'
 require 'xgridconfig.rb'
 require 'xgridnode.rb'
 require 'AWS'
+require 'tempfile'
+require 'time'
 
 # Add class to dashboard routes if set in configuration
 if File.exists?( '/etc/xgrid/xgrid.yaml' )
@@ -93,6 +95,10 @@ post '/admin/sge/slots' do
   redirect XgridConfig.baseurl+'/admin/sge'
 end
 
+post '/admin/sge/fabric' do
+  fabricnode(params[:script])
+  redirect XgridConfig.baseurl+'/admin/sge'
+end
 
 ##
 # Sends an EC2 request for a new node
@@ -108,9 +114,15 @@ def requestnewnode(ami,type)
   node.status = 1
   node.save
 
+  ssh_pub_key = ""
+  if File.exists?("/root/.ssh/id_rsa.pub")
+    file = File.open("/root/.ssh/id_rsa.pub", "rb")
+    ssh_pub_key = "\nXGRID_ROOT_SSHKEY=\""+file.read+"\""
+  end
+
   ec2 = AWS::EC2::Base.new(:access_key_id => ec2_access_key, :secret_access_key => ec2_secret_key, :server => XgridConfig.url, :port => XgridConfig.port.to_i, :use_ssl => false)
   apikey = XgridConfig.apikey
-  user_data = "SGE=\"node\"\nSGEMASTER=\""+XgridConfig.ip+"\"\nXGRIDID=\""+node.id.to_s+"\"\nKEY=\""+apikey+"\"\nXGRIDMASTER=\""+XgridConfig.ip+"\"\n"
+  user_data = "SGE=\"node\"\nSGEMASTER=\""+XgridConfig.ip+"\"\nXGRIDID=\""+node.id.to_s+"\"\nKEY=\""+apikey+"\"\nXGRIDMASTER=\""+XgridConfig.ip+"\"\n"+ssh_pub_key
   begin
     response = ec2.run_instances(
               :image_id       => ami,
@@ -160,6 +172,31 @@ def updateSlotAllocation(slots)
   system("sed -e 's/slots                 1/slots                 "+slots+"/' /usr/share/xgrid/plugins/sge/templates/genocloud.queue.tpl > /tmp/genocloud.queue."+cur.to_s)
   system ("qconf  -Mq /tmp/genocloud.queue."+cur.to_s)
 
+end
+
+
+def fabricnodes(script)
+  nodes = XgridNode.all(:status => 2)
+  tmpscript = '/tmp/script'+Time.now.to_i+'.sh'
+  tmpfabric = '/tmp/fab'+Time.now.to_i+'.py'
+  File.open(tmpscript, 'w', '0755') { |file| file.write(script) }
+  nodelist = [ "localhost" ]
+  nodes.each do |node|
+    #fab command -i /root/.ssh/id_rsa -f tmpfabric
+    nodelist.push(node.name)
+  end
+  nodelist = nodelist.join(",")
+  File.open(tmpfabric, 'w', '0755') { |tmpfile|
+    tmpfile.write("#!/usr/bin/env python\n")
+    tmpfile.write("from fabric.api import *\n")
+    tmpfile.write("env.hosts = ["+nodelist+"]\n")
+    tmpfile.write("env.user = 'root'\n")
+    tmpfile.write("env.warn_only = True\n")
+    tmpfile.write("\n")
+    tmpfile.write("def command():\n")
+    tmpfile.write("    run(\""+tmpscript+"\")\n")
+  }
+  system("fab command -i /root/.ssh/id_rsa -f "+tmpfabric+" &")
 end
 
 
