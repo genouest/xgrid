@@ -1,3 +1,10 @@
+xgrid (1.3.7) UNRELEASED; urgency=medium
+
+  * Fix deletion use case on xgrid web
+  * Add root ssh key creation and copy on nodes
+
+ -- Olivier Sallou <osallou@localhost>  Fri, 23 Jan 2015 16:53:59 +0100
+
 xgrid (1.3.6) UNRELEASED; urgency=medium
 
   * Change Cookbook plugin to work with https protocol
