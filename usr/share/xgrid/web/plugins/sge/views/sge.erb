@@ -55,8 +55,8 @@
 </form>
 
 <h2>Execute bash script on all nodes (including master)</h2>
-<form action="<%= XgridConfig.baseurl %>/admin/sge/fabric" method="post">>
-<textarea name="script" placeholder="Write any bash script to execute on all nodes such as apt-get install XXX etc..."></textarea>
+<form action="<%= XgridConfig.baseurl %>/admin/sge/fabric" method="post">
+<textarea rows="20" cols="80" name="script" placeholder="Write any bash script to execute on all nodes such as apt-get install XXX etc..."></textarea>
 </form>
 <h2>List of jobs</h2>
 <div id="qstat">

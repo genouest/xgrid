@@ -93,8 +93,10 @@ end
 
 post '/admin/node/delete/:id' do
   node = XgridNode.get(params[:id])
-  deletenode(node)
-  node.destroy
+  if ! node.name.empty?
+    deletenode(node)
+    node.destroy
+  end
   redirect settings.baseurl+'/admin'
 end
 
@@ -102,8 +104,10 @@ post '/admin/node/delete' do
  # delete all nodes
  nodes = XgridNode.all
  nodes.each do |node|
-   deletenode(node)
-   node.destroy
+  if ! node.name.empty?
+    deletenode(node)
+    node.destroy
+  end
  end
  redirect settings.baseurl+'/admin'
 end
