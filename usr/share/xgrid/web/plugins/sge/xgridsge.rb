@@ -194,7 +194,8 @@ def fabricnodes(script)
     tmpfile.write("env.warn_only = True\n")
     tmpfile.write("\n")
     tmpfile.write("def command():\n")
-    tmpfile.write("    run(\""+tmpscript+"\")\n")
+    tmpfile.write("    put(\""+tmpscript+", \"/tmp/script.sh\", mode=0755")
+    tmpfile.write("    run(\"/tmp/script.sh\")\n")
   }
   system("fab command -i /root/.ssh/id_rsa -f "+tmpfabric+" &")
 end
