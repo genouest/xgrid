@@ -117,7 +117,7 @@ def requestnewnode(ami,type)
   ssh_pub_key = ""
   if File.exists?("/root/.ssh/id_rsa.pub")
     file = File.open("/root/.ssh/id_rsa.pub", "rb")
-    ssh_pub_key = "\nXGRID_ROOT_SSHKEY=\""+file.read+"\""
+    ssh_pub_key = "\nXGRID_ROOT_SSHKEY=\""+file.read.gsub(/\r/,"").gsub(/\n/,"").strip+"\""
   end
 
   ec2 = AWS::EC2::Base.new(:access_key_id => ec2_access_key, :secret_access_key => ec2_secret_key, :server => XgridConfig.url, :port => XgridConfig.port.to_i, :use_ssl => false)
@@ -175,18 +175,18 @@ def updateSlotAllocation(slots)
 end
 
 
-def fabricnodes(script)
+def fabricnode(script)
   nodes = XgridNode.all(:status => 2)
-  tmpscript = '/tmp/script'+Time.now.to_i+'.sh'
-  tmpfabric = '/tmp/fab'+Time.now.to_i+'.py'
-  File.open(tmpscript, 'w', '0755') { |file| file.write(script) }
+  tmpscript = '/tmp/script'+Time.now.to_i.to_s+'.sh'
+  tmpfabric = '/tmp/fab'+Time.now.to_i.to_s+'.py'
+  File.open(tmpscript, 'w', 0755) { |file| file.write(script) }
   nodelist = [ "localhost" ]
   nodes.each do |node|
     #fab command -i /root/.ssh/id_rsa -f tmpfabric
     nodelist.push(node.name)
   end
-  nodelist = nodelist.join(",")
-  File.open(tmpfabric, 'w', '0755') { |tmpfile|
+  nodelist = nodelist.map { |s| "'#{s}'" }.join(',')
+  File.open(tmpfabric, 'w', 0755) { |tmpfile|
     tmpfile.write("#!/usr/bin/env python\n")
     tmpfile.write("from fabric.api import *\n")
     tmpfile.write("env.hosts = ["+nodelist+"]\n")
@@ -194,9 +194,10 @@ def fabricnodes(script)
     tmpfile.write("env.warn_only = True\n")
     tmpfile.write("\n")
     tmpfile.write("def command():\n")
-    tmpfile.write("    put(\""+tmpscript+", \"/tmp/script.sh\", mode=0755")
+    tmpfile.write("    put(\""+tmpscript+"\", \"/tmp/script.sh\", mode=0755)\n")
     tmpfile.write("    run(\"/tmp/script.sh\")\n")
   }
+  system("dos2unix "+tmpscript)
   system("fab command -i /root/.ssh/id_rsa -f "+tmpfabric+" &")
 end
 

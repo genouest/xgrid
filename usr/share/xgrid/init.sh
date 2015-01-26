@@ -73,10 +73,14 @@ if [ -e /var/lib/xgrid/firstboot ]; then
     hostname $HOSTNAME
   fi
 
-  ssh-keygen -f ~/.ssh/id_rsa -t rsa -N ''
+  if [ ! -e "/root/.ssh" ]; then
+    mkdir -p /root/.ssh
+  fi
 
+  ssh-keygen -f /root/.ssh/id_rsa -t rsa -N ''
+  cat /root/.ssh/id_rsa.pub >>  /root/.ssh/authorized_keys
   if [ -n "$XGRID_ROOT_SSHKEY" ]; then
-    echo $XGRID_ROOT_SSHKEY >> ~/.ssh/authorized_keys
+    echo $XGRID_ROOT_SSHKEY >> /root/.ssh/authorized_keys
   fi
 
 
