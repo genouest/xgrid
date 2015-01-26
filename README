@@ -24,3 +24,7 @@ XGRIDID="1"
 KEY="xxxxxxxx"
 
 The password in xgridconfig.rb is unique and generated at instance startup.
+
+# Package requirements
+
+python-dev, python-pip, fabric, dos2unix
