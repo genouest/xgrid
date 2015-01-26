@@ -182,13 +182,6 @@ def requestaddnode()
 
 end
 
-def fabricnodes()
-  nodes = XgridNode.all
-  nodes.each do |node|
-  #fab command -i /root/.ssh/id_rsa -f testfab.py
-  end 
-
-end
 
 def deletenode(node)
   if node.name.empty?
