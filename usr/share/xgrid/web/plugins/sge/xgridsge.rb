@@ -182,7 +182,6 @@ def fabricnode(script)
   File.open(tmpscript, 'w', 0755) { |file| file.write(script) }
   nodelist = [ "localhost" ]
   nodes.each do |node|
-    #fab command -i /root/.ssh/id_rsa -f tmpfabric
     nodelist.push(node.name)
   end
   nodelist = nodelist.map { |s| "'#{s}'" }.join(',')
