@@ -96,7 +96,7 @@ post '/admin/sge/slots' do
 end
 
 post '/admin/sge/fabric' do
-  fabricnode(params[:script])
+  fabricnode(params[:script], params[:localhost])
   redirect XgridConfig.baseurl+'/admin/sge'
 end
 
@@ -175,12 +175,16 @@ def updateSlotAllocation(slots)
 end
 
 
-def fabricnode(script)
+def fabricnode(script, localhost)
   nodes = XgridNode.all(:status => 2)
   tmpscript = '/tmp/script'+Time.now.to_i.to_s+'.sh'
   tmpfabric = '/tmp/fab'+Time.now.to_i.to_s+'.py'
   File.open(tmpscript, 'w', 0755) { |file| file.write(script) }
+  if localhost == "true"
   nodelist = [ "localhost" ]
+  else
+  nodelist = []
+  end
   nodes.each do |node|
     nodelist.push(node.name)
   end
@@ -197,7 +201,7 @@ def fabricnode(script)
     tmpfile.write("    run(\"/tmp/script.sh\")\n")
   }
   system("dos2unix "+tmpscript)
-  system("fab command -i /root/.ssh/id_rsa -f "+tmpfabric+" &")
+  system("fab command -i /root/.ssh/id_rsa -f "+tmpfabric+" >> /var/log/xgrid_fabric.log &")
 end
 
 

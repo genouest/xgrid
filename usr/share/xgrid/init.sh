@@ -77,6 +77,7 @@ if [ -e /var/lib/xgrid/firstboot ]; then
     mkdir -p /root/.ssh
   fi
 
+  # create the SSH key for the virtual machine
   ssh-keygen -f /root/.ssh/id_rsa -t rsa -N ''
   cat /root/.ssh/id_rsa.pub >>  /root/.ssh/authorized_keys
   if [ -n "$XGRID_ROOT_SSHKEY" ]; then

@@ -1,3 +1,13 @@
+<script language="javascript" type="text/javascript" src="/xgrid/js/editarea_0_8_2/edit_area/edit_area_full.js"></script>
+<script language="javascript" type="text/javascript">
+editAreaLoader.init({
+	id : "bashscript"		// textarea id
+	,syntax: "bash"			// syntax to be uses for highgliting
+	,start_highlight: true		// to display with highlight mode on start-up
+	,display: "later"
+});
+</script>
+
 <script>
         $(function() {
                 $( "#slider" ).slider({
@@ -23,7 +33,6 @@
 </tr>
 </table>
 </form>
-
 <h2>Request a new grid node</h2>
 <form action="<%= XgridConfig.baseurl %>/admin/sge" method="post">
  <table class="tabids">
@@ -54,15 +63,24 @@
  </table>
 </form>
 
-<h2>Execute bash script on all nodes (including master)</h2>
+<h2>Execute bash script on all nodes</h2>
+<% header = "#!/bin/bash\n# write any bash command to execute on all nodes\n# example: apt-get install -y xxxxx\n# example: mkdir /opt/xxxx" %>
 <form action="<%= XgridConfig.baseurl %>/admin/sge/fabric" method="post">
 <table>
 <tr><td>
-<textarea rows="20" cols="80" name="script" placeholder="Write any bash script to execute on all nodes such as apt-get install -y XXX etc...">#!/bin/bash</textarea>
-</td><td>
+<textarea id="bashscript" rows="20" cols="80" name="script">
+<%= header %>
+</textarea>
+</td></tr>
+<tr><td>
+<input type="checkbox" name="localhost" value="true" checked="true"> Also running on the master
+</td></tr>
 <tr><td><input type="submit" value="Execute on all nodes" /></td></tr>
 </table>
 </form>
+
+<p>You can check details on the execution by consulting the /var/log/xgrid_fabric.log file within your virtual machine.</p>
+
 
 <h2>List of jobs</h2>
 <!--% unless @qstat.nil? || @qstat == "" %-->

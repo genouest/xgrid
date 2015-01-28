@@ -24,6 +24,11 @@ if [ -e /var/log/xgrid.log ]; then
 	umount /omaha-beach
 	umount /db
 
+	# remove ssh key
+	rm /root/.ssh/id_rsa
+        rm /root/.ssh/id_rsa.pub
+
+
 	# remove chef validation key
 	if [ -e /usr/share/xgrid/chef_keys/chef-validator.pem ]; then
 		rm /usr/share/xgrid/chef_keys/chef-validator.pem
