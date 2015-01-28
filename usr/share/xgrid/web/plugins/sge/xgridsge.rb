@@ -41,7 +41,7 @@ class XgridSge < Sinatra::Base
   disable :protection
 
 error do
-  'Error occured' + env['sinatra.error'].message
+  '<h1>Error occured</h1><p>' + env['sinatra.error'].message + '</p><p>Please check your <a href="'+XgridConfig.baseurl+'/admin/ec2">EC2 access</a></p>'
 end
 
 
