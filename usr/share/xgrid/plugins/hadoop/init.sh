@@ -140,7 +140,7 @@ if [ "$HADOOP" == "master" ]; then
   /etc/init.d/hadoop-jobtracker  start
 
 # edit the welcome apache page
-echo '<html><body><h1>It works!</h1><p>Welcome to your virtual machine</p><p>You can access to <b>Xgrid</b> manager to deploy your Hadoop cluster <a href="/xgrid">here</a></p></body></html>' > /var/www/index.html
+sed -i "s/<\/div><div class=\"footer\">/<h2>Hadoop management<\/h2><p>You can access to <b>Xgrid<\/b> manager to deploy your Hadoop cluster <a href=\"\/xgrid\">here<\/a><\/p><\/div><div class=\"footer\">/" /var/www/index.html
 
 fi
 if [ "$HADOOP" == "node" ]; then

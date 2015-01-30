@@ -1,16 +1,20 @@
-<h1>Node</h1>
-<p>Id: <%= @node.id %></p>
-<p>Name: <%= @node.name %></p>
-<p>Status: <%= @node.status %></p>
+<div>
+<form action="<%= XgridConfig.baseurl+"/admin/node/delete/"+@node.id.to_s %>" method="post">
+<input id="delete_node" type="submit" value="delete this node"/>
+</form>
+<h1><% if @node.name == '' %> <i>not defined</i> <% else %> <%= @node.name %> <% end %></h1>
+<hr>
+</div>
 <% if !@node.info.nil? && ! @node.info.empty? %>
 <p>Info: <%= @node.info %></p>
 <% end %>
 <% if ! @node.name.empty? %>
+<h2>Real memory usage</h2>
 <p>
-<img src="<%= settings.baseurl %>/images/rrd/mem-<%= @node.name %>.png" class="rrd"></td><td><img src="<%= settings.baseurl %>/images/rrd/cpu-<%= @node.name %>.png" class="rrd">
+<img src="<%= settings.baseurl %>/images/rrd/mem-<%= @node.name %>.png" class="rrd">
+</p>
+<h2>Real CPU usage</h2>
+<p>
+<img src="<%= settings.baseurl %>/images/rrd/cpu-<%= @node.name %>.png" class="rrd">
 </p>
 <% end %>
-<img id="trash"  src="<%= XgridConfig.baseurl %>/images/trash.png" alt="Delete all nodes"/>
-<form action="<%= XgridConfig.baseurl+"/admin/node/delete/"+@node.id.to_s %>" method="post">
-<input type="submit" value="delete this node"/>
-</form>

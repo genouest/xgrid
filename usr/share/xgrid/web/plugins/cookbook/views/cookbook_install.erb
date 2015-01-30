@@ -1,7 +1,6 @@
 <h1>Cookbook "<%= @cookbook_name %>"</h1>
 <p>A cookbook installation may take a few minutes. Click the install button to begin the process.</p>
 <h2>Installation</h2>
-<img id="install" src="<%= XgridConfig.baseurl %>/images/logo_install.png" alt="Install this cookbook"/>
 <form action="<%= XgridConfig.baseurl+"/admin/cookbook/install/"+@cookbook_name %>" method="post">
 <input type="submit" value="<%= @cookbook_name %> installation" />
 </form>

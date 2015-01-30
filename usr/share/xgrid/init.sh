@@ -77,7 +77,6 @@ if [ -e /var/lib/xgrid/firstboot ]; then
     mkdir -p /root/.ssh
   fi
 
-  # create the SSH key for the virtual machine
   ssh-keygen -f /root/.ssh/id_rsa -t rsa -N ''
   cat /root/.ssh/id_rsa.pub >>  /root/.ssh/authorized_keys
   if [ -n "$XGRID_ROOT_SSHKEY" ]; then
@@ -107,6 +106,8 @@ if [ -e /var/lib/xgrid/firstboot ]; then
     # @@baseurl = ''
     LASTIP=`echo $IP| cut -d"." -f4`
     sed -i "s/@@baseurl = '.*'/@@baseurl = 'http:\/\/cloud-"$LASTIP".genouest.org\/xgrid'/" /usr/share/xgrid/web/xgridconfig.rb
+
+    # XGRID PASSWORD
     if [ -z $XGRID_PWD ]; then
     	XGRID_PWD=$(makepasswd --char=10)
     fi
@@ -121,7 +122,17 @@ if [ -e /var/lib/xgrid/firstboot ]; then
     echo "Starting xgrid web server" >> /var/log/xgrid.log
 
     # edit the welcome apache page
-    echo '<html><body><h1>It works!</h1><p>Welcome to your virtual machine</p></body></html>' > /var/www/index.html
+    echo '<html><head><link rel="stylesheet" href="/xgrid/css/xgrid.css" type="text/css"></head>' > /var/www/index.html
+    echo '<body>' >> /var/www/index.html
+    echo '<div class="header"></div>' >> /var/www/index.html
+    echo '<div class="content">' >> /var/www/index.html
+    echo '<h1>Welcome to your Genocloud virtual machine ('$IP', port 80)</h1>' >> /var/www/index.html
+    echo '<hr><br />' >> /var/www/index.html
+    # xgrid plugin generate infos here
+    echo '</div><div class="footer"></div>' >> /var/www/index.html
+    echo '</body></html>' >> /var/www/index.html
+
+    #echo '<html><body><h1>It works!</h1><p>Welcome to your virtual machine</p></body></html>' > /var/www/index.html
 
   else
     # This is a xgrid node

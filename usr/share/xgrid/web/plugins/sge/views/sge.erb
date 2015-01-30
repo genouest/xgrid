@@ -24,6 +24,7 @@ editAreaLoader.init({
 </script>
 
 <h1>Sun Grid Engine management</h1>
+<hr>
 <h2>Configuration</h2>
 <form action="<%= XgridConfig.baseurl %>/admin/sge/slots" method="post">
 <table>
@@ -34,6 +35,7 @@ editAreaLoader.init({
 </table>
 </form>
 <h2>Request a new grid node</h2>
+<p>You can found the image name by clicking <a href="http://genocloud.genouest.org/wordpress/?p=336" target="_blank"> here</a>.</p>
 <form action="<%= XgridConfig.baseurl %>/admin/sge" method="post">
  <table class="tabids">
  <tr>
@@ -51,10 +53,13 @@ editAreaLoader.init({
  <% end %>
  </select></td>
  </tr><tr>
- <td colspan="2">
-  <p>
-  <label for="quantity">Quantity:</label><input type="text" name="quantity" id="quantity" style="border:0; color:#f6931f; font-weight:bold;"/>
-  </p>
+ <td>
+  <label for="quantity">Quantity:</label>
+ </td>
+ <td>
+   <input type="text" name="quantity" id="quantity" style="border:0; color:#f6931f; font-weight:bold;"/>
+ </td></tr>
+ <tr><td>&nbsp;</td><td>
   <div id="slider"></div>
  </td>
  </tr><tr>
@@ -62,6 +67,7 @@ editAreaLoader.init({
  </tr>
  </table>
 </form>
+
 
 <h2>Execute bash script on all nodes</h2>
 <% header = "#!/bin/bash\n# write any bash command to execute on all nodes\n# example: apt-get install -y xxxxx\n# example: mkdir /opt/xxxx" %>
@@ -78,7 +84,6 @@ editAreaLoader.init({
 <tr><td><input type="submit" value="Execute on all nodes" /></td></tr>
 </table>
 </form>
-
 <p>You can check details on the execution by consulting the /var/log/xgrid_fabric.log file within your virtual machine.</p>
 
 
@@ -87,7 +92,7 @@ editAreaLoader.init({
 <% if @qstat == "" %>
 <p> No jobs running </p>
 <% else %>
-<table class="tabnodes">
+<table id="tab_jobs" class="tab_nodes">
 <tr>
 <td><label>job-ID</label></td>
 <td><label>prior</label></td>

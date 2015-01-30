@@ -1,35 +1,70 @@
 <h1>Administration section</h1>
+<hr>
+
 <p>
 This administration page gives you an EC2 access and informations about your nodes.
 <p>
-<h2>Update EC2 access</h2>
-<% if  @ec2.length==0 %>
-  <p>EC2 parameters are not set, they are needed to add new nodes</p>
-<% end %>
-<form action="<%= settings.baseurl %>/admin/ec2">
-<input type="submit" value="Update"/>
-</form>
-<h2>Remote API</h2>
-<p>You can manage your cloud with the API key below.</p>
-<p><b>API key</b> : <%= settings.apikey %></p>
+
+<div>
+  <div class="block">
+   <h2>Update EC2 access</h2>
+   <p> EC2 identification is necessary to use the SGE, Hadoop or Manband plugin. </p>
+   <% if  @ec2.length==0 %>
+     <p>EC2 parameters are not set, they are needed to add new nodes</p>
+   <% end %>
+   <form action="<%= settings.baseurl %>/admin/ec2">
+   <input type="submit" value="Update"/>
+   </form>
+  </div>
+
+  <div class="last-block">
+   <h2>Remote API</h2>
+   <p>You can manage your cloud with the API key below.</p>
+   <p><b>API key</b> : <%= settings.apikey %></p>
+  </div>
+</div>
 
 <h2>Nodes information</h2>
 <% if @nodes && @nodes.length>0 %>
-    <table class="tabnodes">
-        <tr><td><label>Node id</label></td><td><label>Host name</label></td><td><label>Status (1=pending, 2=ok)</label></td><td><label>System statistical viewer</label></td></tr>
+<p>Below general informations about all nodes deployed. </p>
+<p>Please click on the System statistical viewer previews to have more details about RAM and CPU usage.</p>
+    <table class="tab_nodes">
+       <thead>
+        <tr>
+	<th><label>Node id</label></th>
+	<th><label>Host name</label></th>
+	<th><label>Status</label></th>
+	<th><label>System statistical viewer</label></th>
+	</tr>
+       </thead>
+       <tbody>
         <%@nodes.each do |r|%>
         <tr valign="top">
-            <td><a href="<%= settings.baseurl %>/admin/node/<%=r.id%>"><%=r.id%></a></td><td><%=r.name%></td><td><%=r.status%></td>
+            <td><a href="<%= settings.baseurl %>/admin/node/<%=r.id%>"><%=r.id%></a></td>
+	    <td>
+		<% if r.name != '' %> <%=r.name%> <% else %> <i>not defined</i> <% end %>
+		<!-%=r.name%-->
+	    </td>
+	    <!--td><%=r.status%></td-->
+            <td><% if r.status == 1 %> <i>pending</i> <% else %> running <% end %></td>
             <% if ! r.name.empty? %>
-            <td><img src="<%= settings.baseurl %>/images/rrd/mem-<%= r.name %>.mini.png" class="rrd"><img src="<%= settings.baseurl %>/images/rrd/cpu-<%= r.name %>.mini.png" class="rrd"></td>
+            <td>
+		<a href="<%= settings.baseurl %>/admin/node/<%=r.id%>">
+		<img src="<%= settings.baseurl %>/images/rrd/mem-<%= r.name %>.mini.png" class="rrd">
+		<img src="<%= settings.baseurl %>/images/rrd/cpu-<%= r.name %>.mini.png" class="rrd">
+		</a>
+	    </td>
+	    <% else %>
+	      <td><i>informations not available</i></td>
             <% end %>
         </tr>
         <%end%>
+      </tbody>
     </table>
-<h2>Nodes deletion</h2>
-     <img id="trash"  src="<%= XgridConfig.baseurl %>/images/trash.png" alt="Delete all nodes"/>
+
+     <!--img id="trash"  src="<%= XgridConfig.baseurl %>/images/trash.png" alt="Delete all nodes"/-->
    <form action="<%= XgridConfig.baseurl+"/admin/node/delete" %>" method="post">
-     <input type="submit" value="delete all nodes"/>
+     <input type="submit" value="delete all nodes" id="delete_nodes"/>
    </form>
 
 <% else %>

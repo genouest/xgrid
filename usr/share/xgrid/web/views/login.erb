@@ -1,35 +1,22 @@
 <div>
-<h1>Welcome to Xgrid</h1>
-<p>
+<p class="welcome-text">
 XGrid is an internal tool developed to ease the deployment of tools in the cloud.
-</p>
-<p>
-It is used to setup Hadoop, SGE or manband workflows environments and can be extended with plugins to get more.
+<br /><br />
+It is used to setup Hadoop, SGE or manband workflows environments and to use the CHEF cookbooks installation plugin.
 </p>
 <br/>
-<form action="<%= settings.baseurl %>/login" method="post">
-<table class="tabids">
-<caption>Enter your Xgrid credentials</caption>
-<tr>
-<td>
-<label for="login">Login</label>
-</td>
-<td>
-<input type="text" id="login" name="login" value="admin"></input>
-</td>
-</tr>
-<tr>
-<td>
-<label for="password">Password</label>
-</td>
-<td>
-<input type="password" id="password" name="password"></input>
-<tr>
-<td colspan="2">
-<input type="submit"></input>
-</td>
-</tr>
-</table>
+
+<div class="auth-form">
+  <p>Enter your Xgrid credentials</p>
+  <form action="<%= settings.baseurl %>/login" method="post">
+  
+    <input type="text" id="login" name="login" value="admin" class="input-text-field color-black"></input>
+    <input type="password" id="password" name="password" placeholder="password" class="input-text-field"></input>
+    <input type="submit" id="input-submit" value="Log In"></input>
+
 </form>
 </div>
-<div class="info">Generated <b>admin</b> password can be found inside the <b>/root/admin_pwd</b> file</div>
+</div>
+
+<div class="info">Generated <b>admin</b> password was created by the user at the creation of the virtual machine.</div>
+<div class="info"> However, it can be found inside the <b>/root/admin_pwd</b> file inside the virtual machine.</div>

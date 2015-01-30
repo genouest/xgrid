@@ -1,3 +1,4 @@
+/* REDEFINITION OF NATIVE TYPES */ 
 
 body { background: none repeat scroll 0 0 #E2E2E2;
     color: #000000;
@@ -8,68 +9,38 @@ body { background: none repeat scroll 0 0 #E2E2E2;
     margin: auto;
     width: 1200px;}
 
-/* table section*/
-
-.tabnodes { 
-border-width:1px; 
-border-style:solid; 
-border-color: #666666;
-margin-top: 13x;
-margin-bottom: 20px;}
-
-.tabnodes label{
-color: #666666;
-font-weight:bold;
-}
-
-.tabnodes td{
-
-padding-right: 40px;
-}
-
-.tabids caption{
-    color: #045980;
-    font-size: 1.1em;
+h1{ color: #444;
+    font-size: 28px;
     font-style: normal;
+    font-family: "Helvetica Neue",Helvetica,Arial,sans-serif;
+    font-weight: lighter;
     line-height: 1.2;
-    margin-bottom: 2%;
-    margin-left: 0.5%;
-    margin-top: 2%;
-    text-shadow: 2px 2px 2px #DDCCB5;}
-
-.tabids label{color: ffffff;}
-
-
-tbody{margin: 4px;}
-
-td { padding: 10px; color: #666666;}
-
-
-/* text section */
-
-h1{ color: #045980;
-    font-size: 2.2em;
-    font-style: normal;
-    line-height: 1.2;
-    margin-bottom: 2%;
+    margin-bottom: 5px;
     margin-top: 3%;
-    text-shadow: 2px 2px 2px #DDCCB5;
-    font-weight: bold;}
+   }
 
-h2{ color: #045980;
+h2{ color: #787878;
+    background-color: #E0E0E0;
+    padding: 6px 10px;
     font-size: 2.em;
     font-style: normal;
+    font-weight: lighter;
     line-height: 1.2;
-    margin-bottom: 1%;
+    margin-bottom: 3%;
     margin-left: 0.5%;
     margin-top: 50px;
-    text-shadow: 2px 2px 2px #DDCCB5;}
+    clear:both;
+}
 
 p {
     color: #666666;
     font-size: 14px;
     margin-left: 2%;
 }
+
+tbody{margin: 4px;}
+
+td { padding: 10px; color: #666666;}
 
 a {
     text-decoration: none;
@@ -97,12 +68,98 @@ code {
     color: #666666;
 }
 
+hr
+{
+  color : #F0F0F0;
+}
 
-/* image section */
+input[type="submit"]
+{
+  height: 30px;
+  background-color: #303030;
+  color: #ffffff;
+  border: none;
+  border-radius: 3px;
+  cursor: pointer;
+  vertical-align: middle;
+}
+
+/* TABLE SECTION */
+.tabids {
+  width: 40%;
+  margin: 50px auto;
+  background-color: #f2f2f2;
+  padding: 20px 12px;
+  border: 1px solid #B8B8B8;
+  border-radius: 3px;
+  color: #808080;
+}
+
+#quantity
+{
+ width: 10%;
+ text-align: center;
+}
+
+.tabids td:nth-child(1) 
+{
+   border-right: solid 1px #e0e0e0;
+}
+
+.tabids tr:nth-last-child(1) td
+{
+  border : none;
+}
+
+.tabnodes { 
+border-width:1px; 
+border-style:solid;
+border-color: #666666;
+margin-top: 13x;
+margin-bottom: 20px;}
+
+.tabnodes label{
+color: #666666;
+font-weight:bold;
+}
+
+.tabnodes td{
+
+padding-right: 40px;
+}   
+    
+.tabids caption{ 
+    color: #303030;
+    font-size: 1.1em;
+    font-style: normal;
+    line-height: 1.2;
+    margin-bottom: 2%;
+    margin-left: 0.5%;
+    margin-top: 2%;
+}
+
+.tabids input[type="submit"]
+{
+  width : 100%;
+  margin: auto;
+
+}
+
+.tabids select
+{
+    background: none repeat scroll 0 0 transparent;
+    background-color: #e0e0e0;
+    border: solid 1px #808080;
+    font-size: 14px;
+    height: 29px;
+    padding: 5px;
+    width: 100%
+}
+
+/* image section */ 
 
 .content img{
     margin-right: 4px;
-    margin-bottom: 10px;
 }
 
 .content button img{
@@ -115,7 +172,7 @@ code {
 
 /* body contents */
 
-.header { min-height: 75px; width: 100%; margin-top: 2%; background-image: url("../images/header.png");}
+.header { min-height: 75px; width: 100%; margin-top: 2%; background-image: url("/xgrid/images/header.png");}
 
 .logo { margin-left: 45%; height: 100px; width: 110px;}
 .logo:after { clear: both; }
@@ -123,9 +180,9 @@ code {
 .menu {  width: 100%; margin: auto; border-right-width: 8px; }
 
 .item { display: inline-block;
-        padding-top: 0.8%; padding-left: 2.2%; padding-bottom: 0.8%; padding-right: 2.2%;
-	border-right-style: solid; border-right-color: ffffff; border-right-width: 3px;
-	
+        height:100%;
+        padding: 0 30px;
+	border-right-style: solid; border-right-color: ffffff; border-right-width: 1px;
 }
 
 .item a {
@@ -136,10 +193,16 @@ code {
     text-decoration: none;
     z-index: 9;
     text-align: center;
+    position: relative; top:30%;
 }
 
+.item:first-child
+{
+  background-color:#e15050;
+  font-weight: bold;
+}
 
-.items { clear: both; width: 100%; background-color: black;}
+.items { clear: both; width: 100%; background-color: #303030; height: 45px;}
 
 .band {  width: 100%;  margin: auto; height: 2.8333%; min-height: 7px; }
 
@@ -148,7 +211,7 @@ code {
 	min-height: 1200px;
 }
 
-.footer { height: 100px; width: 100%; background-image: url('../images/footer.png'); 
+.footer { height: 100px; width: 100%; background-image: url('/xgrid/images/footer.png'); 
 }
 
 .info { float: left; font-size: 1.1em; margin-left: 20%; margin-top: 18px;}
@@ -167,7 +230,6 @@ code {
 
 #install { width: 60px; }
 
-.tabids { margin: auto; width: 34%; background-color: #5c97b0; }
 
 
 /* tooltip */
@@ -185,3 +247,133 @@ code {
     background-color:#000;
     padding:5px 5px 5px 15px;
 } 
+
+/* CLASSES */
+
+.block
+{
+  float: left;
+  width: 48%;
+  margin-right: 2%;
+  margin-bottom: 40px;
+}
+
+.last-block
+{
+  float: left;
+  clear: right;
+  width: 50%;
+}
+
+.welcome-text
+{
+  text-align: center;
+  font-size: 1.8em;
+  line-height: 1.2;
+  width: 70%;
+  margin: auto;
+}
+
+#delete_node
+{
+ float: right;
+ background-color: #e15050;
+}
+
+/* AUTHENTICATION FORM */
+
+.auth-form
+{
+  width: 35%;
+  margin: 50px auto;
+  background-color: #f2f2f2;
+  padding: 20px 12px;
+  border: 1px solid #B8B8B8;
+  border-radius: 3px;
+}
+
+.auth-form p
+{
+  text-align: center;
+  font-size: 1.8em;
+  margin-bottom: 50px;
+}
+
+.input-text-field
+{
+  width: 100%;
+  height: 40px;
+  display: block;
+  color: #808080;
+  padding: 5px 5px;
+  margin: 10px auto;
+  vertical-align: middle;
+}
+
+.color-black
+{
+ color: #000000;
+}
+
+#input-submit
+{
+  width:100%;
+  height: 50px;
+  padding: 5px 5px;
+  margin: 15px 0 20px 0;
+  background-color: #303030;
+  color: #ffffff;
+  border: none;
+  border-radius: 3px;
+  cursor: pointer;
+  vertical-align: middle;
+}
+
+/* TAB NODES */
+.tab_nodes {
+    width: 70%;
+    font-family: Helvetica, sans-serif;
+    border-collapse: collapse;
+    text-align: center;
+    margin: auto;
+    margin-top: 30px;
+    margin-bottom: 10px;
+}
+
+#tab_jobs
+{
+ width: 100%; 
+}
+
+.tab_nodes td, .tab_nodes th {
+    font-size: 1em;
+    border: 1px solid #101010;
+    padding: 3px 7px 2px 7px;
+    vertical-align: middle;
+    height: 42px;
+}
+
+.tab_nodes th {
+    font-size: 1.1em;
+    font-weight: lighter;
+    text-align: center;
+    padding-top: 3px 7px 2px 7px;
+    background-color: #303030;
+    color: #ffffff;
+}
+
+.tab_nodes tr:nth-child(even) td {
+    color: #000000;
+    background-color: #E0E0E0;
+    vertical-align: middle;
+}
+
+#delete_nodes
+{
+  margin-left : 170px;
+  padding: 0 15px;
+  background-color: #e15050;
+}
+
+
+

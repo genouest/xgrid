@@ -14,7 +14,9 @@
 </script>
 
 <h1>Hadoop management</h1>
-<h2>Request a new Hadoop node</h2>
+<hr>
+<h2>Add a new Hadoop node(s)</h2>
+<p>You can found the image name by clicking <a href="http://genocloud.genouest.org/wordpress/?p=336" target="_blank"> here</a>.</p>
 <form action="<%= XgridConfig.baseurl %>/admin/hadoop" method="post">
  <table class="tabids">
  <tr>
@@ -32,19 +34,22 @@
  <% end %>
  </select></td>
  </tr><tr>
- <td colspan="2">
-  <p>
-  <label for="quantity">Quantity:</label><input type="text" name="quantity" id="quantity" style="border:0; color:#f6931f; font-weight:bold;"/>
-  </p>
+ <td>
+  <label for="quantity">Quantity:</label>
+ </td>
+ <td><input type="text" name="quantity" id="quantity" style="border:0; color:#f6931f; font-weight:bold;"/></td>
+ <tr></tr>
+ <td>&nbsp;</td>
+ <td>
   <div id="slider"></div>
  </td>
  </tr><tr>
- <td colspan="2"><input type="submit"/></td>
+<td colspan="2"><input type="submit"/ value="Create node(s)"></td>
  </tr>
- </table>
+</table>
 </form>
 
-<h1>Manual execution</h1>
+<h2>Add manually a new Hadoop node(s)</h2>
 <p>
 Xgrid sets up a Hadoop cluster automatically in the cloud. To launch manually a node:
 <ul>
@@ -53,16 +58,15 @@ Xgrid sets up a Hadoop cluster automatically in the cloud. To launch manually a 
 <li>Start one or more nodes with the command <b>ghadoop-add-nodes</b></li>
 </ul>
 </p>
-
-<h1>HDFS</h1>
+<h2>HDFS information</h2>
 <p>HDFS directory is located in /mnt/ebs/ per node id.
 </p>
 
-<h1>Test the cluster</h1>
+<h2>Test the cluster</h2>
 <p>To test the cluster, one can use:</p>
 <code>cd /usr/share/hadoop; hadoop jar hadoop-examples-1.0.0.jar teragen 1000 in-dir</code>
 
-<h1>Monitoring</h1>
+<h2>Monitoring</h2>
 <ul>
 <li><a href="<%= XgridConfig.baseurl %>/../hdfs/">HDFS</a></li>
 <li> <a href="<%= XgridConfig.baseurl %>/../mapred/">MapRed</a></li>

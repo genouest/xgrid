@@ -63,7 +63,7 @@ if [ "$WORKFLOW" = "master" ]; then
   rackup -p 4444 -I . -D
 
   # edit the welcome apache page
-  echo '<html><body><h1>It works!</h1><p>Welcome to your virtual machine</p><p>You can access to <b>Xgrid</b> manager to deploy your Workflow cluster <a href="/xgrid">here</a></p></body></html>' > /var/www/index.html
+  sed -i "s/<\/div><div class=\"footer\">/<h2>Manband workflows<\/h2><p>You can configure <b>mandband</b> via <a href=\/xgrid>Xgrid<\/a> web application<\/p><\/div><div class=\"footer\">/" /var/www/index.html
  
 fi
 
