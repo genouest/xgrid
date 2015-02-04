@@ -16,6 +16,9 @@ if [ -e /var/log/xgrid.log ]; then
 	rm /var/lib/xgrid/manband.done
 	rm /var/lib/xgrid/sge.done
 
+	# remove chef client.pem
+	rm /usr/share/xgrid/web/chef_keys/client.pem
+
 	# remove mounts
 	sed -i '/\/var\/lib\/xgrid/d' /etc/exports
 	sed -i '/\/opt/d' /etc/exports
