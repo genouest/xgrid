@@ -24,13 +24,13 @@ if [ -e /var/log/xgrid.log ]; then
 	sed -i '/\/opt/d' /etc/exports
 	sed -i '/\/omaha-beach/d' /etc/fstab
 	sed -i '/\/db/d' /etc/fstab
-	umount /omaha-beach
-	umount /db
+
+	umount -f -l /omaha-beach
+	umount -f -l /db
 
 	# remove ssh key
 	rm /root/.ssh/id_rsa
         rm /root/.ssh/id_rsa.pub
-
 
 	# remove chef validation key
 	if [ -e /usr/share/xgrid/chef_keys/chef-validator.pem ]; then
@@ -43,7 +43,6 @@ if [ -e /var/log/xgrid.log ]; then
 
 	# create the firstboot file to init xgrid
         touch /var/lib/xgrid/firstboot
-
 
 fi
 
