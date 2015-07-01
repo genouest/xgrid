@@ -10,7 +10,7 @@ Vcs-Browser: https://gitlab.irisa.fr/xgrid/master/tree
 
 Package: xgrid
 Architecture: all
-Depends: ruby, ruby-dev, libsinatra-ruby, rubygems, sqlite3,
+Depends: ruby, ruby-dev, ruby-sinatra, rubygems, sqlite3,
  libsqlite3-dev, gcc, make, apache2,
  ruby-amazon-ec2, nfs-server|nfs-kernel-server, makepasswd,
  rrdcollect, rrdtool, git, mysql-server,

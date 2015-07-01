@@ -63,7 +63,7 @@ if [ "$WORKFLOW" = "master" ]; then
   rackup -p 4444 -I . -D
 
   # edit the welcome apache page
-  sed -i "s/<\/div><div class=\"footer\">/<h2>Manband workflows<\/h2><p>You can configure <b>mandband</b> via <a href=\/xgrid>Xgrid<\/a> web application<\/p><\/div><div class=\"footer\">/" /var/www/index.html
+  sed -i "s/<\/div><div class=\"footer\">/<h2>Manband workflows<\/h2><p>You can configure <b>mandband</b> via <a href=\/xgrid>Xgrid<\/a> web application<\/p><\/div><div class=\"footer\">/" /var/www/html/index.html
  
 fi
 

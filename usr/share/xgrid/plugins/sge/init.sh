@@ -50,7 +50,7 @@ if [ "$SGE" = "master" ]; then
   sed -i "s/modules: Xgrid/modules: Xgrid,XgridSge/" /etc/xgrid/xgrid.yaml
 
 # edit the welcome apache page
-sed -i "s/<\/div><div class=\"footer\">/<h2>SGE management<\/h2><p>You can access to <b>Xgrid<\/b> manager to deploy your SGE cluster <a href=\"\/xgrid\">here<\/a><\/p><\/div><div class=\"footer\">/" /var/www/index.html
+sed -i "s/<\/div><div class=\"footer\">/<h2>SGE management<\/h2><p>You can access to <b>Xgrid<\/b> manager to deploy your SGE cluster <a href=\"\/xgrid\">here<\/a><\/p><\/div><div class=\"footer\">/" /var/www/html/index.html
 
 
 fi

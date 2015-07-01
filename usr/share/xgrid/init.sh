@@ -122,17 +122,17 @@ if [ -e /var/lib/xgrid/firstboot ]; then
     echo "Starting xgrid web server" >> /var/log/xgrid.log
 
     # edit the welcome apache page
-    echo '<html><head><link rel="stylesheet" href="/xgrid/css/xgrid.css" type="text/css"></head>' > /var/www/index.html
-    echo '<body>' >> /var/www/index.html
-    echo '<div class="header"></div>' >> /var/www/index.html
-    echo '<div class="content">' >> /var/www/index.html
-    echo '<h1>Welcome to your Genocloud virtual machine ('$IP', port 80)</h1>' >> /var/www/index.html
-    echo '<hr><br />' >> /var/www/index.html
+    echo '<html><head><link rel="stylesheet" href="/xgrid/css/xgrid.css" type="text/css"></head>' > /var/www/html/index.html
+    echo '<body>' >> /var/www/html/index.html
+    echo '<div class="header"></div>' >> /var/www/html/index.html
+    echo '<div class="content">' >> /var/www/html/index.html
+    echo '<h1>Welcome to your Genocloud virtual machine ('$IP', port 80)</h1>' >> /var/www/html/index.html
+    echo '<hr><br />' >> /var/www/html/index.html
     # xgrid plugin generate infos here
-    echo '</div><div class="footer"></div>' >> /var/www/index.html
-    echo '</body></html>' >> /var/www/index.html
+    echo '</div><div class="footer"></div>' >> /var/www/html/index.html
+    echo '</body></html>' >> /var/www/html/index.html
 
-    #echo '<html><body><h1>It works!</h1><p>Welcome to your virtual machine</p></body></html>' > /var/www/index.html
+    #echo '<html><body><h1>It works!</h1><p>Welcome to your virtual machine</p></body></html>' > /var/www/html/index.html
 
   else
     # This is a xgrid node
