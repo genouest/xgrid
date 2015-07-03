@@ -47,9 +47,10 @@ if [ "$SGE" = "master" ]; then
   DEBIAN_FRONTEND='noninteractive' apt-get -y install gridengine-exec
 
   # Add exports
-  echo "/var/spool/gridengine 192.168.2.0/255.255.255.0(rw,sync,no_subtree_check,no_root_squash)" >> /etc/exports
-  echo "/var/lib/gridengine 192.168.2.0/255.255.255.0(rw,sync,no_subtree_check,no_root_squash)" >> /etc/exports
-  echo "/usr/lib/gridengine 192.168.2.0/255.255.255.0(rw,sync,no_subtree_check,no_root_squash)" >> /etc/exports
+  echo "/var/spool/gridengine *(rw,sync,no_subtree_check,no_root_squash)" >> /etc/exports
+  echo "/var/lib/gridengine *(rw,sync,no_subtree_check,no_root_squash)" >> /etc/exports
+  echo "/usr/lib/gridengine *(rw,sync,no_subtree_check,no_root_squash)" >> /etc/exports
+
 
   sed -i "s/modules: Xgrid/modules: Xgrid,XgridSge/" /etc/xgrid/xgrid.yaml
 
@@ -67,7 +68,13 @@ if [ "$SGE" = "node" ]; then
   mount -t nfs -o vers=3 $SGEMASTER:/usr/lib/gridengine /usr/lib/gridengine
   # Wait for DNS to be ready (5 minutes refresh)
   echo "Waiting for DNS refresh"
-  sleep 300
+  if [ -e /mnt/context.sh ]; then
+      # wait for local update
+      sleep 300
+  else
+      # Go for amazon
+      sleep 20
+  fi
   echo "Update node status"
   ruby /usr/share/xgrid/plugins/sge/sendstatus.rb --master $XGRIDMASTER --name $HOSTNAME.$DOMAIN --id $XGRIDID --key $KEY
   sleep 60

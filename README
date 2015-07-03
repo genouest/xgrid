@@ -9,6 +9,7 @@ SGE=master OR HADOOP=master
 XGRID_AMI : id of the image to use
 
 Optional:
+  XGRID_EC2_INSTANCE_TYPE: t1.micro for example (the instance type to use for nodes)
   CHEFSERVER: if cookbooks are used
   SHAREDFS: mount point
   DOMAIN: domain of the instance

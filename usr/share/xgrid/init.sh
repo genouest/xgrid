@@ -87,8 +87,8 @@ if [ -e /var/lib/xgrid/firstboot ]; then
   if [ -z $XGRIDMASTER ]; then
     # This is the xgridmaster
     sed -i '/xgrid/d' /etc/exports
-    echo "/var/lib/xgrid "$MASK"/255.255.255.0(rw,sync,no_subtree_check,no_root_squash)" >> /etc/exports
-    echo "/opt "$MASK"/255.255.255.0(rw,sync,no_subtree_check,no_root_squash)" >> /etc/exports
+    echo "/var/lib/xgrid *(rw,sync,no_subtree_check,no_root_squash)" >> /etc/exports
+    echo "/opt *(rw,sync,no_subtree_check,no_root_squash)" >> /etc/exports
 
     # Web frontend
     echo "Install gem libraries"
@@ -118,8 +118,15 @@ if [ -e /var/lib/xgrid/firstboot ]; then
     fi
     sed -i "s/@@adminpwd = '.*'/@@adminpwd = '"$XGRID_PWD"'/" /usr/share/xgrid/web/xgridconfig.rb
     echo $XGRID_PWD > /root/admin_pwd
-    export APIKEY=$(cat /dev/urandom | tr -dc 'a-zA-Z0-9' | fold -w 16 | head -n 1)
+    if [ -e /mnt/context.txt ]; then
+        export APIKEY=$(cat /dev/urandom | tr -dc 'a-zA-Z0-9' | fold -w 16 | head -n 1)
+    else
+        export APIKEY=$XGRID_PWD
+    fi
     sed -i "s/@@apikey = '.*'/@@apikey = '"$APIKEY"'/" /usr/share/xgrid/web/xgridconfig.rb
+    if [ -n "$XGRID_EC2_INSTANCE_TYPE" ]; then
+        sed -i "s/@@instancetypes = \[.*\]/@@instancetypes = \['"$XGRID_EC2_INSTANCE_TYPE"'\]/" /usr/share/xgrid/web/xgridconfig.rb
+    fi 
     # Mysql, listen on all interfaces
     sed -i "s/127.0.0.1/0.0.0.0/" /etc/mysql/my.cnf
     service mysql restart
