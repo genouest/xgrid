@@ -76,7 +76,11 @@ if [ "$SGE" = "node" ]; then
       sleep 20
   fi
   echo "Update node status"
-  ruby /usr/share/xgrid/plugins/sge/sendstatus.rb --master $XGRIDMASTER --name $HOSTNAME.$DOMAIN --id $XGRIDID --key $KEY
+  if [ -n "$DOMAIN" ]; then
+      ruby /usr/share/xgrid/plugins/sge/sendstatus.rb --master $XGRIDMASTER --name $HOSTNAME.$DOMAIN --id $XGRIDID --key $KEY
+  else
+      ruby /usr/share/xgrid/plugins/sge/sendstatus.rb --master $XGRIDMASTER --name $HOSTNAME --id $XGRIDID --key $KEY
+  fi
   sleep 60
   echo "Install grid node"
   DEBIAN_FRONTEND='noninteractive' apt-get -y install gridengine-exec
