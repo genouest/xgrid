@@ -128,7 +128,7 @@ post '/admin/ec2' do
   end
   ec2.ec2key = params[:ec2key]
   ec2.ec2pwd = params[:ec2password]
-  if not params[:ec2crypt].empty? and params[:ec2crypt].to_i == 1
+  if not params[:ec2crypt].nil? and not params[:ec2crypt].empty? and params[:ec2crypt].to_i == 1
     ec2.ec2pwd = Digest::SHA1.hexdigest(ec2.ec2pwd)
   end
   ec2.save

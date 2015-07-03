@@ -7,12 +7,10 @@ if [ ! -e /var/lib/xgrid/firstboot ]; then
   exit 0
 fi
 
-if [ ! -e /mnt/context.sh ]; then
-  echo "No context file available, exiting"
-  exit 1
+if [ -e /mnt/context.sh ]; then
+  . /mnt/context.sh
 fi
 
-. /mnt/context.sh
 
 if [ -e  /var/lib/xgrid/ec2.properties ]; then
   . /var/lib/xgrid/ec2.properties
@@ -24,7 +22,9 @@ if [ "$SGE" = "master" ]; then
   echo "Installing packages"
   DEBIAN_FRONTEND='noninteractive' apt-get -y install gridengine-master gridengine-client gridengine-drmaa1.0
   # Update config
-  sed  -i 's/none/'$DOMAIN'/' /etc/gridengine/bootstrap
+  if [ -n "$DOMAIN" ]; then
+    sed  -i 's/none/'$DOMAIN'/' /etc/gridengine/bootstrap
+  fi
   su -s /bin/sh -c "/usr/share/gridengine/scripts/init_cluster /var/lib/gridengine default /var/spool/gridengine/spooldb sgeadmin" sgeadmin
 
   # Define queue
@@ -35,7 +35,11 @@ if [ "$SGE" = "master" ]; then
   perl -p -e 's/\$\{([^}]+)\}/defined $ENV{$1} ? $ENV{$1} : $&/eg' $TEMPLATES/genocloud.user.tpl > /tmp/genocloud.user
   qconf -Auser /tmp/genocloud.user
   # Set current as submit host
-  qconf -as $HOSTNAME.$DOMAIN
+  if [ -n "$DOMAIN" ]; then
+    qconf -as $HOSTNAME.$DOMAIN
+  else
+    qconf -as $HOSTNAME
+  fi
   # Define allhosts group
   cp $TEMPLATES/genocloud.hostgroup.tpl /tmp/genocloud.hostgroup
   qconf -Ahgrp /tmp/genocloud.hostgroup
@@ -69,7 +73,9 @@ if [ "$SGE" = "node" ]; then
   sleep 60
   echo "Install grid node"
   DEBIAN_FRONTEND='noninteractive' apt-get -y install gridengine-exec
-  sed  -i 's/none/'$DOMAIN'/' /etc/gridengine/bootstrap
+  if [ -n "$DOMAIN" ]; then
+    sed  -i 's/none/'$DOMAIN'/' /etc/gridengine/bootstrap
+  fi
 fi
 
 

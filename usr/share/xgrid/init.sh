@@ -104,8 +104,13 @@ if [ -e /var/lib/xgrid/firstboot ]; then
     sed -i "s/@@hostname = '.*'/@@hostname = '"$HOSTNAME"'/" /usr/share/xgrid/web/xgridconfig.rb
 
     # @@baseurl = ''
-    LASTIP=`echo $IP| cut -d"." -f4`
-    sed -i "s/@@baseurl = '.*'/@@baseurl = 'http:\/\/cloud-"$LASTIP".genouest.org\/xgrid'/" /usr/share/xgrid/web/xgridconfig.rb
+    if [ -e /mnt/context.sh ]; then
+        LASTIP=`echo $IP| cut -d"." -f4`
+        sed -i "s/@@baseurl = '.*'/@@baseurl = 'http:\/\/cloud-"$LASTIP".genouest.org\/xgrid'/" /usr/share/xgrid/web/xgridconfig.rb
+    else
+        BASEURL=`wget -qO- http://instance-data/latest/meta-data/public-hostname`
+        sed -i "s/@@baseurl = '.*'/@@baseurl = 'http:\/\/"$BASEURL"\/xgrid'/" /usr/share/xgrid/web/xgridconfig.rb
+    fi
 
     # XGRID PASSWORD
     if [ -z $XGRID_PWD ]; then
@@ -118,8 +123,6 @@ if [ -e /var/lib/xgrid/firstboot ]; then
     # Mysql, listen on all interfaces
     sed -i "s/127.0.0.1/0.0.0.0/" /etc/mysql/my.cnf
     service mysql restart
-    echo "Starting xgrid web server"
-    echo "Starting xgrid web server" >> /var/log/xgrid.log
 
     # edit the welcome apache page
     echo '<html><head><link rel="stylesheet" href="/xgrid/css/xgrid.css" type="text/css"></head>' > /var/www/index.html
@@ -182,7 +185,8 @@ fi
 if [ -z $XGRIDMASTER ]; then
   exportfs -ra
   service nfs-kernel-server restart
-
+  echo "Starting xgrid web server"
+  echo "Starting xgrid web server" >> /var/log/xgrid.log
   service xgrid stop >> /var/log/xgrid.log
   service xgrid start >> /var/log/xgrid.log
 
