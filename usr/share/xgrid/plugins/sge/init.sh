@@ -9,6 +9,17 @@ fi
 
 if [ -e /mnt/context.sh ]; then
   . /mnt/context.sh
+else
+  . /var/lib/xgrid/ec2.properties
+  if [ "$SGE" = "master" ]; then
+      MASTERHOSTNAME=`wget -qO- http://instance-data/latest/meta-data/hostname`
+      IFS='.' read -a myarray <<< "$MASTERHOSTNAME"
+      MASTERIP=`wget -qO- http://instance-data/latest/meta-data/local-ipv4`
+      echo "$MASTERIP   ${myarray[0]}.localhost" > /opt/sgemaster
+  else
+      SLAVEHOSTNAME=`wget -qO- http://instance-data/latest/meta-data/hostname`
+      hostname $SLAVEHOSTNAME
+  fi
 fi
 
 
@@ -25,7 +36,9 @@ if [ "$SGE" = "master" ]; then
   if [ -n "$DOMAIN" ]; then
     sed  -i 's/none/'$DOMAIN'/' /etc/gridengine/bootstrap
   fi
+  echo "Ignore fqdn"
   su -s /bin/sh -c "/usr/share/gridengine/scripts/init_cluster /var/lib/gridengine default /var/spool/gridengine/spooldb sgeadmin" sgeadmin
+  sed -i "s/ignore_fqdn.*false/ignore_fqdn    true/" /var/lib/gridengine/default/common/bootstrap
 
   # Define queue
   perl -p -e 's/\$\{([^}]+)\}/defined $ENV{$1} ? $ENV{$1} : $&/eg' $TEMPLATES/genocloud.queue.tpl > /tmp/genocloud.queue
@@ -44,7 +57,10 @@ if [ "$SGE" = "master" ]; then
   cp $TEMPLATES/genocloud.hostgroup.tpl /tmp/genocloud.hostgroup
   qconf -Ahgrp /tmp/genocloud.hostgroup
 
+  service gridengine-master restart
+
   DEBIAN_FRONTEND='noninteractive' apt-get -y install gridengine-exec
+  sed -i "s/ignore_fqdn.*false/ignore_fqdn    true/" /var/lib/gridengine/default/common/bootstrap
 
   # Add exports
   echo "/var/spool/gridengine *(rw,sync,no_subtree_check,no_root_squash)" >> /etc/exports
@@ -83,10 +99,16 @@ if [ "$SGE" = "node" ]; then
   fi
   sleep 60
   echo "Install grid node"
+  if [ -e /opt/sgemaster ]; then
+      cat /opt/sgemaster >> /etc/hosts
+  fi
+
   DEBIAN_FRONTEND='noninteractive' apt-get -y install gridengine-exec
   if [ -n "$DOMAIN" ]; then
     sed  -i 's/none/'$DOMAIN'/' /etc/gridengine/bootstrap
   fi
+  sed -i "s/ignore_fqdn.*false/ignore_fqdn    true/" /var/lib/gridengine/default/common/bootstrap
+  service gridengine-exec restart
 fi
 
 

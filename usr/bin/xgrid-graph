@@ -11,7 +11,7 @@ mkdir -p $WEBPATH
 
 MEM_LIM=`grep MemTotal /proc/meminfo | awk '{print $2}'`
 
-for f in /var/lib/xgrid/rrdcollect/VM-*
+for f in /var/lib/xgrid/rrdcollect/*
 do
   ID=`basename $f`
 
@@ -20,6 +20,8 @@ do
   if [ ! -e /usr/share/xgrid/web/public/images/rrd ]; then
     mkdir -p /usr/share/xgrid/web/public/images/rrd
   fi
+
+  ID="${ID/\.localhost/}"
 
   rrdtool graph $WEBPATH/mem-$ID.png \
         --title 'Memoire utilisée sur 3 heures' \
