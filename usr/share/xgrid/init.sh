@@ -87,8 +87,8 @@ if [ -e /var/lib/xgrid/firstboot ]; then
   if [ -z $XGRIDMASTER ]; then
     # This is the xgridmaster
     sed -i '/xgrid/d' /etc/exports
-    echo "/var/lib/xgrid "$MASK"/255.255.255.0(rw,sync,no_subtree_check,no_root_squash)" >> /etc/exports
-    echo "/opt "$MASK"/255.255.255.0(rw,sync,no_subtree_check,no_root_squash)" >> /etc/exports
+    echo "/var/lib/xgrid *(rw,sync,no_subtree_check,no_root_squash)" >> /etc/exports
+    echo "/opt *(rw,sync,no_subtree_check,no_root_squash)" >> /etc/exports
 
     # Web frontend
     echo "Install gem libraries"
@@ -104,8 +104,13 @@ if [ -e /var/lib/xgrid/firstboot ]; then
     sed -i "s/@@hostname = '.*'/@@hostname = '"$HOSTNAME"'/" /usr/share/xgrid/web/xgridconfig.rb
 
     # @@baseurl = ''
-    LASTIP=`echo $IP| cut -d"." -f4`
-    sed -i "s/@@baseurl = '.*'/@@baseurl = 'http:\/\/cloud-"$LASTIP".genouest.org\/xgrid'/" /usr/share/xgrid/web/xgridconfig.rb
+    if [ -e /mnt/context.sh ]; then
+        LASTIP=`echo $IP| cut -d"." -f4`
+        sed -i "s/@@baseurl = '.*'/@@baseurl = 'http:\/\/cloud-"$LASTIP".genouest.org\/xgrid'/" /usr/share/xgrid/web/xgridconfig.rb
+    else
+        BASEURL=`wget -qO- http://instance-data/latest/meta-data/public-hostname`
+        sed -i "s/@@baseurl = '.*'/@@baseurl = 'http:\/\/"$BASEURL"\/xgrid'/" /usr/share/xgrid/web/xgridconfig.rb
+    fi
 
     # XGRID PASSWORD
     if [ -z $XGRID_PWD ]; then
@@ -113,13 +118,18 @@ if [ -e /var/lib/xgrid/firstboot ]; then
     fi
     sed -i "s/@@adminpwd = '.*'/@@adminpwd = '"$XGRID_PWD"'/" /usr/share/xgrid/web/xgridconfig.rb
     echo $XGRID_PWD > /root/admin_pwd
-    export APIKEY=$(cat /dev/urandom | tr -dc 'a-zA-Z0-9' | fold -w 16 | head -n 1)
+    if [ -e /mnt/context.txt ]; then
+        export APIKEY=$(cat /dev/urandom | tr -dc 'a-zA-Z0-9' | fold -w 16 | head -n 1)
+    else
+        export APIKEY=$XGRID_PWD
+    fi
     sed -i "s/@@apikey = '.*'/@@apikey = '"$APIKEY"'/" /usr/share/xgrid/web/xgridconfig.rb
+    if [ -n "$XGRID_EC2_INSTANCE_TYPE" ]; then
+        sed -i "s/@@instancetypes = \[.*\]/@@instancetypes = \['"$XGRID_EC2_INSTANCE_TYPE"'\]/" /usr/share/xgrid/web/xgridconfig.rb
+    fi 
     # Mysql, listen on all interfaces
     sed -i "s/127.0.0.1/0.0.0.0/" /etc/mysql/my.cnf
     service mysql restart
-    echo "Starting xgrid web server"
-    echo "Starting xgrid web server" >> /var/log/xgrid.log
 
     # edit the welcome apache page
     echo '<html><head><link rel="stylesheet" href="/xgrid/css/xgrid.css" type="text/css"></head>' > /var/www/html/index.html
@@ -182,7 +192,8 @@ fi
 if [ -z $XGRIDMASTER ]; then
   exportfs -ra
   service nfs-kernel-server restart
-
+  echo "Starting xgrid web server"
+  echo "Starting xgrid web server" >> /var/log/xgrid.log
   service xgrid stop >> /var/log/xgrid.log
   service xgrid start >> /var/log/xgrid.log
 

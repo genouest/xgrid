@@ -49,7 +49,7 @@ editAreaLoader.init({
  <td><label for="type">Instance type</label></td>
  <td><select id="type" name="type">
  <% XgridConfig.instancetypes.each do |type| %>
-    <option value="m1.<%= type %>"><%= type %></option>
+    <option value="<%= type %>"><%= type %></option>
  <% end %>
  </select></td>
  </tr><tr>
