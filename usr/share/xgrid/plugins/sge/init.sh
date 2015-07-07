@@ -107,7 +107,10 @@ if [ "$SGE" = "node" ]; then
       cat /opt/sgemaster >> /etc/hosts
   fi
 
-  DEBIAN_FRONTEND='noninteractive' apt-get -y install gridengine-exec
+  #DEBIAN_FRONTEND='noninteractive' apt-get -y install gridengine-exec
+  DEBIAN_FRONTEND='noninteractive' dpkg -i /usr/share/xgrid/3rdparty/gridengine-common_6.2u5-7.3_all.deb /usr/share/xgrid/3rdparty/gridengine-exec_6.2u5-7.3_amd64.deb
+  DEBIAN_FRONTEND='noninteractive' apt-get -y -f install
+
   if [ -n "$DOMAIN" ]; then
     sed  -i 's/none/'$DOMAIN'/' /etc/gridengine/bootstrap
   fi
