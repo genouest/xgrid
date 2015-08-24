@@ -1,27 +1,67 @@
+## Introduction
+
 This package sets up Sun Grid Engine for Open Nebula or cloud-init compatible
 clouds.
 
-Packages expects in CONTEXT the following env variables:
+## Package requirements
 
-XGRID_EC2 : EC2 ip address
-XGRID_EC2_PORT: EC2 port
-SGE=master OR HADOOP=master
-XGRID_AMI : id of the image to use
+python-dev, python-pip, fabric, dos2unix
 
-Optional:
-  CHEFSERVER: if cookbooks are used
-  SHAREDFS: mount point
-  DOMAIN: domain of the instance
+## Building
+
+You can build a .deb package from sources.
+
+`debian/rules clean`
+`debian/rules binary`
+
+## Installation
+
+`*dpkg -i xgrid__version__all.deb*`
+
+## Plugins
+
+In order to use plugin(s), you have to add some variables in your contextualization (CONTEXT)
+
+# Xgrid web interface
+
+XGRID_PWD | *yournewxgridpassword*
+
+# Cookbook
+
+CHEFSERVER | http://*yourchefserverurl*
+CHEFVALIDATIONKEY | *yourchefvalidationkey* 
+
+# Sun Grid Engine
+
+XGRID_EC2 | *EC2 ip address*
+XGRID_EC2_PORT | *EC2 port*
+XGRID_AMI | *id of the image to use*
+SGE | master
+
+ - When a new node is started via the xgrid interface, the software will add EC2 user data:
+
+SGE | *node*
+SGEMASTER | *IP.of.the.master*
+XGRIDID | *x*
+KEY | *xxxxxxxx*
+
+# HADOOP
+
+XGRID_EC2 | *EC2 ip address*
+XGRID_EC2_PORT | *EC2 port*
+XGRID_AMI | *id of the image to use*
+HADOOP | master
+
+# NFS mounts
+
+SHAREDFS | *IP:/shareddirectory*
+DATABANKS |  *IP:/shareddatabanks*
+
+## Possible configuration
 
 After boot, /usr/share/xgrid/web/xgridconfig.rb:
 
 - one may need to adapt baseurl parameter depending on deployment to get VM url.
-
-When a new node is started via the xgrid interface, the software will add EC2 user data:
-SGE="node"
-SGEMASTER="x.x.x.x"
-XGRIDID="1"
-KEY="xxxxxxxx"
 
 The password in xgridconfig.rb is unique and generated at instance startup.
 
