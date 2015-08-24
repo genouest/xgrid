@@ -12,6 +12,7 @@ python-dev, python-pip, fabric, dos2unix
 You can build a .deb package from sources.
 
 `debian/rules clean`
+
 `debian/rules binary`
 
 ## Installation
@@ -24,38 +25,50 @@ In order to use plugin(s), you have to add some variables in your contextualizat
 
 # Xgrid web interface
 
-XGRID_PWD | *yournewxgridpassword*
+Name          | Value
+------------- | -------------
+XGRID_PWD     | *yournewxgridpassword*
 
 # Cookbook
 
-CHEFSERVER | http://*yourchefserverurl*
+Name              | Value
+------------------| -----------------
+CHEFSERVER        | http://*yourchefserverurl*
 CHEFVALIDATIONKEY | *yourchefvalidationkey* 
 
 # Sun Grid Engine
 
-XGRID_EC2 | *EC2 ip address*
+Name           | Value
+-------------- | --------------
+XGRID_EC2      | *EC2 ip address*
 XGRID_EC2_PORT | *EC2 port*
-XGRID_AMI | *id of the image to use*
-SGE | master
+XGRID_AMI      | *id of the image to use*
+SGE            | master
 
  - When a new node is started via the xgrid interface, the software will add EC2 user data:
 
-SGE | *node*
-SGEMASTER | *IP.of.the.master*
-XGRIDID | *x*
+Name          | Value
+------------- | -------------
+SGE           | *node*
+SGEMASTER     | *IP.of.the.master*
+XGRIDID       | *x*
 KEY | *xxxxxxxx*
 
 # HADOOP
 
-XGRID_EC2 | *EC2 ip address*
+Name           | Value
+-------------- | --------------
+XGRID_EC2      | *EC2 ip address*
 XGRID_EC2_PORT | *EC2 port*
-XGRID_AMI | *id of the image to use*
-HADOOP | master
+XGRID_AMI      | *id of the image to use*
+HADOOP         | master
 
 # NFS mounts
 
-SHAREDFS | *IP:/shareddirectory*
-DATABANKS |  *IP:/shareddatabanks*
+Name          | Value
+------------- | -------------
+SHAREDFS      | *IP:/shareddirectory*
+DATABANKS     |  *IP:/shareddatabanks*
 
 ## Possible configuration
 
