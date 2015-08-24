@@ -9,7 +9,7 @@ class XgridConfig
 
   @@ami = ''
 
-  @@instancetypes = [ 'small', 'large', 'xlarge' ]
+  @@instancetypes = [ 'm1.small', 'm1.large', 'm1.xlarge' ]
 
   @@ip = ''
 

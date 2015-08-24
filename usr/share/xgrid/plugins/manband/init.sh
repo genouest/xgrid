@@ -7,12 +7,9 @@ if [ ! -e /var/lib/xgrid/firstboot ]; then
   exit 0
 fi
 
-if [ ! -e /mnt/context.sh ]; then
-  echo "No context file available, exiting"
-  exit 1
+if [ -e /mnt/context.sh ]; then
+  . /mnt/context.sh
 fi
-
-. /mnt/context.sh
 
 if [ -e  /var/lib/xgrid/ec2.properties ]; then
   . /var/lib/xgrid/ec2.properties

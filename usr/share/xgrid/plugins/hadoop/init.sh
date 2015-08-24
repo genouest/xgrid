@@ -5,7 +5,9 @@
 
 echo "Hadoop plugin"
 
-. /mnt/context.sh
+if [ -e /mnt/context.sh ]; then
+  . /mnt/context.sh
+fi
 
 if [ -e  /var/lib/xgrid/ec2.properties ]; then
   . /var/lib/xgrid/ec2.properties
