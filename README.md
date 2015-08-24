@@ -78,6 +78,3 @@ After boot, /usr/share/xgrid/web/xgridconfig.rb:
 
 - the password is unique and generated at instance startup.
 
-# Package requirements
-
-python-dev, python-pip, fabric, dos2unix
