@@ -5,7 +5,10 @@ clouds.
 
 ## Package requirements
 
-python-dev, python-pip, fabric, dos2unix
+python-dev
+python-pip
+fabric
+dos2unix
 
 ## Building
 
@@ -17,7 +20,7 @@ You can build a .deb package from sources.
 
 ## Installation
 
-`dpkg -i xgrid_*version*_all.deb`
+`dpkg -i xgrid_version_all.deb`
 
 `apt-get -f install`
 
