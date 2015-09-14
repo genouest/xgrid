@@ -6,8 +6,11 @@ clouds.
 ## Package requirements
 
 python-dev
+
 python-pip
+
 fabric
+
 dos2unix
 
 ## Building
