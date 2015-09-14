@@ -19,6 +19,8 @@ You can build a .deb package from sources.
 
 `dpkg -i xgrid_*version*_all.deb`
 
+`apt-get -f install`
+
 ## Plugins
 
 In order to use plugin(s), you have to add some variables in your contextualization (CONTEXT)
@@ -76,5 +78,5 @@ After boot, /usr/share/xgrid/web/xgridconfig.rb:
 
 - one may need to adapt baseurl parameter depending on deployment to get VM url.
 
-- the password is unique and generated at instance startup.
+- the password is unique (specified in context variables or generated at instance startup).
 
