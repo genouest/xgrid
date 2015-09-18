@@ -44,22 +44,33 @@ if [ "$SGE" = "master" ]; then
 
   # Define queue
   perl -p -e 's/\$\{([^}]+)\}/defined $ENV{$1} ? $ENV{$1} : $&/eg' $TEMPLATES/genocloud.queue.tpl > /tmp/genocloud.queue
-  qconf -Aq /tmp/genocloud.queue
+  #qconf -Aq /tmp/genocloud.queue
   # Add user
   export USER="vuser"
   perl -p -e 's/\$\{([^}]+)\}/defined $ENV{$1} ? $ENV{$1} : $&/eg' $TEMPLATES/genocloud.user.tpl > /tmp/genocloud.user
-  qconf -Auser /tmp/genocloud.user
+  #qconf -Auser /tmp/genocloud.user
   # Set current as submit host
+  #if [ -n "$DOMAIN" ]; then
+  #  qconf -as $HOSTNAME.$DOMAIN
+  #else
+  #  qconf -as $HOSTNAME
+  #fi
+  # Define allhosts group
+  cp $TEMPLATES/genocloud.hostgroup.tpl /tmp/genocloud.hostgroup
+  #qconf -Ahgrp /tmp/genocloud.hostgroup
+
+  service gridengine-master restart
+
+  sleep 3
+
+  qconf -Aq /tmp/genocloud.queue
+  qconf -Auser /tmp/genocloud.user
   if [ -n "$DOMAIN" ]; then
     qconf -as $HOSTNAME.$DOMAIN
   else
     qconf -as $HOSTNAME
   fi
-  # Define allhosts group
-  cp $TEMPLATES/genocloud.hostgroup.tpl /tmp/genocloud.hostgroup
   qconf -Ahgrp /tmp/genocloud.hostgroup
-
-  service gridengine-master restart
 
   #DEBIAN_FRONTEND='noninteractive' apt-get -y install gridengine-exec
   DEBIAN_FRONTEND='noninteractive' dpkg -i /usr/share/xgrid/3rdparty/gridengine-common_6.2u5-7.3_all.deb /usr/share/xgrid/3rdparty/gridengine-exec_6.2u5-7.3_amd64.deb

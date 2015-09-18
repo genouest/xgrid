@@ -16,6 +16,10 @@ if [ -e /var/lib/cloud/instance/user-data.txt ]; then
     ln -s /var/lib/cloud/instance/user-data.txt /var/lib/xgrid/ec2.properties
 fi
 
+if [ -n "$XGRID_NOINIT" ]; then
+    exit
+fi
+
 if [ -e  /var/lib/xgrid/ec2.properties ]; then
   . /var/lib/xgrid/ec2.properties
 fi
