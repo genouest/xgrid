@@ -1,7 +1,10 @@
 ## Introduction
 
-This package sets up Sun Grid Engine for Open Nebula or cloud-init compatible
-clouds.
+XGrid is an internal tool developed to ease the deployment of tools in the cloud.
+
+It is used to setup Hadoop, SGE or manband workflows environments and can be extended with plugins to get more.
+
+This package is compatible with OpenNebula or cloud-init compatible clouds.
 
 ## Package requirements
 
