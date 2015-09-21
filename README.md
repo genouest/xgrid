@@ -30,6 +30,16 @@ You can build a .deb package from sources.
 
 `apt-get -f install`
 
+## Start it up
+
+`service xgrid start`
+
+Xgrid is configured to start up on the boot automatically.
+
+## Access
+
+Xgrid is available from your web browser at the following url: http://domain/xgrid
+
 ## Plugins
 
 In order to use plugin(s), you have to add some variables in your contextualization (CONTEXT)
