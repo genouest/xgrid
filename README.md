@@ -99,3 +99,6 @@ After boot, /usr/share/xgrid/web/xgridconfig.rb:
 
 - the password is unique (specified in context variables or generated at instance startup).
 
+## Download
+
+Xgrid packages for Wheezy and Jessie are available for download : http://genocloud.genouest.org/appliances/
