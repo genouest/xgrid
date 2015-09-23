@@ -101,4 +101,4 @@ After boot, /usr/share/xgrid/web/xgridconfig.rb:
 
 ## Download
 
-Xgrid packages for Wheezy and Jessie are available for download : http://genocloud.genouest.org/appliances/
+Xgrid packages for Wheezy and Jessie are available for download : http://genocloud.genouest.org/appliances/xgrid_packages/
